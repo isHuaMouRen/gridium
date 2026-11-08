@@ -11,10 +11,12 @@ public class Rect {
 	private final double height;
 
 	public Rect(double x, double y, double width, double height) {
-		this.x = x;
-		this.y = y;
-		this.width = Math.max(0.0, width);
-		this.height = Math.max(0.0, height);
+		this.x = requireFinite(x, "x");
+		this.y = requireFinite(y, "y");
+		this.width = requireDimension(width, "width");
+		this.height = requireDimension(height, "height");
+		requireFinite(this.x + this.width, "right");
+		requireFinite(this.y + this.height, "bottom");
 	}
 
 	public static Rect fromOriginAndSize(double x, double y, Size size) {
@@ -63,5 +65,19 @@ public class Rect {
 	@Override
 	public String toString() {
 		return "Rect[x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + "]";
+	}
+
+	private static double requireFinite(double value, String name) {
+		if (!Double.isFinite(value)) {
+			throw new IllegalArgumentException(name + " must be finite");
+		}
+		return value;
+	}
+
+	private static double requireDimension(double value, String name) {
+		if (!Double.isFinite(value) || value < 0.0) {
+			throw new IllegalArgumentException(name + " must be finite and non-negative");
+		}
+		return value;
 	}
 }

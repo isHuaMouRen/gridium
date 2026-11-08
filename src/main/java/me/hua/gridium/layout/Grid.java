@@ -7,6 +7,8 @@ import me.hua.gridium.core.Size;
 import me.hua.gridium.core.UIElement;
 import me.hua.gridium.core.VerticalAlignment;
 import me.hua.gridium.rendering.GridRenderer;
+import me.hua.gridium.rendering.MinecraftGridRenderer;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,22 +35,23 @@ public class Grid extends FrameworkElement<Grid> {
 		}
 
 		children.add(element);
-		invalidateMeasure();
 	}
 
 	public boolean remove(UIElement element) {
-		if (children.remove(element)) {
-			invalidateMeasure();
-			return true;
-		}
-		return false;
+		return children.remove(element);
 	}
 
 	public List<UIElement> getChildren() {
 		return List.copyOf(children);
 	}
 
-	public void layout(double width, double height) {
+	public void draw(GuiGraphicsExtractor graphics) {
+		Objects.requireNonNull(graphics, "graphics");
+		layout(graphics.guiWidth(), graphics.guiHeight());
+		render(new MinecraftGridRenderer(graphics));
+	}
+
+	private void layout(double width, double height) {
 		Size viewportSize = new Size(width, height);
 		measure(viewportSize);
 		arrange(Rect.fromOriginAndSize(0.0, 0.0, viewportSize));

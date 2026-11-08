@@ -9,10 +9,12 @@ public class Thickness {
 	private final double bottom;
 
 	public Thickness(double left, double top, double right, double bottom) {
-		this.left = left;
-		this.top = top;
-		this.right = right;
-		this.bottom = bottom;
+		this.left = requireFinite(left, "left");
+		this.top = requireFinite(top, "top");
+		this.right = requireFinite(right, "right");
+		this.bottom = requireFinite(bottom, "bottom");
+		requireFinite(this.left + this.right, "horizontal");
+		requireFinite(this.top + this.bottom, "vertical");
 	}
 
 	public static Thickness uniform(double uniform) {
@@ -50,5 +52,12 @@ public class Thickness {
 	@Override
 	public String toString() {
 		return "Thickness[left=" + left + ", top=" + top + ", right=" + right + ", bottom=" + bottom + "]";
+	}
+
+	private static double requireFinite(double value, String name) {
+		if (!Double.isFinite(value)) {
+			throw new IllegalArgumentException(name + " must be finite");
+		}
+		return value;
 	}
 }

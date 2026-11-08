@@ -26,10 +26,10 @@ Gridium API 必须清晰区分“画什么”和“画在哪”。
 - 开发者描述布局意图即可；Gridium 负责计算最终绝对位置，并在内部将位置传给原生绘制方法。
 - 常规使用方式不得要求开发者先算出原版方法的 `x`、`y` 再传入。若确有特殊场景需要显式坐标，应提供清楚的逃生方式，而不是让手工坐标成为常规 API。
 
-例如，下面的结构表达了两类职责：构造时定义文本内容和绘制属性，创建后的链式调用定义布局。
+例如，下面的结构表达了两类职责：构造时定义文本内容和绘制属性，创建后的链式调用定义布局。`font` 是当前 `Screen` 提供的原生字体。
 
 ```java
-var title = new Text(Component.literal("Gridium"))
+var title = new Text(font, Component.literal("Gridium"), 0xFFFFFFFF, false)
     .setHorizontalAlignment(HorizontalAlignment.CENTER)
     .setVerticalAlignment(VerticalAlignment.TOP)
     .setMargin(new Thickness(0.0, 24.0, 0.0, 0.0));

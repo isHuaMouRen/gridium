@@ -1,7 +1,6 @@
 package me.hua.gridium.controls;
 
 import me.hua.gridium.core.FrameworkElement;
-import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.Size;
 import me.hua.gridium.rendering.GridRenderer;
 
@@ -11,10 +10,14 @@ public class Rectangle extends FrameworkElement<Rectangle> {
 	private final int color;
 
 	public Rectangle(double width, double height, int color) {
-		super("rectangle");
-		this.width = Math.max(0.0, width);
-		this.height = Math.max(0.0, height);
+		Size size = new Size(width, height);
+		this.width = size.getWidth();
+		this.height = size.getHeight();
 		this.color = color;
+	}
+
+	public int getColor() {
+		return color;
 	}
 
 	@Override
@@ -29,6 +32,6 @@ public class Rectangle extends FrameworkElement<Rectangle> {
 
 	@Override
 	protected void renderOverride(GridRenderer renderer) {
-		renderer.rectangle(getBounds(), color);
+		renderer.render(this);
 	}
 }

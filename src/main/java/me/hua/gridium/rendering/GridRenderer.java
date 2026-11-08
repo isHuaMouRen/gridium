@@ -1,10 +1,10 @@
 package me.hua.gridium.rendering;
 
-import me.hua.gridium.core.Rect;
-import net.minecraft.network.chat.Component;
+import me.hua.gridium.controls.Rectangle;
+import me.hua.gridium.controls.Text;
 
 public interface GridRenderer {
-	void text(Component component, Rect bounds, int color, boolean drawShadow);
+	void render(Text text);
 
-	void rectangle(Rect bounds, int color);
+	void render(Rectangle rectangle);
 }

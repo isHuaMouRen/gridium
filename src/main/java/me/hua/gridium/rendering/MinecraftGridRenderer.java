@@ -1,39 +1,39 @@
 package me.hua.gridium.rendering;
 
 import me.hua.gridium.core.Rect;
-import net.minecraft.client.gui.Font;
+import me.hua.gridium.controls.Rectangle;
+import me.hua.gridium.controls.Text;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.network.chat.Component;
 
 import java.util.Objects;
 
 public class MinecraftGridRenderer implements GridRenderer {
 	private final GuiGraphicsExtractor graphics;
-	private final Font font;
 
-	public MinecraftGridRenderer(GuiGraphicsExtractor graphics, Font font) {
+	public MinecraftGridRenderer(GuiGraphicsExtractor graphics) {
 		this.graphics = Objects.requireNonNull(graphics, "graphics");
-		this.font = Objects.requireNonNull(font, "font");
 	}
 
 	@Override
-	public void text(Component component, Rect bounds, int color, boolean drawShadow) {
+	public void render(Text text) {
+		Rect bounds = text.getBounds();
 		graphics.text(
-			font,
-			component,
+			text.getFont(),
+			text.getComponent(),
 			(int) Math.round(bounds.getX()),
 			(int) Math.round(bounds.getY()),
-			color,
-			drawShadow
+			text.getColor(),
+			text.drawsShadow()
 		);
 	}
 
 	@Override
-	public void rectangle(Rect bounds, int color) {
+	public void render(Rectangle rectangle) {
+		Rect bounds = rectangle.getBounds();
 		int left = (int) Math.round(bounds.getX());
 		int top = (int) Math.round(bounds.getY());
 		int right = (int) Math.round(bounds.getRight());
 		int bottom = (int) Math.round(bounds.getBottom());
-		graphics.fill(left, top, right, bottom, color);
+		graphics.fill(left, top, right, bottom, rectangle.getColor());
 	}
 }

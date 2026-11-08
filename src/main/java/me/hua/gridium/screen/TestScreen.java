@@ -6,7 +6,6 @@ import me.hua.gridium.core.HorizontalAlignment;
 import me.hua.gridium.core.Thickness;
 import me.hua.gridium.core.VerticalAlignment;
 import me.hua.gridium.layout.Grid;
-import me.hua.gridium.rendering.MinecraftGridRenderer;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -24,7 +23,7 @@ public class TestScreen extends Screen {
 	protected void init() {
 		grid = new Grid();
 
-		Text title = new Text(Component.literal("Gridium layout test"), 0xFFFFFFFF, true)
+		Text title = new Text(font, Component.literal("Gridium layout test"), 0xFFFFFFFF, true)
 			.setHorizontalAlignment(HorizontalAlignment.CENTER)
 			.setVerticalAlignment(VerticalAlignment.TOP)
 			.setMargin(new Thickness(0.0, 24.0, 0.0, 0.0));
@@ -35,7 +34,7 @@ public class TestScreen extends Screen {
 			.setVerticalAlignment(VerticalAlignment.CENTER);
 		grid.add(panel);
 
-		Text label = new Text(Component.literal("Centered by Grid"))
+		Text label = new Text(font, Component.literal("Centered by Grid"), 0xFFFFFFFF, false)
 			.setHorizontalAlignment(HorizontalAlignment.CENTER)
 			.setVerticalAlignment(VerticalAlignment.CENTER);
 		grid.add(label);
@@ -44,8 +43,7 @@ public class TestScreen extends Screen {
 	@Override
 	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
 		super.extractRenderState(graphics, mouseX, mouseY, partialTick);
-		grid.layout(width, height);
-		grid.render(new MinecraftGridRenderer(graphics, font));
+		grid.draw(graphics);
 	}
 
 	@Override

@@ -7,8 +7,8 @@ public class Size {
 	private final double height;
 
 	public Size(double width, double height) {
-		this.width = Math.max(0.0, width);
-		this.height = Math.max(0.0, height);
+		this.width = requireDimension(width, "width");
+		this.height = requireDimension(height, "height");
 	}
 
 	public double getWidth() {
@@ -20,7 +20,7 @@ public class Size {
 	}
 
 	public boolean isEmpty() {
-		return width <= 0.0 && height <= 0.0;
+		return width == 0.0 || height == 0.0;
 	}
 
 	public Size withWidth(double width) {
@@ -34,5 +34,12 @@ public class Size {
 	@Override
 	public String toString() {
 		return "Size[width=" + width + ", height=" + height + "]";
+	}
+
+	private static double requireDimension(double value, String name) {
+		if (!Double.isFinite(value) || value < 0.0) {
+			throw new IllegalArgumentException(name + " must be finite and non-negative");
+		}
+		return value;
 	}
 }

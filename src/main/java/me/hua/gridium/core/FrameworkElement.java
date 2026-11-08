@@ -7,24 +7,12 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	private HorizontalAlignment horizontalAlignment = HorizontalAlignment.LEFT;
 	private VerticalAlignment verticalAlignment = VerticalAlignment.TOP;
 
-	public FrameworkElement() {
-		super();
-	}
-
-	public FrameworkElement(String name) {
-		super(name);
-	}
-
 	public final Thickness getMargin() {
 		return margin;
 	}
 
 	public final T setMargin(Thickness margin) {
-		Thickness newMargin = Objects.requireNonNull(margin, "margin");
-		if (!hasSameValues(this.margin, newMargin)) {
-			this.margin = newMargin;
-			invalidateMeasure();
-		}
+		this.margin = Objects.requireNonNull(margin, "margin");
 		return self();
 	}
 
@@ -33,11 +21,7 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	}
 
 	public final T setHorizontalAlignment(HorizontalAlignment horizontalAlignment) {
-		HorizontalAlignment newAlignment = Objects.requireNonNull(horizontalAlignment, "horizontalAlignment");
-		if (this.horizontalAlignment != newAlignment) {
-			this.horizontalAlignment = newAlignment;
-			invalidateArrange();
-		}
+		this.horizontalAlignment = Objects.requireNonNull(horizontalAlignment, "horizontalAlignment");
 		return self();
 	}
 
@@ -46,11 +30,7 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	}
 
 	public final T setVerticalAlignment(VerticalAlignment verticalAlignment) {
-		VerticalAlignment newAlignment = Objects.requireNonNull(verticalAlignment, "verticalAlignment");
-		if (this.verticalAlignment != newAlignment) {
-			this.verticalAlignment = newAlignment;
-			invalidateArrange();
-		}
+		this.verticalAlignment = Objects.requireNonNull(verticalAlignment, "verticalAlignment");
 		return self();
 	}
 
@@ -86,10 +66,4 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	protected void arrangeContent(Rect finalRect) {
 	}
 
-	private static boolean hasSameValues(Thickness first, Thickness second) {
-		return Double.compare(first.getLeft(), second.getLeft()) == 0
-			&& Double.compare(first.getTop(), second.getTop()) == 0
-			&& Double.compare(first.getRight(), second.getRight()) == 0
-			&& Double.compare(first.getBottom(), second.getBottom()) == 0;
-	}
 }
