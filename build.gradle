@@ -79,3 +79,12 @@ publishing {
 		// retrieving dependencies.
 	}
 }
+
+//set username to Dev
+loom {
+	runs {
+		client {
+			programArguments.add("--username=Dev")
+		}
+	}
+}
