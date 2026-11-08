@@ -26,20 +26,20 @@ public class TestScreen extends Screen {
 		grid = new Grid();
 		MinecraftTextMetrics textMetrics = new MinecraftTextMetrics(font);
 
-		Text title = new Text("Gridium layout test", textMetrics);
-		title.setHorizontalAlignment(HorizontalAlignment.CENTER);
-		title.setVerticalAlignment(VerticalAlignment.TOP);
-		title.setMargin(new Thickness(0.0, 24.0, 0.0, 0.0));
+		Text title = new Text("Gridium layout test", textMetrics)
+			.setHorizontalAlignment(HorizontalAlignment.CENTER)
+			.setVerticalAlignment(VerticalAlignment.TOP)
+			.setMargin(new Thickness(0.0, 24.0, 0.0, 0.0));
 		grid.add(title);
 
-		Rectangle panel = new Rectangle(180.0, 48.0, 0xFF202020);
-		panel.setHorizontalAlignment(HorizontalAlignment.CENTER);
-		panel.setVerticalAlignment(VerticalAlignment.CENTER);
+		Rectangle panel = new Rectangle(180.0, 48.0, 0xFF202020)
+			.setHorizontalAlignment(HorizontalAlignment.CENTER)
+			.setVerticalAlignment(VerticalAlignment.CENTER);
 		grid.add(panel);
 
-		Text label = new Text("Centered by Grid", textMetrics);
-		label.setHorizontalAlignment(HorizontalAlignment.CENTER);
-		label.setVerticalAlignment(VerticalAlignment.CENTER);
+		Text label = new Text("Centered by Grid", textMetrics)
+			.setHorizontalAlignment(HorizontalAlignment.CENTER)
+			.setVerticalAlignment(VerticalAlignment.CENTER);
 		grid.add(label);
 	}
 

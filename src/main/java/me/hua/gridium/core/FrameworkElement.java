@@ -19,36 +19,39 @@ public class FrameworkElement extends UIElement {
 		return margin;
 	}
 
-	public final void setMargin(Thickness margin) {
+	public FrameworkElement setMargin(Thickness margin) {
 		Thickness newMargin = Objects.requireNonNull(margin, "margin");
 		if (!hasSameValues(this.margin, newMargin)) {
 			this.margin = newMargin;
 			invalidateMeasure();
 		}
+		return this;
 	}
 
 	public final HorizontalAlignment getHorizontalAlignment() {
 		return horizontalAlignment;
 	}
 
-	public final void setHorizontalAlignment(HorizontalAlignment horizontalAlignment) {
+	public FrameworkElement setHorizontalAlignment(HorizontalAlignment horizontalAlignment) {
 		HorizontalAlignment newAlignment = Objects.requireNonNull(horizontalAlignment, "horizontalAlignment");
 		if (this.horizontalAlignment != newAlignment) {
 			this.horizontalAlignment = newAlignment;
 			invalidateArrange();
 		}
+		return this;
 	}
 
 	public final VerticalAlignment getVerticalAlignment() {
 		return verticalAlignment;
 	}
 
-	public final void setVerticalAlignment(VerticalAlignment verticalAlignment) {
+	public FrameworkElement setVerticalAlignment(VerticalAlignment verticalAlignment) {
 		VerticalAlignment newAlignment = Objects.requireNonNull(verticalAlignment, "verticalAlignment");
 		if (this.verticalAlignment != newAlignment) {
 			this.verticalAlignment = newAlignment;
 			invalidateArrange();
 		}
+		return this;
 	}
 
 	@Override
