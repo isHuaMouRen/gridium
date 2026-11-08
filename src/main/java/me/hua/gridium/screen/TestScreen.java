@@ -46,7 +46,8 @@ public class TestScreen extends Screen {
 	@Override
 	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
 		super.extractRenderState(graphics, mouseX, mouseY, partialTick);
-		grid.draw(new MinecraftGridRenderer(graphics, font), width, height);
+		grid.layout(width, height);
+		grid.render(new MinecraftGridRenderer(graphics, font));
 	}
 
 	@Override

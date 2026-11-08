@@ -48,12 +48,10 @@ public class Grid extends FrameworkElement<Grid> {
 		return List.copyOf(children);
 	}
 
-	public void draw(GridRenderer renderer, double width, double height) {
-		Objects.requireNonNull(renderer, "renderer");
+	public void layout(double width, double height) {
 		Size viewportSize = new Size(width, height);
 		measure(viewportSize);
 		arrange(Rect.fromOriginAndSize(0.0, 0.0, viewportSize));
-		render(renderer);
 	}
 
 	@Override
