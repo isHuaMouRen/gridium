@@ -4,27 +4,33 @@ import me.hua.gridium.core.FrameworkElement;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.Size;
 import me.hua.gridium.rendering.GridRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 
 import java.util.Objects;
 
 public class Text extends FrameworkElement<Text> {
-	private final String value;
-	private final TextMetrics textMetrics;
+	private final Component component;
 	private final int color;
+	private final boolean drawShadow;
 
-	public Text(String value, TextMetrics textMetrics) {
-		this(value, textMetrics, 0xFFFFFFFF);
+	public Text(Component component) {
+		this(component, 0xFFFFFFFF, false);
 	}
 
-	public Text(String value, TextMetrics textMetrics, int color) {
+	public Text(Component component,int color){
+		this(component,color,false);
+	}
+
+	public Text(Component component, int color, boolean drawShadow) {
 		super("text");
-		this.value = Objects.requireNonNull(value, "value");
-		this.textMetrics = Objects.requireNonNull(textMetrics, "textMetrics");
+		this.component = Objects.requireNonNull(component, "component");
 		this.color = color;
+		this.drawShadow = drawShadow;
 	}
 
-	public String getValue() {
-		return value;
+	public Component getComponent() {
+		return component;
 	}
 
 	@Override
@@ -34,12 +40,13 @@ public class Text extends FrameworkElement<Text> {
 
 	@Override
 	protected Size measureContent(Size availableSize) {
-		return Objects.requireNonNull(textMetrics.measureText(value), "measured text size");
+		var font = Minecraft.getInstance().font;
+		return new Size(font.width(component), font.lineHeight);
 	}
 
 	@Override
 	protected void renderOverride(GridRenderer renderer) {
 		Rect bounds = getBounds();
-		renderer.text(value, bounds, color);
+		renderer.text(component, bounds, color, drawShadow);
 	}
 }

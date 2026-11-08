@@ -7,7 +7,6 @@ import me.hua.gridium.core.Thickness;
 import me.hua.gridium.core.VerticalAlignment;
 import me.hua.gridium.layout.Grid;
 import me.hua.gridium.rendering.MinecraftGridRenderer;
-import me.hua.gridium.rendering.MinecraftTextMetrics;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -24,9 +23,8 @@ public class TestScreen extends Screen {
 	@Override
 	protected void init() {
 		grid = new Grid();
-		MinecraftTextMetrics textMetrics = new MinecraftTextMetrics(font);
 
-		Text title = new Text("Gridium layout test", textMetrics)
+		Text title = new Text(Component.literal("Gridium layout test"), 0xFFFFFFFF, true)
 			.setHorizontalAlignment(HorizontalAlignment.CENTER)
 			.setVerticalAlignment(VerticalAlignment.TOP)
 			.setMargin(new Thickness(0.0, 24.0, 0.0, 0.0));
@@ -37,7 +35,7 @@ public class TestScreen extends Screen {
 			.setVerticalAlignment(VerticalAlignment.CENTER);
 		grid.add(panel);
 
-		Text label = new Text("Centered by Grid", textMetrics)
+		Text label = new Text(Component.literal("Centered by Grid"))
 			.setHorizontalAlignment(HorizontalAlignment.CENTER)
 			.setVerticalAlignment(VerticalAlignment.CENTER);
 		grid.add(label);

@@ -3,6 +3,7 @@ package me.hua.gridium.rendering;
 import me.hua.gridium.core.Rect;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.network.chat.Component;
 
 import java.util.Objects;
 
@@ -16,8 +17,15 @@ public class MinecraftGridRenderer implements GridRenderer {
 	}
 
 	@Override
-	public void text(String value, Rect bounds, int color) {
-		graphics.text(font, value, (int) Math.round(bounds.getX()), (int) Math.round(bounds.getY()), color);
+	public void text(Component component, Rect bounds, int color, boolean drawShadow) {
+		graphics.text(
+			font,
+			component,
+			(int) Math.round(bounds.getX()),
+			(int) Math.round(bounds.getY()),
+			color,
+			drawShadow
+		);
 	}
 
 	@Override
