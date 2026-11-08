@@ -42,6 +42,14 @@ Only list work that is not implemented yet. Remove an item from this file when i
 ## Rendering state
 
 - [ ] Add a rendering-state API for scissor clipping (`enableScissor`, `disableScissor`, `containsPointInScissor`) with safe scoped use.
-- [ ] Add a rendering-state API for pose transforms (`pose`) without coupling layout geometry to Minecraft rendering state.
+- [ ] Add a layout transform system supporting scale only:
+  - Apply scale during measure and arrange so the transformed desired size participates in parent layout and alignment.
+  - Apply the same scale to drawing so visual size matches the space reserved by layout.
+  - Keep layout transforms independent of Minecraft rendering APIs.
+- [ ] Add a render transform system applied after layout:
+  - Support translation, scale, and rotation, with a defined transform origin and composition order.
+  - Do not change measure, arrange, or the space reserved by the element.
+  - Apply transforms through the rendering adapter and restore the graphics pose after each element.
+  - Defer transformed hit testing and pointer interaction until the UI interaction model exists.
 - [ ] Add explicit stratum and blur controls (`nextStratum`, `blurBeforeThisStratum`).
 - [ ] Add cursor request/application support (`requestCursor`, `applyCursor`) where the UI interaction layer needs it.
