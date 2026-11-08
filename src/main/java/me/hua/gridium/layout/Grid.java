@@ -12,8 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Grid extends FrameworkElement {
+public class Grid extends FrameworkElement<Grid> {
 	private final List<UIElement> children = new ArrayList<>();
+
+	@Override
+	protected Grid self() {
+		return this;
+	}
 
 	public void add(UIElement element) {
 		Objects.requireNonNull(element, "element");

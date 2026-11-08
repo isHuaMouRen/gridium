@@ -1,16 +1,13 @@
 package me.hua.gridium.controls;
 
 import me.hua.gridium.core.FrameworkElement;
-import me.hua.gridium.core.HorizontalAlignment;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.Size;
-import me.hua.gridium.core.Thickness;
-import me.hua.gridium.core.VerticalAlignment;
 import me.hua.gridium.rendering.GridRenderer;
 
 import java.util.Objects;
 
-public class Text extends FrameworkElement {
+public class Text extends FrameworkElement<Text> {
 	private final String value;
 	private final TextMetrics textMetrics;
 	private final int color;
@@ -31,20 +28,7 @@ public class Text extends FrameworkElement {
 	}
 
 	@Override
-	public Text setMargin(Thickness margin) {
-		super.setMargin(margin);
-		return this;
-	}
-
-	@Override
-	public Text setHorizontalAlignment(HorizontalAlignment horizontalAlignment) {
-		super.setHorizontalAlignment(horizontalAlignment);
-		return this;
-	}
-
-	@Override
-	public Text setVerticalAlignment(VerticalAlignment verticalAlignment) {
-		super.setVerticalAlignment(verticalAlignment);
+	protected Text self() {
 		return this;
 	}
 

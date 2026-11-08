@@ -2,7 +2,7 @@ package me.hua.gridium.core;
 
 import java.util.Objects;
 
-public class FrameworkElement extends UIElement {
+public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UIElement {
 	private Thickness margin = Thickness.ZERO;
 	private HorizontalAlignment horizontalAlignment = HorizontalAlignment.LEFT;
 	private VerticalAlignment verticalAlignment = VerticalAlignment.TOP;
@@ -19,40 +19,42 @@ public class FrameworkElement extends UIElement {
 		return margin;
 	}
 
-	public FrameworkElement setMargin(Thickness margin) {
+	public final T setMargin(Thickness margin) {
 		Thickness newMargin = Objects.requireNonNull(margin, "margin");
 		if (!hasSameValues(this.margin, newMargin)) {
 			this.margin = newMargin;
 			invalidateMeasure();
 		}
-		return this;
+		return self();
 	}
 
 	public final HorizontalAlignment getHorizontalAlignment() {
 		return horizontalAlignment;
 	}
 
-	public FrameworkElement setHorizontalAlignment(HorizontalAlignment horizontalAlignment) {
+	public final T setHorizontalAlignment(HorizontalAlignment horizontalAlignment) {
 		HorizontalAlignment newAlignment = Objects.requireNonNull(horizontalAlignment, "horizontalAlignment");
 		if (this.horizontalAlignment != newAlignment) {
 			this.horizontalAlignment = newAlignment;
 			invalidateArrange();
 		}
-		return this;
+		return self();
 	}
 
 	public final VerticalAlignment getVerticalAlignment() {
 		return verticalAlignment;
 	}
 
-	public FrameworkElement setVerticalAlignment(VerticalAlignment verticalAlignment) {
+	public final T setVerticalAlignment(VerticalAlignment verticalAlignment) {
 		VerticalAlignment newAlignment = Objects.requireNonNull(verticalAlignment, "verticalAlignment");
 		if (this.verticalAlignment != newAlignment) {
 			this.verticalAlignment = newAlignment;
 			invalidateArrange();
 		}
-		return this;
+		return self();
 	}
+
+	protected abstract T self();
 
 	@Override
 	protected final Size measureOverride(Size availableSize) {
