@@ -11,6 +11,10 @@ import net.minecraft.util.FormattedCharSequence;
 import org.jspecify.annotations.Nullable;
 
 public interface GridRenderer {
+	void pushLayoutScale(double originX, double originY, double scaleX, double scaleY);
+
+	void popLayoutScale();
+
 	void render(Text text, @Nullable String string);
 
 	void render(Text text, FormattedCharSequence formattedCharSequence);

@@ -42,7 +42,23 @@ public class UIElement {
 	public final void render(GridRenderer renderer) {
 		Objects.requireNonNull(renderer, "renderer");
 		if (visible) {
-			renderOverride(renderer);
+			if (this instanceof FrameworkElement<?> frameworkElement
+				&& (frameworkElement.getLayoutScaleX() != 1.0 || frameworkElement.getLayoutScaleY() != 1.0)) {
+				Rect bounds = getBounds();
+				renderer.pushLayoutScale(
+					bounds.getX(),
+					bounds.getY(),
+					frameworkElement.getLayoutScaleX(),
+					frameworkElement.getLayoutScaleY()
+				);
+				try {
+					renderOverride(renderer);
+				} finally {
+					renderer.popLayoutScale();
+				}
+			} else {
+				renderOverride(renderer);
+			}
 		}
 	}
 

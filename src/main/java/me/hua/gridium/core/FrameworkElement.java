@@ -6,6 +6,8 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	private Thickness margin = Thickness.ZERO;
 	private HorizontalAlignment horizontalAlignment = HorizontalAlignment.LEFT;
 	private VerticalAlignment verticalAlignment = VerticalAlignment.TOP;
+	private double layoutScaleX = 1.0;
+	private double layoutScaleY = 1.0;
 
 	public final Thickness getMargin() {
 		return margin;
@@ -34,29 +36,54 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 		return self();
 	}
 
+	public final double getLayoutScaleX() {
+		return layoutScaleX;
+	}
+
+	public final double getLayoutScaleY() {
+		return layoutScaleY;
+	}
+
+	/**
+	 * Scales content during measurement, arrangement, and drawing. Margins remain unscaled.
+	 */
+	public final T setLayoutScale(double scaleX, double scaleY) {
+		double newScaleX = requireLayoutScale(scaleX, "scaleX");
+		double newScaleY = requireLayoutScale(scaleY, "scaleY");
+		layoutScaleX = newScaleX;
+		layoutScaleY = newScaleY;
+		return self();
+	}
+
 	protected abstract T self();
 
 	@Override
 	protected final Size measureOverride(Size availableSize) {
 		Size contentAvailableSize = new Size(
-			Math.max(0.0, availableSize.getWidth() - margin.getHorizontal()),
-			Math.max(0.0, availableSize.getHeight() - margin.getVertical())
+			Math.max(0.0, availableSize.getWidth() - margin.getHorizontal()) / layoutScaleX,
+			Math.max(0.0, availableSize.getHeight() - margin.getVertical()) / layoutScaleY
 		);
 		Size contentDesiredSize = Objects.requireNonNull(
 			measureContent(contentAvailableSize),
 			"measureContent result"
 		);
 		return new Size(
-			contentDesiredSize.getWidth() + margin.getHorizontal(),
-			contentDesiredSize.getHeight() + margin.getVertical()
+			contentDesiredSize.getWidth() * layoutScaleX + margin.getHorizontal(),
+			contentDesiredSize.getHeight() * layoutScaleY + margin.getVertical()
 		);
 	}
 
 	@Override
 	protected final Rect arrangeOverride(Rect finalRect) {
 		Rect contentRect = finalRect.inset(margin);
-		arrangeContent(contentRect);
-		return contentRect;
+		Rect unscaledContentRect = new Rect(
+			contentRect.getX(),
+			contentRect.getY(),
+			contentRect.getWidth() / layoutScaleX,
+			contentRect.getHeight() / layoutScaleY
+		);
+		arrangeContent(unscaledContentRect);
+		return unscaledContentRect;
 	}
 
 	protected Size measureContent(Size availableSize) {
@@ -64,6 +91,13 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	}
 
 	protected void arrangeContent(Rect finalRect) {
+	}
+
+	private static double requireLayoutScale(double scale, String name) {
+		if (!Double.isFinite(scale) || scale <= 0.0 || scale > Float.MAX_VALUE || scale < Float.MIN_VALUE) {
+			throw new IllegalArgumentException(name + " must be finite, positive, and representable as a float");
+		}
+		return scale;
 	}
 
 }

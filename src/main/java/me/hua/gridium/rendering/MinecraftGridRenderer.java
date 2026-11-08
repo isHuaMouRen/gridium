@@ -24,6 +24,20 @@ public class MinecraftGridRenderer implements GridRenderer {
 	}
 
 	@Override
+	public void pushLayoutScale(double originX, double originY, double scaleX, double scaleY) {
+		var pose = graphics.pose();
+		pose.pushMatrix();
+		pose.translate((float) originX, (float) originY);
+		pose.scale((float) scaleX, (float) scaleY);
+		pose.translate((float) -originX, (float) -originY);
+	}
+
+	@Override
+	public void popLayoutScale() {
+		graphics.pose().popMatrix();
+	}
+
+	@Override
 	public void render(Text text, @Nullable String string) {
 		Rect bounds = text.getBounds();
 		graphics.text(

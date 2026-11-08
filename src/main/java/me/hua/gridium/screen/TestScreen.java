@@ -27,9 +27,22 @@ public class TestScreen extends Screen {
 		grid = new Grid();
 
 		grid.add(new Text(font, Component.literal("Gridium layout test"), 0xFFFFFFFF, true)
+			.setLayoutScale(1.5, 1.5)
 			.setHorizontalAlignment(HorizontalAlignment.CENTER)
 			.setVerticalAlignment(VerticalAlignment.TOP)
-			.setMargin(new Thickness(0.0, 24.0, 0.0, 0.0))
+			.setMargin(new Thickness(0.0, 12.0, 0.0, 0.0))
+		);
+
+		grid.add(new HorizontalLine(180.0, 0xFFFF4040)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER)
+				.setVerticalAlignment(VerticalAlignment.TOP)
+				.setMargin(new Thickness(0.0, 24.0, 0.0, 0.0))
+		);
+
+		grid.add(new VerticalLine(48.0, 0xFF40FF40)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER)
+				.setVerticalAlignment(VerticalAlignment.TOP)
+				.setMargin(new Thickness(0.0,24.0,0.0,0.0))
 		);
 
 		grid.add(new GradientRectangle(180.0, 48.0, 0xFF202020, 0xFF405080)
@@ -40,18 +53,6 @@ public class TestScreen extends Screen {
 		grid.add(new RectangleOutline(180.0, 48.0, 0xFFFFFFFF)
 			.setHorizontalAlignment(HorizontalAlignment.CENTER)
 			.setVerticalAlignment(VerticalAlignment.CENTER)
-		);
-
-		grid.add(new HorizontalLine(180.0, 0xFFFF4040)
-			.setHorizontalAlignment(HorizontalAlignment.CENTER)
-			.setVerticalAlignment(VerticalAlignment.TOP)
-			.setMargin(new Thickness(0.0, 36.0, 0.0, 0.0))
-		);
-
-		grid.add(new VerticalLine(48.0, 0xFF40FF40)
-			.setHorizontalAlignment(HorizontalAlignment.CENTER)
-			.setVerticalAlignment(VerticalAlignment.TOP)
-			.setMargin(new Thickness(0.0,36.0,0.0,0.0))
 		);
 
 		grid.add(new Text(font, "Centered by Grid", 0xFFFFFFFF)
