@@ -2,6 +2,7 @@ package me.hua.gridium.screen;
 
 import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.HorizontalLine;
+import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.Text;
 import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.HorizontalAlignment;
@@ -32,6 +33,11 @@ public class TestScreen extends Screen {
 		);
 
 		grid.add(new GradientRectangle(180.0, 48.0, 0xFF202020, 0xFF405080)
+			.setHorizontalAlignment(HorizontalAlignment.CENTER)
+			.setVerticalAlignment(VerticalAlignment.CENTER)
+		);
+
+		grid.add(new RectangleOutline(180.0, 48.0, 0xFFFFFFFF)
 			.setHorizontalAlignment(HorizontalAlignment.CENTER)
 			.setVerticalAlignment(VerticalAlignment.CENTER)
 		);

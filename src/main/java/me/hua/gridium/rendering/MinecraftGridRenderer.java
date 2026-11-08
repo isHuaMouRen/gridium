@@ -4,6 +4,7 @@ import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.Rectangle;
+import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.Text;
 import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.Rect;
@@ -140,5 +141,17 @@ public class MinecraftGridRenderer implements GridRenderer {
 				line.getColor()
 			);
 		}
+	}
+
+	@Override
+	public void render(RectangleOutline outline) {
+		Rect bounds = outline.getBounds();
+		graphics.outline(
+			(int) Math.round(bounds.getX()),
+			(int) Math.round(bounds.getY()),
+			(int) Math.round(bounds.getWidth()),
+			(int) Math.round(bounds.getHeight()),
+			outline.getColor()
+		);
 	}
 }
