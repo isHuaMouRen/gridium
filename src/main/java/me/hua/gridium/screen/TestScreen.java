@@ -1,6 +1,6 @@
 package me.hua.gridium.screen;
 
-import me.hua.gridium.controls.Rectangle;
+import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.Text;
 import me.hua.gridium.core.HorizontalAlignment;
 import me.hua.gridium.core.Thickness;
@@ -23,18 +23,18 @@ public class TestScreen extends Screen {
 	protected void init() {
 		grid = new Grid();
 
-		Text title = new Text(font, Component.literal("Gridium layout test"), 0xFFFFFFFF, true)
+		var title = new Text(font, Component.literal("Gridium layout test"), 0xFFFFFFFF, true)
 			.setHorizontalAlignment(HorizontalAlignment.CENTER)
 			.setVerticalAlignment(VerticalAlignment.TOP)
 			.setMargin(new Thickness(0.0, 24.0, 0.0, 0.0));
 		grid.add(title);
 
-		Rectangle panel = new Rectangle(180.0, 48.0, 0xFF202020)
+		var panel = new GradientRectangle(180.0, 48.0, 0xFF202020, 0xFF405080)
 			.setHorizontalAlignment(HorizontalAlignment.CENTER)
 			.setVerticalAlignment(VerticalAlignment.CENTER);
 		grid.add(panel);
 
-		Text label = new Text(font, "Centered by Grid", 0xFFFFFFFF)
+		var label = new Text(font, "Centered by Grid", 0xFFFFFFFF)
 			.setHorizontalAlignment(HorizontalAlignment.CENTER)
 			.setVerticalAlignment(VerticalAlignment.CENTER);
 		grid.add(label);

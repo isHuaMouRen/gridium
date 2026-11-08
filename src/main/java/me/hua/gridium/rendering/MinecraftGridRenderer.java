@@ -1,6 +1,7 @@
 package me.hua.gridium.rendering;
 
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
+import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.Text;
 import me.hua.gridium.core.Rect;
@@ -94,5 +95,18 @@ public class MinecraftGridRenderer implements GridRenderer {
 				Objects.requireNonNull(rectangle.getColor(), "color")
 			);
 		}
+	}
+
+	@Override
+	public void render(GradientRectangle rectangle) {
+		Rect bounds = rectangle.getBounds();
+		graphics.fillGradient(
+			(int) Math.round(bounds.getX()),
+			(int) Math.round(bounds.getY()),
+			(int) Math.round(bounds.getRight()),
+			(int) Math.round(bounds.getBottom()),
+			rectangle.getFirstColor(),
+			rectangle.getSecondColor()
+		);
 	}
 }
