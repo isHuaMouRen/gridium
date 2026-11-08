@@ -2,8 +2,10 @@ package me.hua.gridium.rendering;
 
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import me.hua.gridium.controls.GradientRectangle;
+import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.Text;
+import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.Rect;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.render.TextureSetup;
@@ -108,5 +110,35 @@ public class MinecraftGridRenderer implements GridRenderer {
 			rectangle.getFirstColor(),
 			rectangle.getSecondColor()
 		);
+	}
+
+	@Override
+	public void render(HorizontalLine line) {
+		Rect bounds = line.getBounds();
+		int length = (int) Math.round(bounds.getWidth());
+		if (length > 0) {
+			graphics.horizontalLine(
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getX()) + length - 1,
+				(int) Math.round(bounds.getY()),
+				line.getColor()
+			);
+		}
+	}
+
+	@Override
+	public void render(VerticalLine line) {
+		Rect bounds = line.getBounds();
+		int length = (int) Math.round(bounds.getHeight());
+		if (length > 0) {
+			int top = (int) Math.round(bounds.getY());
+			// The native verticalLine offsets its first Y by one and treats the second as exclusive.
+			graphics.verticalLine(
+				(int) Math.round(bounds.getX()),
+				top - 1,
+				top + length,
+				line.getColor()
+			);
+		}
 	}
 }
