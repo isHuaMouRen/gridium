@@ -34,7 +34,7 @@ public class TestScreen extends Screen {
 			.setVerticalAlignment(VerticalAlignment.CENTER);
 		grid.add(panel);
 
-		Text label = new Text(font, Component.literal("Centered by Grid"), 0xFFFFFFFF, false)
+		Text label = new Text(font, "Centered by Grid", 0xFFFFFFFF)
 			.setHorizontalAlignment(HorizontalAlignment.CENTER)
 			.setVerticalAlignment(VerticalAlignment.CENTER);
 		grid.add(label);

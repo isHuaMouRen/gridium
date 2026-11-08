@@ -6,10 +6,11 @@ Only list work that is not implemented yet. Remove an item from this file when i
 
 - [ ] Add line elements for `GuiGraphicsExtractor.horizontalLine` and `verticalLine`.
 - [ ] Add gradient fill support for `fillGradient`, preserving both endpoint colors.
+- [x] Add simple `fill` overloads for default pure color, `RenderPipeline` plus pure color, and `RenderPipeline` plus `TextureSetup`.
 - [ ] Add rectangle outline support for `outline`.
 - [ ] Add text highlight support for `textHighlight`, including its inversion option.
 - [ ] Extend `Text` to cover the remaining text inputs and options:
-  - `String` and `FormattedCharSequence` content.
+  - [x] Add simple `String`, `FormattedCharSequence`, and `Component` content overloads with default or explicit shadow options.
   - Centered text placement (`centeredText`).
   - Word wrapping (`textWithWordWrap`), including configurable width and shadow.
   - Backdrop rendering (`textWithBackdrop`).
