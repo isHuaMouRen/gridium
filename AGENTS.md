@@ -27,23 +27,40 @@ Gridium 是一个面向 Fabric Mod 的 Minecraft UI 布局框架，目标是让�
 
 核心规则：
 - 布局计算（Measure / Arrange）应独立于 Minecraft 的绘制 API。
-- 控件的数据结构应尽量只描述尺寸、位置、边距和对齐。
-- `Screen`、`DrawContext`、`TextRenderer` 等具体渲染对象只应该出现在最低层的渲染适配器中。
+- UI 元素负责描述绘制内容及其布局属性；布局完成后，由统一的绘制入口遍历并绘制所有元素。
+- 优先使用目标 Minecraft 版本原生渲染对象（例如 `GraphicsExtractor`）及其绘制方法，不要额外创造一套与原生绘制 API 重复的命名映射。
+- `Grid` 应提供统一绘制方法，例如 `grid.draw(graphicsExtractor)`，供 `Screen` 调用；该方法负责完成所需布局并绘制已布局的元素。
 
-不要把渲染细节直接塞进布局模型。
+布局算法仍应与具体绘制调用保持清晰边界；不要让单个元素各自要求 Screen 手动定位或逐个调用绘制。
 
-### 2.3 渐进式开发
+### 2.3 面向原生绘制能力的 UI API
+
+- 绘制内容优先按原生绘制能力组织和命名，例如文本、矩形等；具体方法名应以目标 Minecraft 版本实际提供的 API 为准（例如 `drawText`、`drawRectangle`）。
+- 不要默认建立 `TextBlock`、`Button` 等 WPF 风格控件体系来包装原生绘制方法。仅在确有交互或复合行为需求时，才新增相应的高层控件。
+- 元素的水平、垂直对齐由 `Grid` 等布局容器处理，开发者描述内容与对齐，不手动计算绘制坐标。
+
+使用方式应尽量接近以下形式（对齐类型和参数以项目实际 API 为准）：
+
+```java
+var grid = new Grid();
+grid.add(new Text("test", HorizontalAlignment.LEFT, VerticalAlignment.TOP));
+
+// 在 Screen 中
+grid.draw(graphicsExtractor);
+```
+
+### 2.4 渐进式开发
 
 本项目不适合一次性构建完整 UI 框架。应按阶段推进：
 1. 基础模型：`Size`、`Rect`、`Thickness`、`UIElement`
 2. 容器抽象：`UIContainer`、`FrameworkElement`
 3. 布局算法：`Grid`、对齐和测量流程
-4. 控件：`TextBlock`，再扩展 `Button` 等
-5. 渲染适配：将布局结果输出到 Fabric/Minecraft 渲染层
+4. 绘制元素：先支持文本、矩形等基础内容
+5. 统一绘制入口：由 `Grid.draw(...)` 绘制已布局的元素
 
 不要在第一轮就实现所有控件或复杂布局器。
 
-### 2.4 借鉴 WPF，但不要照搬 WPF
+### 2.5 借鉴布局思想，但不要照搬 WPF
 
 可以吸收 WPF 的核心思路：
 - 统一的布局阶段
@@ -51,7 +68,7 @@ Gridium 是一个面向 Fabric Mod 的 Minecraft UI 布局框架，目标是让�
 - 容器嵌套
 - 可扩展控件树
 
-但不要为了“像 WPF”而引入不必要复杂度，例如：
+但不要为了“像 WPF”而引入不必要复杂度或重复包装原生绘制能力，例如：
 - 过深的继承体系
 - 过早的依赖注入框架
 - 过度抽象的通用平台层
@@ -80,10 +97,10 @@ Gridium 是一个面向 Fabric Mod 的 Minecraft UI 布局框架，目标是让�
 
 当前阶段最重要的验收标准：
 - 能够创建一个 `Grid`
-- 向其中追加多个 `TextBlock`
+- 向其中追加多个描述原生绘制内容的元素，例如文本
 - 指定不同的水平/垂直对齐方式
 - 由框架自动计算位置和尺寸
-- 在 Fabric 环境中正常渲染
+- 在 `Screen` 中通过一次 `grid.draw(graphicsExtractor)` 绘制全部已布局元素
 
 这比“实现一套大而全的 UI 系统”更重要。
 
@@ -133,8 +150,8 @@ Gridium 是一个面向 Fabric Mod 的 Minecraft UI 布局框架，目标是让�
 3. `HorizontalAlignment` / `VerticalAlignment`
 4. `Measure` / `Arrange` / `Render` 流程
 5. `Grid` 基础网格布局
-6. `TextBlock`
-7. 可选扩展：`StackPanel`、`Button` 等
+6. 基础绘制元素（例如 `Text`）及其原生绘制 API 调用
+7. `Grid.draw(...)` 统一绘制入口
 
 先让最核心的布局链路跑通，再扩展控件和细节。
 
@@ -153,8 +170,8 @@ Gridium 是一个面向 Fabric Mod 的 Minecraft UI 布局框架，目标是让�
 
 - 开发者可以声明 UI，而不必手动计算坐标
 - 布局系统负责 Measure / Arrange
-- 渲染层负责真正绘制到 Minecraft 界面
-- 未来新增控件和布局容器可以在此基础上安全扩展
+- 元素使用 Minecraft 原生绘制能力，统一由 Grid 绘制到界面
+- 未来可在此基础上扩展布局容器和确有需要的高层控件
 
 这也是本项目最关键的工程原则：让 GUI 开发从“像素编程”转向“布局声明”。
 
