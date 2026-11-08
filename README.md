@@ -16,6 +16,7 @@ The layout design is inspired by WPF (Windows Presentation Foundation), but the 
 
 * Use `Size`, `Rect`, and `Thickness` to represent dimensions, layout bounds, and margins.
 * Arrange elements using horizontal and vertical alignment options.
+* Read an arranged element's content size with `getActualWidth()` and `getActualHeight()`; these include layout scaling, exclude margins, and are not affected by render transforms.
 * `Grid` measures, arranges, and draws all its children within the available screen area.
 * Pass layout results to Minecraft's native rendering API through `GuiGraphicsExtractor`.
 * Currently supported drawing elements:

@@ -45,6 +45,22 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	}
 
 	/**
+	 * Returns the arranged content width including layout scaling, excluding the margin.
+	 * Returns zero until the element has been arranged.
+	 */
+	public final double getActualWidth() {
+		return getBounds().getWidth() * layoutScaleX;
+	}
+
+	/**
+	 * Returns the arranged content height including layout scaling, excluding the margin.
+	 * Returns zero until the element has been arranged.
+	 */
+	public final double getActualHeight() {
+		return getBounds().getHeight() * layoutScaleY;
+	}
+
+	/**
 	 * Scales content during measurement, arrangement, and drawing. Margins remain unscaled.
 	 */
 	public final T setLayoutScale(double scaleX, double scaleY) {

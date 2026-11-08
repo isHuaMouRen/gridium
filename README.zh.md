@@ -16,6 +16,7 @@ Gridium 是一个面向 Fabric Mod 的 Minecraft Java Edition UI 布局框架。
 
 * 使用 `Size`、`Rect` 和 `Thickness` 表达尺寸、布局边界和外边距。
 * 使用水平和垂直对齐方式对元素进行布局。
+* 使用 `getActualWidth()` 和 `getActualHeight()` 获取元素排列后的内容尺寸；包含布局缩放、不含外边距，且不受绘制变换影响。
 * `Grid` 根据屏幕可用区域测量、排列并绘制所有子元素。
 * 通过 `GuiGraphicsExtractor` 将布局结果交给 Minecraft 原生绘制 API。
 * 当前绘制元素：
