@@ -1,5 +1,7 @@
 package me.hua.gridium.core;
 
+import me.hua.gridium.rendering.GridRenderer;
+
 import java.util.Objects;
 
 public class UIElement {
@@ -74,12 +76,22 @@ public class UIElement {
 		arrangeValid = true;
 	}
 
+	public final void render(GridRenderer renderer) {
+		Objects.requireNonNull(renderer, "renderer");
+		if (visible) {
+			renderOverride(renderer);
+		}
+	}
+
 	protected Size measureOverride(Size availableSize) {
 		return Size.ZERO;
 	}
 
 	protected Rect arrangeOverride(Rect finalRect) {
 		return finalRect;
+	}
+
+	protected void renderOverride(GridRenderer renderer) {
 	}
 
 	public final void invalidateMeasure() {
