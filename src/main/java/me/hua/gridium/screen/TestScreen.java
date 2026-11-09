@@ -1,12 +1,7 @@
 package me.hua.gridium.screen;
 
 import me.hua.gridium.Gridium;
-import me.hua.gridium.controls.GradientRectangle;
-import me.hua.gridium.controls.HorizontalLine;
-import me.hua.gridium.controls.RectangleOutline;
-import me.hua.gridium.controls.Text;
-import me.hua.gridium.controls.TextureRectangle;
-import me.hua.gridium.controls.VerticalLine;
+import me.hua.gridium.controls.*;
 import me.hua.gridium.core.HorizontalAlignment;
 import me.hua.gridium.core.RenderTransform;
 import me.hua.gridium.core.Thickness;
@@ -30,69 +25,30 @@ public class TestScreen extends Screen {
 	protected void init() {
 		grid = new Grid();
 
-		grid.add(new Text(font, Component.literal("Gridium layout test"), 0xFFFFFFFF, true)
-				.setLayoutScale(1.5, 1.5)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-				.setVerticalAlignment(VerticalAlignment.TOP)
-				.setMargin(new Thickness(0.0, 12.0, 0.0, 0.0))
-		);
-
-		grid.add(new HorizontalLine(180.0, 0xFFFF4040)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-				.setVerticalAlignment(VerticalAlignment.TOP)
-				.setMargin(new Thickness(0.0, 24.0, 0.0, 0.0))
-		);
-
-		grid.add(new VerticalLine(48.0, 0xFF40FF40)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-				.setVerticalAlignment(VerticalAlignment.TOP)
-				.setMargin(new Thickness(0.0, 24.0, 0.0, 0.0))
-		);
-
 		grid.add(new TextureRectangle(
 				RenderPipelines.GUI_TEXTURED,
 				Gridium.id("icon.png"),
-				48.0,
-				48.0,
-				0.0F,
-				0.0F,
-				128,
-				128,
-				128,
-				128,
+				24, 24,
+				0, 0,
+				128, 128,
+				128, 128,
 				0xFFFFFFFF)
 				.setHorizontalAlignment(HorizontalAlignment.LEFT)
 				.setVerticalAlignment(VerticalAlignment.TOP)
-				.setMargin(new Thickness(12, 12, 0.0, 0.0))
+				.setMargin(new Thickness(10, 10, 0, 0))
 		);
 
-		grid.add(new GradientRectangle(48.0, 48.0, 0xFF202020, 0xFF405080)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-				.setVerticalAlignment(VerticalAlignment.CENTER)
+		grid.add(new Text(font, Component.literal("§lGridium Test Page"), 0xFFFFFFFF, true)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT)
+				.setVerticalAlignment(VerticalAlignment.TOP)
+				.setMargin(new Thickness(10 + 24 + 10, 10, 0, 0))
+				.setLayoutScale(2, 2)
 		);
 
-		grid.add(new RectangleOutline(48, 48.0, 0xFFFFFFFF)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-				.setVerticalAlignment(VerticalAlignment.CENTER)
-		);
-
-		grid.add(new RectangleOutline(48, 48, 0xFFFFFFFF)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-				.setVerticalAlignment(VerticalAlignment.CENTER)
-				.setRenderTransformOrigin(0.5, 0.5)
-				.setRenderTransform(new RenderTransform(0, 0, 0.8, 0.8, 0))
-		);
-
-		grid.add(new RectangleOutline(48, 48, 0xFFFFFFFF)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-				.setVerticalAlignment(VerticalAlignment.CENTER)
-				.setRenderTransformOrigin(0.5, 0.5)
-				.setRenderTransform(new RenderTransform(0, 0, 0.8, 0.8, 45))
-		);
-
-		grid.add(new Text(font, "Centered by Grid", 0xFFFFFFFF)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-				.setVerticalAlignment(VerticalAlignment.CENTER)
+		grid.add(new Rectangle(width - 10 - (12 + 24 + 10), 2, 0xFFFFFFFF)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT)
+				.setVerticalAlignment(VerticalAlignment.TOP)
+				.setMargin(new Thickness(10 + 24 + 10, 10 + 24 - 4, 0, 0))
 		);
 	}
 
