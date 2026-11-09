@@ -23,7 +23,7 @@ The layout design is inspired by WPF (Windows Presentation Foundation), but the 
 * Currently supported drawing elements:
   + Text: supports `String`, `FormattedCharSequence`, and `Component`, with configurable color and shadow.
   + Rectangles: supports solid-color fills, as well as fills using `RenderPipeline` and `TextureSetup`.
-  + Texture rectangles: support `Identifier` textures with normalized UV bounds, or a render pipeline with pixel-based source regions, texture dimensions, and optional tint.
+  + Texture rectangles: support `Identifier` textures with normalized UV bounds, a render pipeline with pixel-based source regions, texture dimensions, and optional tint, or `GpuTextureView` with `GpuSampler`.
   + Gradient rectangles: supports setting the colors at both ends of the gradient.
   + Horizontal and vertical lines.
 * Provides a test screen accessible through Mod Menu (an optional, recommended dependency).
@@ -77,6 +77,8 @@ public void extractRenderState(
 In this example, `font` is the font provided by `Screen`. To use `Component`, import `net.minecraft.network.chat.Component`. Alignment and margin types are in the `me.hua.gridium.core` package, `Grid` is in `me.hua.gridium.layout`, and drawing elements are in `me.hua.gridium.controls`.
 
 `TextureRectangle` uses its layout bounds as the destination rectangle. Its default `Identifier` constructor samples the full texture using normalized UVs; the UV overload accepts explicit normalized bounds. The `RenderPipeline` overload instead accepts pixel source coordinates and dimensions plus the full texture dimensions, with an optional tint color. Source-region dimensions are independent of the destination size, so alignment or layout scaling does not change the sampled texture region.
+
+For GPU textures, pass a `GpuTextureView` and `GpuSampler`; this native overload uses normalized UV bounds, the default GUI textured pipeline, and a white tint.
 
 The render transform is configured as translation X/Y, scale X/Y, and rotation in degrees. Its normalized origin defaults to `(0.0, 0.0)` (top-left); `(0.5, 0.5)` rotates and scales around the center. Scale is applied first, then rotation, then translation. Render transforms do not affect layout or actual size.
 

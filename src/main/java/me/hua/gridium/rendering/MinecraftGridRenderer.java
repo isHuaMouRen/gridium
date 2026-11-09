@@ -13,6 +13,7 @@ import me.hua.gridium.core.RenderTransform;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import org.jspecify.annotations.Nullable;
 
@@ -137,11 +138,30 @@ public class MinecraftGridRenderer implements GridRenderer {
 		int top = (int) Math.round(bounds.getY());
 		int right = (int) Math.round(bounds.getRight());
 		int bottom = (int) Math.round(bounds.getBottom());
+		var textureView = rectangle.getTextureView();
+		if (textureView != null) {
+			TextureRectangle.UvRegion uvRegion = Objects.requireNonNull(rectangle.getUvRegion(), "uvRegion");
+			graphics.blit(
+					textureView,
+					Objects.requireNonNull(rectangle.getSampler(), "sampler"),
+					left,
+					top,
+					right,
+					bottom,
+					uvRegion.u0(),
+					uvRegion.u1(),
+					uvRegion.v0(),
+					uvRegion.v1()
+			);
+			return;
+		}
+
+		Identifier texture = Objects.requireNonNull(rectangle.getTexture(), "texture");
 		TextureRectangle.PixelRegion pixelRegion = rectangle.getPixelRegion();
 		if (pixelRegion != null) {
 			graphics.blit(
 					Objects.requireNonNull(rectangle.getRenderPipeline(), "renderPipeline"),
-					rectangle.getTexture(),
+					texture,
 					left,
 					top,
 					pixelRegion.u(),
@@ -157,7 +177,7 @@ public class MinecraftGridRenderer implements GridRenderer {
 		} else {
 			TextureRectangle.UvRegion uvRegion = Objects.requireNonNull(rectangle.getUvRegion(), "uvRegion");
 			graphics.blit(
-					rectangle.getTexture(),
+					texture,
 					left,
 					top,
 					right,

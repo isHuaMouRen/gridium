@@ -1,6 +1,8 @@
 package me.hua.gridium.controls;
 
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.textures.GpuSampler;
+import com.mojang.renderpearl.api.textures.GpuTextureView;
 import me.hua.gridium.core.FrameworkElement;
 import me.hua.gridium.core.Size;
 import me.hua.gridium.rendering.GridRenderer;
@@ -10,7 +12,9 @@ import org.jspecify.annotations.Nullable;
 import java.util.Objects;
 
 public class TextureRectangle extends FrameworkElement<TextureRectangle> {
-	private final Identifier texture;
+	private final @Nullable Identifier texture;
+	private final @Nullable GpuTextureView textureView;
+	private final @Nullable GpuSampler sampler;
 	private final double width;
 	private final double height;
 	private final @Nullable UvRegion uvRegion;
@@ -37,6 +41,8 @@ public class TextureRectangle extends FrameworkElement<TextureRectangle> {
 	private TextureRectangle(Identifier texture, double width, double height, UvRegion uvRegion) {
 		Size size = new Size(width, height);
 		this.texture = Objects.requireNonNull(texture, "texture");
+		this.textureView = null;
+		this.sampler = null;
 		this.width = size.getWidth();
 		this.height = size.getHeight();
 		this.uvRegion = Objects.requireNonNull(uvRegion, "uvRegion");
@@ -87,6 +93,8 @@ public class TextureRectangle extends FrameworkElement<TextureRectangle> {
 	) {
 		Size size = new Size(width, height);
 		this.texture = Objects.requireNonNull(texture, "texture");
+		this.textureView = null;
+		this.sampler = null;
 		this.width = size.getWidth();
 		this.height = size.getHeight();
 		this.uvRegion = null;
@@ -95,8 +103,47 @@ public class TextureRectangle extends FrameworkElement<TextureRectangle> {
 		this.color = color;
 	}
 
-	public Identifier getTexture() {
+	public TextureRectangle(
+			GpuTextureView textureView,
+			GpuSampler sampler,
+			double width,
+			double height
+	) {
+		this(textureView, sampler, width, height, 0.0F, 1.0F, 0.0F, 1.0F);
+	}
+
+	public TextureRectangle(
+			GpuTextureView textureView,
+			GpuSampler sampler,
+			double width,
+			double height,
+			float u0,
+			float u1,
+			float v0,
+			float v1
+	) {
+		Size size = new Size(width, height);
+		this.texture = null;
+		this.textureView = Objects.requireNonNull(textureView, "textureView");
+		this.sampler = Objects.requireNonNull(sampler, "sampler");
+		this.width = size.getWidth();
+		this.height = size.getHeight();
+		this.uvRegion = new UvRegion(u0, u1, v0, v1);
+		this.renderPipeline = null;
+		this.pixelRegion = null;
+		this.color = -1;
+	}
+
+	public @Nullable Identifier getTexture() {
 		return texture;
+	}
+
+	public @Nullable GpuTextureView getTextureView() {
+		return textureView;
+	}
+
+	public @Nullable GpuSampler getSampler() {
+		return sampler;
 	}
 
 	public @Nullable UvRegion getUvRegion() {

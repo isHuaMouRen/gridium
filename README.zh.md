@@ -23,7 +23,7 @@ Gridium 是一个面向 Fabric Mod 的 Minecraft Java Edition UI 布局框架。
 * 当前绘制元素：
   + 文本：支持 `String`、`FormattedCharSequence` 和 `Component`，并可设置颜色及阴影。
   + 矩形：支持纯色填充，以及 `RenderPipeline` 和 `TextureSetup` 形式的填充。
-  + 纹理矩形：支持 `Identifier` 纹理的归一化 UV 边界，或使用渲染管线、像素源区域、纹理尺寸及可选 tint 颜色。
+  + 纹理矩形：支持 `Identifier` 纹理的归一化 UV 边界，或使用渲染管线、像素源区域、纹理尺寸及可选 tint 颜色；也支持 `GpuTextureView` 和 `GpuSampler`。
   + 渐变矩形：支持设置渐变两端的颜色。
   + 水平线和垂直线。
 * 提供可从 Mod Menu 打开的测试界面（Mod Menu 为可选推荐依赖）。
@@ -77,6 +77,8 @@ public void extractRenderState(
 示例中的 `font` 是 `Screen` 提供的字体；使用 `Component` 时需要导入 `net.minecraft.network.chat.Component` 。对齐类型和边距类型分别位于 `me.hua.gridium.core` 包， `Grid` 位于 `me.hua.gridium.layout` 包，绘制元素位于 `me.hua.gridium.controls` 包。
 
 `TextureRectangle` 使用布局边界作为目标绘制区域。默认 `Identifier` 构造器使用归一化 UV 采样整张纹理；UV 重载允许指定归一化边界。`RenderPipeline` 重载则使用像素坐标描述源区域，并接收纹理完整尺寸及可选 tint 颜色。源区域尺寸与目标尺寸相互独立，因此对齐或布局缩放不会改变采样区域。
+
+绘制 GPU 纹理时，传入 `GpuTextureView` 和 `GpuSampler`；对应原生重载使用归一化 UV、默认 GUI 纹理管线和白色 tint。
 
 绘制变换参数依次为 X/Y 平移、X/Y 缩放和角度（度）。归一化原点默认为 `(0.0, 0.0)`（左上角）；`(0.5, 0.5)` 表示围绕中心旋转和缩放。变换顺序为先缩放、再旋转、最后平移。绘制变换不影响布局或实际宽高。
 
