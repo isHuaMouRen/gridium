@@ -43,18 +43,22 @@ public class UIElement {
 		Objects.requireNonNull(renderer, "renderer");
 		if (visible) {
 			if (this instanceof FrameworkElement<?> frameworkElement
-				&& (frameworkElement.getLayoutScaleX() != 1.0 || frameworkElement.getLayoutScaleY() != 1.0)) {
+				&& (frameworkElement.getLayoutScaleX() != 1.0
+					|| frameworkElement.getLayoutScaleY() != 1.0
+					|| !frameworkElement.getRenderTransform().isIdentity())) {
 				Rect bounds = getBounds();
-				renderer.pushLayoutScale(
-					bounds.getX(),
-					bounds.getY(),
+				renderer.pushElementTransform(
+					bounds,
 					frameworkElement.getLayoutScaleX(),
-					frameworkElement.getLayoutScaleY()
+					frameworkElement.getLayoutScaleY(),
+					frameworkElement.getRenderTransform(),
+					frameworkElement.getRenderTransformOriginX(),
+					frameworkElement.getRenderTransformOriginY()
 				);
 				try {
 					renderOverride(renderer);
 				} finally {
-					renderer.popLayoutScale();
+					renderer.popElementTransform();
 				}
 			} else {
 				renderOverride(renderer);

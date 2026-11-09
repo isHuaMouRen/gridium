@@ -17,6 +17,7 @@ The layout design is inspired by WPF (Windows Presentation Foundation), but the 
 * Use `Size`, `Rect`, and `Thickness` to represent dimensions, layout bounds, and margins.
 * Arrange elements using horizontal and vertical alignment options.
 * Read an arranged element's content size with `getActualWidth()` and `getActualHeight()`; these include layout scaling, exclude margins, and are not affected by render transforms.
+* Apply post-layout translation, scaling, and rotation with an adjustable normalized origin; render transforms do not affect layout size.
 * `Grid` measures, arranges, and draws all its children within the available screen area.
 * Pass layout results to Minecraft's native rendering API through `GuiGraphicsExtractor`.
 * Currently supported drawing elements:
@@ -47,6 +48,12 @@ protected void init() {
     grid.add(new GradientRectangle(180.0, 48.0, 0xFF202020, 0xFF405080)
         .setHorizontalAlignment(HorizontalAlignment.CENTER)
         .setVerticalAlignment(VerticalAlignment.CENTER));
+
+    grid.add(new RectangleOutline(180.0, 48.0, 0xFFFFFFFF)
+        .setHorizontalAlignment(HorizontalAlignment.CENTER)
+        .setVerticalAlignment(VerticalAlignment.CENTER)
+        .setRenderTransform(new RenderTransform(0.0, 0.0, 1.0, 1.0, 8.0))
+        .setRenderTransformOrigin(0.5, 0.5));
 }
 
 @Override
@@ -62,6 +69,8 @@ public void extractRenderState(
 ```
 
 In this example, `font` is the font provided by `Screen`. To use `Component`, import `net.minecraft.network.chat.Component`. Alignment and margin types are in the `me.hua.gridium.core` package, `Grid` is in `me.hua.gridium.layout`, and drawing elements are in `me.hua.gridium.controls`.
+
+The render transform is configured as translation X/Y, scale X/Y, and rotation in degrees. Its normalized origin defaults to `(0.0, 0.0)` (top-left); `(0.5, 0.5)` rotates and scales around the center. Scale is applied first, then rotation, then translation. Render transforms do not affect layout or actual size.
 
 Horizontal alignment options: `LEFT`, `CENTER`, `RIGHT`, and `STRETCH`. Vertical alignment options: `TOP`, `CENTER`, `BOTTOM`, and `STRETCH`.
 

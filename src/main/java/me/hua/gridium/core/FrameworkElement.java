@@ -8,6 +8,9 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	private VerticalAlignment verticalAlignment = VerticalAlignment.TOP;
 	private double layoutScaleX = 1.0;
 	private double layoutScaleY = 1.0;
+	private RenderTransform renderTransform = RenderTransform.IDENTITY;
+	private double renderTransformOriginX;
+	private double renderTransformOriginY;
 
 	public final Thickness getMargin() {
 		return margin;
@@ -71,6 +74,38 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 		return self();
 	}
 
+	public final RenderTransform getRenderTransform() {
+		return renderTransform;
+	}
+
+	/**
+	 * Sets a visual transform that does not affect measurement, arrangement, or actual size.
+	 */
+	public final T setRenderTransform(RenderTransform renderTransform) {
+		this.renderTransform = Objects.requireNonNull(renderTransform, "renderTransform");
+		return self();
+	}
+
+	public final double getRenderTransformOriginX() {
+		return renderTransformOriginX;
+	}
+
+	public final double getRenderTransformOriginY() {
+		return renderTransformOriginY;
+	}
+
+	/**
+	 * Sets the normalized visual-transform origin within the content bounds. Each coordinate ranges
+	 * from 0.0 to 1.0; the default is the top-left.
+	 */
+	public final T setRenderTransformOrigin(double originX, double originY) {
+		requireTransformOrigin(originX, "originX");
+		requireTransformOrigin(originY, "originY");
+		renderTransformOriginX = originX;
+		renderTransformOriginY = originY;
+		return self();
+	}
+
 	protected abstract T self();
 
 	@Override
@@ -114,6 +149,12 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 			throw new IllegalArgumentException(name + " must be finite, positive, and representable as a float");
 		}
 		return scale;
+	}
+
+	private static void requireTransformOrigin(double origin, String name) {
+		if (!Double.isFinite(origin) || origin < 0.0 || origin > 1.0) {
+			throw new IllegalArgumentException(name + " must be between 0.0 and 1.0");
+		}
 	}
 
 }

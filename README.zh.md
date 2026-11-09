@@ -17,6 +17,7 @@ Gridium 是一个面向 Fabric Mod 的 Minecraft Java Edition UI 布局框架。
 * 使用 `Size`、`Rect` 和 `Thickness` 表达尺寸、布局边界和外边距。
 * 使用水平和垂直对齐方式对元素进行布局。
 * 使用 `getActualWidth()` 和 `getActualHeight()` 获取元素排列后的内容尺寸；包含布局缩放、不含外边距，且不受绘制变换影响。
+* 支持布局后的平移、缩放和旋转，并可设置归一化变换原点；绘制变换不影响布局尺寸。
 * `Grid` 根据屏幕可用区域测量、排列并绘制所有子元素。
 * 通过 `GuiGraphicsExtractor` 将布局结果交给 Minecraft 原生绘制 API。
 * 当前绘制元素：
@@ -47,6 +48,12 @@ protected void init() {
     grid.add(new GradientRectangle(180.0, 48.0, 0xFF202020, 0xFF405080)
         .setHorizontalAlignment(HorizontalAlignment.CENTER)
         .setVerticalAlignment(VerticalAlignment.CENTER));
+
+    grid.add(new RectangleOutline(180.0, 48.0, 0xFFFFFFFF)
+        .setHorizontalAlignment(HorizontalAlignment.CENTER)
+        .setVerticalAlignment(VerticalAlignment.CENTER)
+        .setRenderTransform(new RenderTransform(0.0, 0.0, 1.0, 1.0, 8.0))
+        .setRenderTransformOrigin(0.5, 0.5));
 }
 
 @Override
@@ -62,6 +69,8 @@ public void extractRenderState(
 ```
 
 示例中的 `font` 是 `Screen` 提供的字体；使用 `Component` 时需要导入 `net.minecraft.network.chat.Component` 。对齐类型和边距类型分别位于 `me.hua.gridium.core` 包， `Grid` 位于 `me.hua.gridium.layout` 包，绘制元素位于 `me.hua.gridium.controls` 包。
+
+绘制变换参数依次为 X/Y 平移、X/Y 缩放和角度（度）。归一化原点默认为 `(0.0, 0.0)`（左上角）；`(0.5, 0.5)` 表示围绕中心旋转和缩放。变换顺序为先缩放、再旋转、最后平移。绘制变换不影响布局或实际宽高。
 
 水平对齐方式： `LEFT` 、 `CENTER` 、 `RIGHT` 、 `STRETCH` 。垂直对齐方式： `TOP` 、 `CENTER` 、 `BOTTOM` 、 `STRETCH` 。
 

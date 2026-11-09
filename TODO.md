@@ -46,10 +46,10 @@ Only list work that is not implemented yet. Remove an item from this file when i
   - [x] Apply scale during measure and arrange so the transformed desired size participates in parent layout and alignment.
   - [x] Apply the same scale to drawing so visual size matches the space reserved by layout.
   - [x] Keep layout transforms independent of Minecraft rendering APIs.
-- [ ] Add a render transform system applied after layout:
-  - Support translation, scale, and rotation, with a defined transform origin and composition order.
-  - Do not change measure, arrange, or the space reserved by the element.
-  - Apply transforms through the rendering adapter and restore the graphics pose after each element.
-  - Defer transformed hit testing and pointer interaction until the UI interaction model exists.
+- [x] Add a render transform system applied after layout:
+  - [x] Support translation, scale, and rotation, with a defined transform origin and composition order.
+  - [x] Do not change measure, arrange, or the space reserved by the element.
+  - [x] Apply transforms through the rendering adapter and restore the graphics pose after each element.
+  - [x] Defer transformed hit testing and pointer interaction until the UI interaction model exists.
 - [ ] Add explicit stratum and blur controls (`nextStratum`, `blurBeforeThisStratum`).
 - [ ] Add cursor request/application support (`requestCursor`, `applyCursor`) where the UI interaction layer needs it.

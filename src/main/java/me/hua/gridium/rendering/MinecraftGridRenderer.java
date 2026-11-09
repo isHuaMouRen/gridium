@@ -8,6 +8,7 @@ import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.Text;
 import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.Rect;
+import me.hua.gridium.core.RenderTransform;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.network.chat.Component;
@@ -24,16 +25,30 @@ public class MinecraftGridRenderer implements GridRenderer {
 	}
 
 	@Override
-	public void pushLayoutScale(double originX, double originY, double scaleX, double scaleY) {
+	public void pushElementTransform(
+		Rect bounds,
+		double layoutScaleX,
+		double layoutScaleY,
+		RenderTransform renderTransform,
+		double renderOriginX,
+		double renderOriginY
+	) {
 		var pose = graphics.pose();
 		pose.pushMatrix();
+		double originX = bounds.getX() + bounds.getWidth() * layoutScaleX * renderOriginX;
+		double originY = bounds.getY() + bounds.getHeight() * layoutScaleY * renderOriginY;
+		pose.translate((float) renderTransform.translationX(), (float) renderTransform.translationY());
 		pose.translate((float) originX, (float) originY);
-		pose.scale((float) scaleX, (float) scaleY);
+		pose.rotate((float) Math.toRadians(renderTransform.rotationDegrees()));
+		pose.scale((float) renderTransform.scaleX(), (float) renderTransform.scaleY());
 		pose.translate((float) -originX, (float) -originY);
+		pose.translate((float) bounds.getX(), (float) bounds.getY());
+		pose.scale((float) layoutScaleX, (float) layoutScaleY);
+		pose.translate((float) -bounds.getX(), (float) -bounds.getY());
 	}
 
 	@Override
-	public void popLayoutScale() {
+	public void popElementTransform() {
 		graphics.pose().popMatrix();
 	}
 

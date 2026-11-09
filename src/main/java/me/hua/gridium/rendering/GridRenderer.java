@@ -6,14 +6,23 @@ import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.Text;
 import me.hua.gridium.controls.VerticalLine;
+import me.hua.gridium.core.Rect;
+import me.hua.gridium.core.RenderTransform;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import org.jspecify.annotations.Nullable;
 
 public interface GridRenderer {
-	void pushLayoutScale(double originX, double originY, double scaleX, double scaleY);
+	void pushElementTransform(
+		Rect bounds,
+		double layoutScaleX,
+		double layoutScaleY,
+		RenderTransform renderTransform,
+		double renderOriginX,
+		double renderOriginY
+	);
 
-	void popLayoutScale();
+	void popElementTransform();
 
 	void render(Text text, @Nullable String string);
 
