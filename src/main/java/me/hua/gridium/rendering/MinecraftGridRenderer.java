@@ -6,6 +6,7 @@ import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.Text;
+import me.hua.gridium.controls.TextureRectangle;
 import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.RenderTransform;
@@ -125,6 +126,46 @@ public class MinecraftGridRenderer implements GridRenderer {
 					right,
 					bottom,
 					Objects.requireNonNull(rectangle.getColor(), "color")
+			);
+		}
+	}
+
+	@Override
+	public void render(TextureRectangle rectangle) {
+		Rect bounds = rectangle.getBounds();
+		int left = (int) Math.round(bounds.getX());
+		int top = (int) Math.round(bounds.getY());
+		int right = (int) Math.round(bounds.getRight());
+		int bottom = (int) Math.round(bounds.getBottom());
+		TextureRectangle.PixelRegion pixelRegion = rectangle.getPixelRegion();
+		if (pixelRegion != null) {
+			graphics.blit(
+					Objects.requireNonNull(rectangle.getRenderPipeline(), "renderPipeline"),
+					rectangle.getTexture(),
+					left,
+					top,
+					pixelRegion.u(),
+					pixelRegion.v(),
+					right - left,
+					bottom - top,
+					pixelRegion.sourceWidth(),
+					pixelRegion.sourceHeight(),
+					pixelRegion.textureWidth(),
+					pixelRegion.textureHeight(),
+					rectangle.getColor()
+			);
+		} else {
+			TextureRectangle.UvRegion uvRegion = Objects.requireNonNull(rectangle.getUvRegion(), "uvRegion");
+			graphics.blit(
+					rectangle.getTexture(),
+					left,
+					top,
+					right,
+					bottom,
+					uvRegion.u0(),
+					uvRegion.u1(),
+					uvRegion.v0(),
+					uvRegion.v1()
 			);
 		}
 	}

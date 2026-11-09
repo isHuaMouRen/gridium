@@ -14,10 +14,7 @@ Only list work that is not implemented yet. Remove an item from this file when i
   - Centered text placement (`centeredText`).
   - Word wrapping (`textWithWordWrap`), including configurable width and shadow.
   - Backdrop rendering (`textWithBackdrop`).
-- [ ] Add textured blit elements for all `blit` forms:
-  - `Identifier` textures and `GpuTextureView` plus `GpuSampler`.
-  - Explicit render pipeline and tint color where supported.
-  - Distinguish destination bounds from source dimensions, UV coordinates, and texture dimensions.
+- [ ] Add textured blit elements for `GpuTextureView` plus `GpuSampler`, preserving UV coordinates.
 - [ ] Add sprite elements for all `blitSprite` forms:
   - `Identifier` and `TextureAtlasSprite` sources.
   - Alpha/color options and source-region variants.

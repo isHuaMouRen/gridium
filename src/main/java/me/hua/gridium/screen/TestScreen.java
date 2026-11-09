@@ -1,9 +1,11 @@
 package me.hua.gridium.screen;
 
+import me.hua.gridium.Gridium;
 import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.Text;
+import me.hua.gridium.controls.TextureRectangle;
 import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.HorizontalAlignment;
 import me.hua.gridium.core.RenderTransform;
@@ -11,6 +13,7 @@ import me.hua.gridium.core.Thickness;
 import me.hua.gridium.core.VerticalAlignment;
 import me.hua.gridium.layout.Grid;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -44,6 +47,23 @@ public class TestScreen extends Screen {
 				.setHorizontalAlignment(HorizontalAlignment.CENTER)
 				.setVerticalAlignment(VerticalAlignment.TOP)
 				.setMargin(new Thickness(0.0, 24.0, 0.0, 0.0))
+		);
+
+		grid.add(new TextureRectangle(
+				RenderPipelines.GUI_TEXTURED,
+				Gridium.id("icon.png"),
+				48.0,
+				48.0,
+				0.0F,
+				0.0F,
+				128,
+				128,
+				128,
+				128,
+				0xFFFFFFFF)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT)
+				.setVerticalAlignment(VerticalAlignment.TOP)
+				.setMargin(new Thickness(12, 12, 0.0, 0.0))
 		);
 
 		grid.add(new GradientRectangle(48.0, 48.0, 0xFF202020, 0xFF405080)
