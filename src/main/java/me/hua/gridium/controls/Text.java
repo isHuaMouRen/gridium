@@ -29,12 +29,12 @@ public class Text extends FrameworkElement<Text> {
 
 	public Text(Font font, FormattedCharSequence formattedCharSequence, int color) {
 		this(font, ContentType.FORMATTED_CHAR_SEQUENCE, null,
-			Objects.requireNonNull(formattedCharSequence, "formattedCharSequence"), null, color, true);
+				Objects.requireNonNull(formattedCharSequence, "formattedCharSequence"), null, color, true);
 	}
 
 	public Text(Font font, FormattedCharSequence formattedCharSequence, int color, boolean drawShadow) {
 		this(font, ContentType.FORMATTED_CHAR_SEQUENCE, null,
-			Objects.requireNonNull(formattedCharSequence, "formattedCharSequence"), null, color, drawShadow);
+				Objects.requireNonNull(formattedCharSequence, "formattedCharSequence"), null, color, drawShadow);
 	}
 
 	public Text(Font font, Component component, int color) {
@@ -46,13 +46,13 @@ public class Text extends FrameworkElement<Text> {
 	}
 
 	private Text(
-		Font font,
-		ContentType contentType,
-		@Nullable String string,
-		@Nullable FormattedCharSequence formattedCharSequence,
-		@Nullable Component component,
-		int color,
-		boolean drawShadow
+			Font font,
+			ContentType contentType,
+			@Nullable String string,
+			@Nullable FormattedCharSequence formattedCharSequence,
+			@Nullable Component component,
+			int color,
+			boolean drawShadow
 	) {
 		this.font = Objects.requireNonNull(font, "font");
 		this.contentType = Objects.requireNonNull(contentType, "contentType");

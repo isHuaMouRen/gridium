@@ -6,11 +6,11 @@ package me.hua.gridium.core;
  * are allowed to collapse or flip the rendered content.
  */
 public record RenderTransform(
-	double translationX,
-	double translationY,
-	double scaleX,
-	double scaleY,
-	double rotationDegrees
+		double translationX,
+		double translationY,
+		double scaleX,
+		double scaleY,
+		double rotationDegrees
 ) {
 	public static final RenderTransform IDENTITY = new RenderTransform(0.0, 0.0, 1.0, 1.0, 0.0);
 
@@ -24,10 +24,10 @@ public record RenderTransform(
 
 	public boolean isIdentity() {
 		return translationX == 0.0
-			&& translationY == 0.0
-			&& scaleX == 1.0
-			&& scaleY == 1.0
-			&& rotationDegrees == 0.0;
+				&& translationY == 0.0
+				&& scaleX == 1.0
+				&& scaleY == 1.0
+				&& rotationDegrees == 0.0;
 	}
 
 	private static void requireFiniteFloat(double value, String name) {

@@ -55,10 +55,10 @@ public class Rect {
 	public Rect inset(Thickness thickness) {
 		Objects.requireNonNull(thickness, "thickness");
 		return new Rect(
-			x + thickness.getLeft(),
-			y + thickness.getTop(),
-			Math.max(0.0, width - thickness.getHorizontal()),
-			Math.max(0.0, height - thickness.getVertical())
+				x + thickness.getLeft(),
+				y + thickness.getTop(),
+				Math.max(0.0, width - thickness.getHorizontal()),
+				Math.max(0.0, height - thickness.getVertical())
 		);
 	}
 

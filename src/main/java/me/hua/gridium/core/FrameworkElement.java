@@ -111,16 +111,16 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	@Override
 	protected final Size measureOverride(Size availableSize) {
 		Size contentAvailableSize = new Size(
-			Math.max(0.0, availableSize.getWidth() - margin.getHorizontal()) / layoutScaleX,
-			Math.max(0.0, availableSize.getHeight() - margin.getVertical()) / layoutScaleY
+				Math.max(0.0, availableSize.getWidth() - margin.getHorizontal()) / layoutScaleX,
+				Math.max(0.0, availableSize.getHeight() - margin.getVertical()) / layoutScaleY
 		);
 		Size contentDesiredSize = Objects.requireNonNull(
-			measureContent(contentAvailableSize),
-			"measureContent result"
+				measureContent(contentAvailableSize),
+				"measureContent result"
 		);
 		return new Size(
-			contentDesiredSize.getWidth() * layoutScaleX + margin.getHorizontal(),
-			contentDesiredSize.getHeight() * layoutScaleY + margin.getVertical()
+				contentDesiredSize.getWidth() * layoutScaleX + margin.getHorizontal(),
+				contentDesiredSize.getHeight() * layoutScaleY + margin.getVertical()
 		);
 	}
 
@@ -128,10 +128,10 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	protected final Rect arrangeOverride(Rect finalRect) {
 		Rect contentRect = finalRect.inset(margin);
 		Rect unscaledContentRect = new Rect(
-			contentRect.getX(),
-			contentRect.getY(),
-			contentRect.getWidth() / layoutScaleX,
-			contentRect.getHeight() / layoutScaleY
+				contentRect.getX(),
+				contentRect.getY(),
+				contentRect.getWidth() / layoutScaleX,
+				contentRect.getHeight() / layoutScaleY
 		);
 		arrangeContent(unscaledContentRect);
 		return unscaledContentRect;

@@ -26,12 +26,12 @@ public class MinecraftGridRenderer implements GridRenderer {
 
 	@Override
 	public void pushElementTransform(
-		Rect bounds,
-		double layoutScaleX,
-		double layoutScaleY,
-		RenderTransform renderTransform,
-		double renderOriginX,
-		double renderOriginY
+			Rect bounds,
+			double layoutScaleX,
+			double layoutScaleY,
+			RenderTransform renderTransform,
+			double renderOriginX,
+			double renderOriginY
 	) {
 		var pose = graphics.pose();
 		pose.pushMatrix();
@@ -56,12 +56,12 @@ public class MinecraftGridRenderer implements GridRenderer {
 	public void render(Text text, @Nullable String string) {
 		Rect bounds = text.getBounds();
 		graphics.text(
-			text.getFont(),
-			string,
-			(int) Math.round(bounds.getX()),
-			(int) Math.round(bounds.getY()),
-			text.getColor(),
-			text.drawsShadow()
+				text.getFont(),
+				string,
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				text.getColor(),
+				text.drawsShadow()
 		);
 	}
 
@@ -69,12 +69,12 @@ public class MinecraftGridRenderer implements GridRenderer {
 	public void render(Text text, FormattedCharSequence formattedCharSequence) {
 		Rect bounds = text.getBounds();
 		graphics.text(
-			text.getFont(),
-			formattedCharSequence,
-			(int) Math.round(bounds.getX()),
-			(int) Math.round(bounds.getY()),
-			text.getColor(),
-			text.drawsShadow()
+				text.getFont(),
+				formattedCharSequence,
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				text.getColor(),
+				text.drawsShadow()
 		);
 	}
 
@@ -82,12 +82,12 @@ public class MinecraftGridRenderer implements GridRenderer {
 	public void render(Text text, Component component) {
 		Rect bounds = text.getBounds();
 		graphics.text(
-			text.getFont(),
-			component,
-			(int) Math.round(bounds.getX()),
-			(int) Math.round(bounds.getY()),
-			text.getColor(),
-			text.drawsShadow()
+				text.getFont(),
+				component,
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				text.getColor(),
+				text.drawsShadow()
 		);
 	}
 
@@ -102,29 +102,29 @@ public class MinecraftGridRenderer implements GridRenderer {
 		TextureSetup textureSetup = rectangle.getTextureSetup();
 		if (textureSetup != null) {
 			graphics.fill(
-				Objects.requireNonNull(renderPipeline, "renderPipeline"),
-				textureSetup,
-				left,
-				top,
-				right,
-				bottom
+					Objects.requireNonNull(renderPipeline, "renderPipeline"),
+					textureSetup,
+					left,
+					top,
+					right,
+					bottom
 			);
 		} else if (renderPipeline != null) {
 			graphics.fill(
-				renderPipeline,
-				left,
-				top,
-				right,
-				bottom,
-				Objects.requireNonNull(rectangle.getColor(), "color")
+					renderPipeline,
+					left,
+					top,
+					right,
+					bottom,
+					Objects.requireNonNull(rectangle.getColor(), "color")
 			);
 		} else {
 			graphics.fill(
-				left,
-				top,
-				right,
-				bottom,
-				Objects.requireNonNull(rectangle.getColor(), "color")
+					left,
+					top,
+					right,
+					bottom,
+					Objects.requireNonNull(rectangle.getColor(), "color")
 			);
 		}
 	}
@@ -133,12 +133,12 @@ public class MinecraftGridRenderer implements GridRenderer {
 	public void render(GradientRectangle rectangle) {
 		Rect bounds = rectangle.getBounds();
 		graphics.fillGradient(
-			(int) Math.round(bounds.getX()),
-			(int) Math.round(bounds.getY()),
-			(int) Math.round(bounds.getRight()),
-			(int) Math.round(bounds.getBottom()),
-			rectangle.getFirstColor(),
-			rectangle.getSecondColor()
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				(int) Math.round(bounds.getRight()),
+				(int) Math.round(bounds.getBottom()),
+				rectangle.getFirstColor(),
+				rectangle.getSecondColor()
 		);
 	}
 
@@ -148,10 +148,10 @@ public class MinecraftGridRenderer implements GridRenderer {
 		int length = (int) Math.round(bounds.getWidth());
 		if (length > 0) {
 			graphics.horizontalLine(
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getX()) + length - 1,
-				(int) Math.round(bounds.getY()),
-				line.getColor()
+					(int) Math.round(bounds.getX()),
+					(int) Math.round(bounds.getX()) + length - 1,
+					(int) Math.round(bounds.getY()),
+					line.getColor()
 			);
 		}
 	}
@@ -164,10 +164,10 @@ public class MinecraftGridRenderer implements GridRenderer {
 			int top = (int) Math.round(bounds.getY());
 			// The native verticalLine offsets its first Y by one and treats the second as exclusive.
 			graphics.verticalLine(
-				(int) Math.round(bounds.getX()),
-				top - 1,
-				top + length,
-				line.getColor()
+					(int) Math.round(bounds.getX()),
+					top - 1,
+					top + length,
+					line.getColor()
 			);
 		}
 	}
@@ -176,11 +176,11 @@ public class MinecraftGridRenderer implements GridRenderer {
 	public void render(RectangleOutline outline) {
 		Rect bounds = outline.getBounds();
 		graphics.outline(
-			(int) Math.round(bounds.getX()),
-			(int) Math.round(bounds.getY()),
-			(int) Math.round(bounds.getWidth()),
-			(int) Math.round(bounds.getHeight()),
-			outline.getColor()
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				(int) Math.round(bounds.getWidth()),
+				(int) Math.round(bounds.getHeight()),
+				outline.getColor()
 		);
 	}
 }

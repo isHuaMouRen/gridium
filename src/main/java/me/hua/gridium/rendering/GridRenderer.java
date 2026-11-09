@@ -14,12 +14,12 @@ import org.jspecify.annotations.Nullable;
 
 public interface GridRenderer {
 	void pushElementTransform(
-		Rect bounds,
-		double layoutScaleX,
-		double layoutScaleY,
-		RenderTransform renderTransform,
-		double renderOriginX,
-		double renderOriginY
+			Rect bounds,
+			double layoutScaleX,
+			double layoutScaleY,
+			RenderTransform renderTransform,
+			double renderOriginX,
+			double renderOriginY
 	);
 
 	void popElementTransform();

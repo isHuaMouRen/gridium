@@ -26,20 +26,20 @@ public class Rectangle extends FrameworkElement<Rectangle> {
 
 	public Rectangle(RenderPipeline renderPipeline, TextureSetup textureSetup, double width, double height) {
 		this(
-			width,
-			height,
-			null,
-			Objects.requireNonNull(renderPipeline, "renderPipeline"),
-			Objects.requireNonNull(textureSetup, "textureSetup")
+				width,
+				height,
+				null,
+				Objects.requireNonNull(renderPipeline, "renderPipeline"),
+				Objects.requireNonNull(textureSetup, "textureSetup")
 		);
 	}
 
 	private Rectangle(
-		double width,
-		double height,
-		@Nullable Integer color,
-		@Nullable RenderPipeline renderPipeline,
-		@Nullable TextureSetup textureSetup
+			double width,
+			double height,
+			@Nullable Integer color,
+			@Nullable RenderPipeline renderPipeline,
+			@Nullable TextureSetup textureSetup
 	) {
 		Size size = new Size(width, height);
 		this.width = size.getWidth();
