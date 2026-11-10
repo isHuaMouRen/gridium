@@ -14,6 +14,7 @@ import me.hua.gridium.core.RenderTransform;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import org.jspecify.annotations.Nullable;
@@ -107,6 +108,20 @@ public class MinecraftGridRenderer implements GridRenderer {
 			}
 		}
 		graphics.text(text.getFont(), component, x, y, text.getColor(), text.drawsShadow());
+	}
+
+	@Override
+	public void renderWrapped(Text text, FormattedText formattedText) {
+		Rect bounds = text.getBounds();
+		graphics.textWithWordWrap(
+				text.getFont(),
+				formattedText,
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				text.getWrapWidth(),
+				text.getColor(),
+				text.drawsShadow()
+		);
 	}
 
 	@Override

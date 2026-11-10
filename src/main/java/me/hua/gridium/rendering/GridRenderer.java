@@ -11,6 +11,7 @@ import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.RenderTransform;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;
 import org.jspecify.annotations.Nullable;
 
@@ -31,6 +32,8 @@ public interface GridRenderer {
 	void render(Text text, FormattedCharSequence formattedCharSequence);
 
 	void render(Text text, Component component);
+
+	void renderWrapped(Text text, FormattedText formattedText);
 
 	void render(TextHighlight highlight);
 

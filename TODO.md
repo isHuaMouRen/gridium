@@ -11,7 +11,7 @@ Only list work that is not implemented yet. Remove an item from this file when i
 - [ ] Extend `Text` to cover the remaining text inputs and options:
   - [x] Add simple `String`, `FormattedCharSequence`, and `Component` content overloads with default or explicit shadow options.
   - [x] Centered text placement (`centeredText`).
-  - Word wrapping (`textWithWordWrap`), including configurable width and shadow.
+  - [x] Word wrapping (`textWithWordWrap`), including configurable width and shadow.
   - Backdrop rendering (`textWithBackdrop`).
 - [ ] Add sprite elements for all `blitSprite` forms:
   - `Identifier` and `TextureAtlasSprite` sources.

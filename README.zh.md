@@ -21,7 +21,7 @@ Gridium 是一个面向 Fabric Mod 的 Minecraft Java Edition UI 布局框架。
 * `Grid` 根据屏幕可用区域测量、排列并绘制所有子元素。
 * 通过 `GuiGraphicsExtractor` 将布局结果交给 Minecraft 原生绘制 API。
 * 当前绘制元素：
-  + 文本：支持 `String`、`FormattedCharSequence` 和 `Component`，并可设置颜色及阴影。
+  + 文本：支持 `String`、`FormattedCharSequence` 和 `Component`，并可设置颜色及阴影；`FormattedText` 支持按指定宽度换行。
   + 文本高亮：支持原生高亮矩形及可选的文字反色。
   + 矩形：支持纯色填充，以及 `RenderPipeline` 和 `TextureSetup` 形式的填充。
   + 纹理矩形：支持 `Identifier` 纹理的归一化 UV 边界，或使用渲染管线、像素源区域、纹理尺寸及可选 tint 颜色；也支持 `GpuTextureView` 和 `GpuSampler`。
@@ -78,6 +78,8 @@ public void extractRenderState(
 示例中的 `font` 是 `Screen` 提供的字体；使用 `Component` 时需要导入 `net.minecraft.network.chat.Component` 。对齐类型和边距类型分别位于 `me.hua.gridium.core` 包， `Grid` 位于 `me.hua.gridium.layout` 包，绘制元素位于 `me.hua.gridium.controls` 包。
 
 使用 `setHorizontalAlignment(HorizontalAlignment.CENTER)` 可将文本元素居中排列在可用布局区域中。`Text.isCentered()` 和 `Text.setCentered(...)` 已弃用，请改用布局对齐方式。
+
+需要对格式化文本换行时，可用 `FormattedText`、换行宽度、颜色及可选阴影参数创建 `Text`。换行宽度同时作为元素期望布局宽度；元素期望高度根据换行后的行数测量，绘制时调用 Minecraft 原生 `textWithWordWrap`。
 
 `TextureRectangle` 使用布局边界作为目标绘制区域。默认 `Identifier` 构造器使用归一化 UV 采样整张纹理；UV 重载允许指定归一化边界。`RenderPipeline` 重载则使用像素坐标描述源区域，并接收纹理完整尺寸及可选 tint 颜色。源区域尺寸与目标尺寸相互独立，因此对齐或布局缩放不会改变采样区域。
 

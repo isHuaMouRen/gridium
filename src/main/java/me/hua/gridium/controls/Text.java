@@ -5,6 +5,7 @@ import me.hua.gridium.core.Size;
 import me.hua.gridium.rendering.GridRenderer;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;
 import org.jspecify.annotations.Nullable;
 
@@ -16,34 +17,54 @@ public class Text extends FrameworkElement<Text> {
 	private final @Nullable String string;
 	private final @Nullable FormattedCharSequence formattedCharSequence;
 	private final @Nullable Component component;
+	private final @Nullable FormattedText formattedText;
+	private final int wrapWidth;
 	private final int color;
 	private final boolean drawShadow;
 	private boolean centered;
 
 	public Text(Font font, @Nullable String string, int color) {
-		this(font, ContentType.STRING, string, null, null, color, true);
+		this(font, ContentType.STRING, string, null, null, null, 0, color, true);
 	}
 
 	public Text(Font font, @Nullable String string, int color, boolean drawShadow) {
-		this(font, ContentType.STRING, string, null, null, color, drawShadow);
+		this(font, ContentType.STRING, string, null, null, null, 0, color, drawShadow);
 	}
 
 	public Text(Font font, FormattedCharSequence formattedCharSequence, int color) {
 		this(font, ContentType.FORMATTED_CHAR_SEQUENCE, null,
-				Objects.requireNonNull(formattedCharSequence, "formattedCharSequence"), null, color, true);
+				Objects.requireNonNull(formattedCharSequence, "formattedCharSequence"), null, null, 0, color, true);
 	}
 
 	public Text(Font font, FormattedCharSequence formattedCharSequence, int color, boolean drawShadow) {
 		this(font, ContentType.FORMATTED_CHAR_SEQUENCE, null,
-				Objects.requireNonNull(formattedCharSequence, "formattedCharSequence"), null, color, drawShadow);
+				Objects.requireNonNull(formattedCharSequence, "formattedCharSequence"), null, null, 0, color, drawShadow);
 	}
 
 	public Text(Font font, Component component, int color) {
-		this(font, ContentType.COMPONENT, null, null, Objects.requireNonNull(component, "component"), color, true);
+		this(font, ContentType.COMPONENT, null, null, Objects.requireNonNull(component, "component"), null, 0, color, true);
 	}
 
 	public Text(Font font, Component component, int color, boolean drawShadow) {
-		this(font, ContentType.COMPONENT, null, null, Objects.requireNonNull(component, "component"), color, drawShadow);
+		this(font, ContentType.COMPONENT, null, null, Objects.requireNonNull(component, "component"), null, 0, color, drawShadow);
+	}
+
+	public Text(Font font, FormattedText formattedText, int wrapWidth, int color) {
+		this(font, formattedText, wrapWidth, color, true);
+	}
+
+	public Text(Font font, FormattedText formattedText, int wrapWidth, int color, boolean drawShadow) {
+		this(
+				font,
+				ContentType.WRAPPED,
+				null,
+				null,
+				null,
+				Objects.requireNonNull(formattedText, "formattedText"),
+				requireWrapWidth(wrapWidth),
+				color,
+				drawShadow
+		);
 	}
 
 	private Text(
@@ -52,6 +73,8 @@ public class Text extends FrameworkElement<Text> {
 			@Nullable String string,
 			@Nullable FormattedCharSequence formattedCharSequence,
 			@Nullable Component component,
+			@Nullable FormattedText formattedText,
+			int wrapWidth,
 			int color,
 			boolean drawShadow
 	) {
@@ -60,6 +83,8 @@ public class Text extends FrameworkElement<Text> {
 		this.string = string;
 		this.formattedCharSequence = formattedCharSequence;
 		this.component = component;
+		this.formattedText = formattedText;
+		this.wrapWidth = wrapWidth;
 		this.color = color;
 		this.drawShadow = drawShadow;
 	}
@@ -78,6 +103,14 @@ public class Text extends FrameworkElement<Text> {
 
 	public FormattedCharSequence getFormattedCharSequence() {
 		return Objects.requireNonNull(formattedCharSequence, "Text content is not a FormattedCharSequence");
+	}
+
+	public FormattedText getFormattedText() {
+		return Objects.requireNonNull(formattedText, "Text content is not FormattedText for word wrapping");
+	}
+
+	public int getWrapWidth() {
+		return wrapWidth;
 	}
 
 	public int getColor() {
@@ -114,12 +147,13 @@ public class Text extends FrameworkElement<Text> {
 
 	@Override
 	protected Size measureContent(Size availableSize) {
-		int width = switch (contentType) {
-			case STRING -> string == null ? 0 : font.width(string);
-			case FORMATTED_CHAR_SEQUENCE -> font.width(getFormattedCharSequence());
-			case COMPONENT -> font.width(getComponent());
+		return switch (contentType) {
+			case STRING -> new Size(string == null ? 0 : font.width(string),
+					string == null ? 0 : font.lineHeight);
+			case FORMATTED_CHAR_SEQUENCE -> new Size(font.width(getFormattedCharSequence()), font.lineHeight);
+			case COMPONENT -> new Size(font.width(getComponent()), font.lineHeight);
+			case WRAPPED -> new Size(wrapWidth, font.wordWrapHeight(getFormattedText(), wrapWidth));
 		};
-		return new Size(width, contentType == ContentType.STRING && string == null ? 0 : font.lineHeight);
 	}
 
 	@Override
@@ -128,12 +162,21 @@ public class Text extends FrameworkElement<Text> {
 			case STRING -> renderer.render(this, string);
 			case FORMATTED_CHAR_SEQUENCE -> renderer.render(this, getFormattedCharSequence());
 			case COMPONENT -> renderer.render(this, getComponent());
+			case WRAPPED -> renderer.renderWrapped(this, getFormattedText());
 		}
+	}
+
+	private static int requireWrapWidth(int wrapWidth) {
+		if (wrapWidth < 0) {
+			throw new IllegalArgumentException("wrapWidth must be non-negative");
+		}
+		return wrapWidth;
 	}
 
 	private enum ContentType {
 		STRING,
 		FORMATTED_CHAR_SEQUENCE,
-		COMPONENT
+		COMPONENT,
+		WRAPPED
 	}
 }
