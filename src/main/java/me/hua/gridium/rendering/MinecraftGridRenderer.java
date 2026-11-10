@@ -56,42 +56,57 @@ public class MinecraftGridRenderer implements GridRenderer {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public void render(Text text, @Nullable String string) {
 		Rect bounds = text.getBounds();
-		graphics.text(
-				text.getFont(),
-				string,
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
-				text.getColor(),
-				text.drawsShadow()
-		);
+		int x = (int) Math.round(bounds.getX());
+		int y = (int) Math.round(bounds.getY());
+		if (text.isCentered() && string != null) {
+			int centerX = (int) Math.round(bounds.getX() + bounds.getWidth() / 2.0);
+			if (text.drawsShadow()) {
+				x = centerX - text.getFont().width(string) / 2;
+			} else {
+				graphics.centeredText(text.getFont(), string, centerX, y, text.getColor());
+				return;
+			}
+		}
+		graphics.text(text.getFont(), string, x, y, text.getColor(), text.drawsShadow());
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public void render(Text text, FormattedCharSequence formattedCharSequence) {
 		Rect bounds = text.getBounds();
-		graphics.text(
-				text.getFont(),
-				formattedCharSequence,
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
-				text.getColor(),
-				text.drawsShadow()
-		);
+		int x = (int) Math.round(bounds.getX());
+		int y = (int) Math.round(bounds.getY());
+		if (text.isCentered()) {
+			int centerX = (int) Math.round(bounds.getX() + bounds.getWidth() / 2.0);
+			if (text.drawsShadow()) {
+				x = centerX - text.getFont().width(formattedCharSequence) / 2;
+			} else {
+				graphics.centeredText(text.getFont(), formattedCharSequence, centerX, y, text.getColor());
+				return;
+			}
+		}
+		graphics.text(text.getFont(), formattedCharSequence, x, y, text.getColor(), text.drawsShadow());
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public void render(Text text, Component component) {
 		Rect bounds = text.getBounds();
-		graphics.text(
-				text.getFont(),
-				component,
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
-				text.getColor(),
-				text.drawsShadow()
-		);
+		int x = (int) Math.round(bounds.getX());
+		int y = (int) Math.round(bounds.getY());
+		if (text.isCentered()) {
+			int centerX = (int) Math.round(bounds.getX() + bounds.getWidth() / 2.0);
+			if (text.drawsShadow()) {
+				x = centerX - text.getFont().width(component) / 2;
+			} else {
+				graphics.centeredText(text.getFont(), component, centerX, y, text.getColor());
+				return;
+			}
+		}
+		graphics.text(text.getFont(), component, x, y, text.getColor(), text.drawsShadow());
 	}
 
 	@Override
