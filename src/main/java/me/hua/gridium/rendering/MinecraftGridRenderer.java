@@ -5,6 +5,7 @@ import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
+import me.hua.gridium.controls.SpriteRectangle;
 import me.hua.gridium.controls.Text;
 import me.hua.gridium.controls.TextHighlight;
 import me.hua.gridium.controls.TextureRectangle;
@@ -242,6 +243,81 @@ public class MinecraftGridRenderer implements GridRenderer {
 					uvRegion.u1(),
 					uvRegion.v0(),
 					uvRegion.v1()
+			);
+		}
+	}
+
+	@Override
+	public void render(SpriteRectangle spriteRectangle) {
+		Rect bounds = spriteRectangle.getBounds();
+		int left = (int) Math.round(bounds.getX());
+		int top = (int) Math.round(bounds.getY());
+		int width = (int) Math.round(bounds.getRight()) - left;
+		int height = (int) Math.round(bounds.getBottom()) - top;
+		if (width <= 0 || height <= 0) {
+			return;
+		}
+
+		var sprite = spriteRectangle.getSprite();
+		if (sprite != null) {
+			graphics.blitSprite(
+					spriteRectangle.getRenderPipeline(),
+					sprite,
+					left,
+					top,
+					width,
+					height,
+					spriteRectangle.getColor()
+			);
+			return;
+		}
+
+		Identifier spriteId = Objects.requireNonNull(spriteRectangle.getSpriteId(), "spriteId");
+		Float alpha = spriteRectangle.getAlpha();
+		SpriteRectangle.SourceRegion sourceRegion = spriteRectangle.getSourceRegion();
+		if (sourceRegion != null) {
+			int sourceWidth = sourceRegion.sourceWidth();
+			int sourceHeight = sourceRegion.sourceHeight();
+			var pose = graphics.pose();
+			pose.pushMatrix();
+			try {
+				pose.translate(left, top);
+				pose.scale((float) width / sourceWidth, (float) height / sourceHeight);
+				graphics.blitSprite(
+						spriteRectangle.getRenderPipeline(),
+						spriteId,
+						sourceRegion.spriteWidth(),
+						sourceRegion.spriteHeight(),
+						sourceRegion.sourceX(),
+						sourceRegion.sourceY(),
+						0,
+						0,
+						sourceWidth,
+						sourceHeight,
+						spriteRectangle.getColor()
+				);
+			} finally {
+				pose.popMatrix();
+			}
+		} else if (alpha != null) {
+			graphics.blitSprite(
+					spriteRectangle.getRenderPipeline(),
+					spriteId,
+					left,
+					top,
+					width,
+					height,
+					alpha
+			);
+		} else {
+			graphics.blitSprite(
+					spriteRectangle.getRenderPipeline(),
+					spriteId,
+					left,
+					top,
+					width,
+					height,
+					spriteRectangle.getColor()
 			);
 		}
 	}

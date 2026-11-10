@@ -25,6 +25,7 @@ Gridium 是一个面向 Fabric Mod 的 Minecraft Java Edition UI 布局框架。
   + 文本高亮：支持原生高亮矩形及可选的文字反色。
   + 矩形：支持纯色填充，以及 `RenderPipeline` 和 `TextureSetup` 形式的填充。
   + 纹理矩形：支持 `Identifier` 纹理的归一化 UV 边界，或使用渲染管线、像素源区域、纹理尺寸及可选 tint 颜色；也支持 `GpuTextureView` 和 `GpuSampler`。
+  + 精灵矩形：支持 GUI 精灵标识符及原生缩放元数据、图集精灵、tint、alpha 和标识符精灵源区域。
   + 渐变矩形：支持设置渐变两端的颜色。
   + 水平线和垂直线。
 * 提供可从 Mod Menu 打开的测试界面（Mod Menu 为可选推荐依赖）。
@@ -82,6 +83,8 @@ public void extractRenderState(
 需要对格式化文本换行时，可用 `FormattedText`、换行宽度、颜色及可选阴影参数创建 `Text`。换行宽度同时作为元素期望布局宽度；元素期望高度根据换行后的行数测量，绘制时调用 Minecraft 原生 `textWithWordWrap`。
 
 需要绘制 Minecraft 配置的文字背景时，用 `Component`、文本宽度和文字颜色创建 `Text`。元素会预留文本宽度加背景左右各 2 像素的留白，及原生 13 像素背景高度；背景颜色由 Minecraft 当前选项提供，原生方法会绘制带阴影文本。
+
+`SpriteRectangle` 使用布局边界作为目标绘制区域。GUI 精灵标识符保留原生拉伸、平铺和九宫格行为；`TextureAtlasSprite` 使用原生直接精灵重载。标识符精灵还支持原生 alpha 重载和源区域形式，源区域尺寸与目标布局尺寸分别处理。
 
 `TextureRectangle` 使用布局边界作为目标绘制区域。默认 `Identifier` 构造器使用归一化 UV 采样整张纹理；UV 重载允许指定归一化边界。`RenderPipeline` 重载则使用像素坐标描述源区域，并接收纹理完整尺寸及可选 tint 颜色。源区域尺寸与目标尺寸相互独立，因此对齐或布局缩放不会改变采样区域。
 

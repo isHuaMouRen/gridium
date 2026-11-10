@@ -25,6 +25,7 @@ The layout design is inspired by WPF (Windows Presentation Foundation), but the 
   + Text highlights: support the native highlight rectangle and its optional text inversion.
   + Rectangles: supports solid-color fills, as well as fills using `RenderPipeline` and `TextureSetup`.
   + Texture rectangles: support `Identifier` textures with normalized UV bounds, a render pipeline with pixel-based source regions, texture dimensions, and optional tint, or `GpuTextureView` with `GpuSampler`.
+  + Sprite rectangles: support GUI sprite identifiers with native scaling metadata, atlas sprites, tint, alpha, and identifier-based source regions.
   + Gradient rectangles: supports setting the colors at both ends of the gradient.
   + Horizontal and vertical lines.
 * Provides a test screen accessible through Mod Menu (an optional, recommended dependency).
@@ -82,6 +83,8 @@ Use `setHorizontalAlignment(HorizontalAlignment.CENTER)` to center a text elemen
 To wrap formatted content, construct `Text` with a `FormattedText`, wrap width, color, and optional shadow flag. The wrap width is also the element's desired layout width; its desired height is measured from the wrapped line count, and rendering uses Minecraft's native `textWithWordWrap`.
 
 To draw a component with Minecraft's configured text backdrop, construct `Text` with the component, text width, and text color. The element reserves the text width plus four pixels of horizontal backdrop padding and the native 13-pixel backdrop height; Minecraft supplies the configured background color and the native method draws the text with shadow.
+
+`SpriteRectangle` uses its layout bounds as the destination rectangle. GUI sprite identifiers retain their native stretch, tile, and nine-slice behavior; `TextureAtlasSprite` instances use the native direct sprite overload. Identifier sprites also support the native alpha overload and source-region form, with source dimensions kept separate from destination layout size.
 
 `TextureRectangle` uses its layout bounds as the destination rectangle. Its default `Identifier` constructor samples the full texture using normalized UVs; the UV overload accepts explicit normalized bounds. The `RenderPipeline` overload instead accepts pixel source coordinates and dimensions plus the full texture dimensions, with an optional tint color. Source-region dimensions are independent of the destination size, so alignment or layout scaling does not change the sampled texture region.
 
