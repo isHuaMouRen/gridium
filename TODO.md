@@ -13,7 +13,6 @@ Only list work that is not implemented yet. Remove an item from this file when i
   - [x] Centered text placement (`centeredText`).
   - [x] Word wrapping (`textWithWordWrap`), including configurable width and shadow.
   - [x] Backdrop rendering (`textWithBackdrop`).
-- [ ] Add item drawing support for `item`, seeded variants, and owner-specific rendering.
 - [ ] Add fake item drawing support for `fakeItem` and its seed option.
 - [ ] Add item decoration support for `itemDecorations`, including optional count text.
 - [ ] Add map rendering support for `map`.

@@ -3,6 +3,7 @@ package me.hua.gridium.rendering;
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.HorizontalLine;
+import me.hua.gridium.controls.ItemIcon;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.SpriteRectangle;
@@ -18,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.entity.LivingEntity;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
@@ -148,6 +150,19 @@ public class MinecraftGridRenderer implements GridRenderer {
 				(int) Math.round(bounds.getBottom()),
 				highlight.invertsText()
 		);
+	}
+
+	@Override
+	public void render(ItemIcon itemIcon) {
+		Rect bounds = itemIcon.getBounds();
+		int x = (int) Math.round(bounds.getX());
+		int y = (int) Math.round(bounds.getY());
+		LivingEntity owner = itemIcon.getOwner();
+		if (owner != null) {
+			graphics.item(owner, itemIcon.getItemStack(), x, y, itemIcon.getSeed());
+		} else {
+			graphics.item(itemIcon.getItemStack(), x, y, itemIcon.getSeed());
+		}
 	}
 
 	@Override

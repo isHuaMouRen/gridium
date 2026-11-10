@@ -28,6 +28,7 @@ The layout design is inspired by WPF (Windows Presentation Foundation), but the 
   + Sprite rectangles: support GUI sprite identifiers with native scaling metadata, atlas sprites, tint, alpha, and identifier-based source regions.
   + Gradient rectangles: supports setting the colors at both ends of the gradient.
   + Horizontal and vertical lines.
+  + Item icons: support item stacks, deterministic render seeds, and owner-aware rendering.
 * Provides a test screen accessible through Mod Menu (an optional, recommended dependency).
 
 `Grid` currently arranges its children within the entire screen area; it is not a table layout with row and column definitions. Multiple children can be aligned within the same area.
@@ -85,6 +86,8 @@ To wrap formatted content, construct `Text` with a `FormattedText`, wrap width, 
 To draw a component with Minecraft's configured text backdrop, construct `Text` with the component, text width, and text color. The element reserves the text width plus four pixels of horizontal backdrop padding and the native 13-pixel backdrop height; Minecraft supplies the configured background color and the native method draws the text with shadow.
 
 `SpriteRectangle` uses its layout bounds as the destination rectangle. GUI sprite identifiers retain their native stretch, tile, and nine-slice behavior; `TextureAtlasSprite` instances use the native direct sprite overload. Identifier sprites also support the native alpha overload and source-region form, with source dimensions kept separate from destination layout size.
+
+`ItemIcon` renders an `ItemStack` in Minecraft's native 16-by-16 GUI item area. It supports the default or explicit render seed, plus the native owner-aware overload for a `LivingEntity`.
 
 `TextureRectangle` uses its layout bounds as the destination rectangle. Its default `Identifier` constructor samples the full texture using normalized UVs; the UV overload accepts explicit normalized bounds. The `RenderPipeline` overload instead accepts pixel source coordinates and dimensions plus the full texture dimensions, with an optional tint color. Source-region dimensions are independent of the destination size, so alignment or layout scaling does not change the sampled texture region.
 
