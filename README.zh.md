@@ -22,6 +22,7 @@ Gridium 是一个面向 Fabric Mod 的 Minecraft Java Edition UI 布局框架。
 * 通过 `GuiGraphicsExtractor` 将布局结果交给 Minecraft 原生绘制 API。
 * 当前绘制元素：
   + 文本：支持 `String`、`FormattedCharSequence` 和 `Component`，并可设置颜色及阴影。
+  + 文本高亮：支持原生高亮矩形及可选的文字反色。
   + 矩形：支持纯色填充，以及 `RenderPipeline` 和 `TextureSetup` 形式的填充。
   + 纹理矩形：支持 `Identifier` 纹理的归一化 UV 边界，或使用渲染管线、像素源区域、纹理尺寸及可选 tint 颜色；也支持 `GpuTextureView` 和 `GpuSampler`。
   + 渐变矩形：支持设置渐变两端的颜色。

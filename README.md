@@ -22,6 +22,7 @@ The layout design is inspired by WPF (Windows Presentation Foundation), but the 
 * Pass layout results to Minecraft's native rendering API through `GuiGraphicsExtractor`.
 * Currently supported drawing elements:
   + Text: supports `String`, `FormattedCharSequence`, and `Component`, with configurable color and shadow.
+  + Text highlights: support the native highlight rectangle and its optional text inversion.
   + Rectangles: supports solid-color fills, as well as fills using `RenderPipeline` and `TextureSetup`.
   + Texture rectangles: support `Identifier` textures with normalized UV bounds, a render pipeline with pixel-based source regions, texture dimensions, and optional tint, or `GpuTextureView` with `GpuSampler`.
   + Gradient rectangles: supports setting the colors at both ends of the gradient.

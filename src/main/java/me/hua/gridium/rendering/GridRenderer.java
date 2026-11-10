@@ -5,6 +5,7 @@ import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.Text;
+import me.hua.gridium.controls.TextHighlight;
 import me.hua.gridium.controls.TextureRectangle;
 import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.Rect;
@@ -30,6 +31,8 @@ public interface GridRenderer {
 	void render(Text text, FormattedCharSequence formattedCharSequence);
 
 	void render(Text text, Component component);
+
+	void render(TextHighlight highlight);
 
 	void render(Rectangle rectangle);
 

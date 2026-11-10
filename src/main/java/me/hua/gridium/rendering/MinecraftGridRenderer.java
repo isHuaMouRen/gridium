@@ -6,6 +6,7 @@ import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.Text;
+import me.hua.gridium.controls.TextHighlight;
 import me.hua.gridium.controls.TextureRectangle;
 import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.Rect;
@@ -90,6 +91,18 @@ public class MinecraftGridRenderer implements GridRenderer {
 				(int) Math.round(bounds.getY()),
 				text.getColor(),
 				text.drawsShadow()
+		);
+	}
+
+	@Override
+	public void render(TextHighlight highlight) {
+		Rect bounds = highlight.getBounds();
+		graphics.textHighlight(
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				(int) Math.round(bounds.getRight()),
+				(int) Math.round(bounds.getBottom()),
+				highlight.invertsText()
 		);
 	}
 
