@@ -19,34 +19,50 @@ public class Text extends FrameworkElement<Text> {
 	private final @Nullable Component component;
 	private final @Nullable FormattedText formattedText;
 	private final int wrapWidth;
+	private final int backdropWidth;
 	private final int color;
 	private final boolean drawShadow;
 	private boolean centered;
 
 	public Text(Font font, @Nullable String string, int color) {
-		this(font, ContentType.STRING, string, null, null, null, 0, color, true);
+		this(font, ContentType.STRING, string, null, null, null, 0, 0, color, true);
 	}
 
 	public Text(Font font, @Nullable String string, int color, boolean drawShadow) {
-		this(font, ContentType.STRING, string, null, null, null, 0, color, drawShadow);
+		this(font, ContentType.STRING, string, null, null, null, 0, 0, color, drawShadow);
 	}
 
 	public Text(Font font, FormattedCharSequence formattedCharSequence, int color) {
 		this(font, ContentType.FORMATTED_CHAR_SEQUENCE, null,
-				Objects.requireNonNull(formattedCharSequence, "formattedCharSequence"), null, null, 0, color, true);
+				Objects.requireNonNull(formattedCharSequence, "formattedCharSequence"), null, null, 0, 0, color, true);
 	}
 
 	public Text(Font font, FormattedCharSequence formattedCharSequence, int color, boolean drawShadow) {
 		this(font, ContentType.FORMATTED_CHAR_SEQUENCE, null,
-				Objects.requireNonNull(formattedCharSequence, "formattedCharSequence"), null, null, 0, color, drawShadow);
+				Objects.requireNonNull(formattedCharSequence, "formattedCharSequence"), null, null, 0, 0, color, drawShadow);
 	}
 
 	public Text(Font font, Component component, int color) {
-		this(font, ContentType.COMPONENT, null, null, Objects.requireNonNull(component, "component"), null, 0, color, true);
+		this(font, ContentType.COMPONENT, null, null, Objects.requireNonNull(component, "component"), null, 0, 0, color, true);
 	}
 
 	public Text(Font font, Component component, int color, boolean drawShadow) {
-		this(font, ContentType.COMPONENT, null, null, Objects.requireNonNull(component, "component"), null, 0, color, drawShadow);
+		this(font, ContentType.COMPONENT, null, null, Objects.requireNonNull(component, "component"), null, 0, 0, color, drawShadow);
+	}
+
+	public Text(Font font, Component component, int backdropWidth, int color) {
+		this(
+				font,
+				ContentType.BACKDROP,
+				null,
+				null,
+				Objects.requireNonNull(component, "component"),
+				null,
+				0,
+				requireBackdropWidth(backdropWidth),
+				color,
+				true
+		);
 	}
 
 	public Text(Font font, FormattedText formattedText, int wrapWidth, int color) {
@@ -62,6 +78,7 @@ public class Text extends FrameworkElement<Text> {
 				null,
 				Objects.requireNonNull(formattedText, "formattedText"),
 				requireWrapWidth(wrapWidth),
+				0,
 				color,
 				drawShadow
 		);
@@ -75,6 +92,7 @@ public class Text extends FrameworkElement<Text> {
 			@Nullable Component component,
 			@Nullable FormattedText formattedText,
 			int wrapWidth,
+			int backdropWidth,
 			int color,
 			boolean drawShadow
 	) {
@@ -85,6 +103,7 @@ public class Text extends FrameworkElement<Text> {
 		this.component = component;
 		this.formattedText = formattedText;
 		this.wrapWidth = wrapWidth;
+		this.backdropWidth = backdropWidth;
 		this.color = color;
 		this.drawShadow = drawShadow;
 	}
@@ -111,6 +130,10 @@ public class Text extends FrameworkElement<Text> {
 
 	public int getWrapWidth() {
 		return wrapWidth;
+	}
+
+	public int getBackdropWidth() {
+		return backdropWidth;
 	}
 
 	public int getColor() {
@@ -153,6 +176,7 @@ public class Text extends FrameworkElement<Text> {
 			case FORMATTED_CHAR_SEQUENCE -> new Size(font.width(getFormattedCharSequence()), font.lineHeight);
 			case COMPONENT -> new Size(font.width(getComponent()), font.lineHeight);
 			case WRAPPED -> new Size(wrapWidth, font.wordWrapHeight(getFormattedText(), wrapWidth));
+			case BACKDROP -> new Size(backdropWidth + 4.0, 13.0);
 		};
 	}
 
@@ -163,6 +187,7 @@ public class Text extends FrameworkElement<Text> {
 			case FORMATTED_CHAR_SEQUENCE -> renderer.render(this, getFormattedCharSequence());
 			case COMPONENT -> renderer.render(this, getComponent());
 			case WRAPPED -> renderer.renderWrapped(this, getFormattedText());
+			case BACKDROP -> renderer.renderWithBackdrop(this, getComponent());
 		}
 	}
 
@@ -173,10 +198,18 @@ public class Text extends FrameworkElement<Text> {
 		return wrapWidth;
 	}
 
+	private static int requireBackdropWidth(int backdropWidth) {
+		if (backdropWidth < 0) {
+			throw new IllegalArgumentException("backdropWidth must be non-negative");
+		}
+		return backdropWidth;
+	}
+
 	private enum ContentType {
 		STRING,
 		FORMATTED_CHAR_SEQUENCE,
 		COMPONENT,
-		WRAPPED
+		WRAPPED,
+		BACKDROP
 	}
 }

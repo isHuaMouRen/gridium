@@ -125,6 +125,19 @@ public class MinecraftGridRenderer implements GridRenderer {
 	}
 
 	@Override
+	public void renderWithBackdrop(Text text, Component component) {
+		Rect bounds = text.getBounds();
+		graphics.textWithBackdrop(
+				text.getFont(),
+				component,
+				(int) Math.round(bounds.getX()) + 2,
+				(int) Math.round(bounds.getY()) + 2,
+				text.getBackdropWidth(),
+				text.getColor()
+		);
+	}
+
+	@Override
 	public void render(TextHighlight highlight) {
 		Rect bounds = highlight.getBounds();
 		graphics.textHighlight(

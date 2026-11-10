@@ -35,6 +35,8 @@ public interface GridRenderer {
 
 	void renderWrapped(Text text, FormattedText formattedText);
 
+	void renderWithBackdrop(Text text, Component component);
+
 	void render(TextHighlight highlight);
 
 	void render(Rectangle rectangle);

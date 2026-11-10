@@ -12,7 +12,7 @@ Only list work that is not implemented yet. Remove an item from this file when i
   - [x] Add simple `String`, `FormattedCharSequence`, and `Component` content overloads with default or explicit shadow options.
   - [x] Centered text placement (`centeredText`).
   - [x] Word wrapping (`textWithWordWrap`), including configurable width and shadow.
-  - Backdrop rendering (`textWithBackdrop`).
+  - [x] Backdrop rendering (`textWithBackdrop`).
 - [ ] Add sprite elements for all `blitSprite` forms:
   - `Identifier` and `TextureAtlasSprite` sources.
   - Alpha/color options and source-region variants.
