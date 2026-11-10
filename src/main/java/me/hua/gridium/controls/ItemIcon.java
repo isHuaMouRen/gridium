@@ -9,6 +9,10 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
 
+/**
+ * Displays an item stack. Create the stack only after Minecraft has bound item components,
+ * typically after a world has loaded.
+ */
 public class ItemIcon extends FrameworkElement<ItemIcon> {
 	private static final double ICON_SIZE = 16.0;
 
