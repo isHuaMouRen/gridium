@@ -89,6 +89,8 @@ public void extractRenderState(
 
 `ItemIcon` 在 Minecraft 原生 16×16 GUI 物品区域绘制 `ItemStack`，支持默认或显式渲染 seed，以及接收 `LivingEntity` owner 的原生重载。
 
+`FakeItemIcon` 使用 Minecraft 原生 `fakeItem` 绘制方式，不指定玩家或实体 owner，并支持默认或显式渲染 seed。
+
 `TextureRectangle` 使用布局边界作为目标绘制区域。默认 `Identifier` 构造器使用归一化 UV 采样整张纹理；UV 重载允许指定归一化边界。`RenderPipeline` 重载则使用像素坐标描述源区域，并接收纹理完整尺寸及可选 tint 颜色。源区域尺寸与目标尺寸相互独立，因此对齐或布局缩放不会改变采样区域。
 
 绘制 GPU 纹理时，传入 `GpuTextureView` 和 `GpuSampler`；对应原生重载使用归一化 UV、默认 GUI 纹理管线和白色 tint。

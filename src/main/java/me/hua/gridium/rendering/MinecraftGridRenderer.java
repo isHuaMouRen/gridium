@@ -1,6 +1,7 @@
 package me.hua.gridium.rendering;
 
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
+import me.hua.gridium.controls.FakeItemIcon;
 import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.ItemIcon;
@@ -163,6 +164,17 @@ public class MinecraftGridRenderer implements GridRenderer {
 		} else {
 			graphics.item(itemIcon.getItemStack(), x, y, itemIcon.getSeed());
 		}
+	}
+
+	@Override
+	public void render(FakeItemIcon itemIcon) {
+		Rect bounds = itemIcon.getBounds();
+		graphics.fakeItem(
+				itemIcon.getItemStack(),
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				itemIcon.getSeed()
+		);
 	}
 
 	@Override
