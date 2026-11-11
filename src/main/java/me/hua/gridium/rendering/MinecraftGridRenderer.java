@@ -6,6 +6,7 @@ import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.ItemDecorations;
 import me.hua.gridium.controls.ItemIcon;
+import me.hua.gridium.controls.MapImage;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.SpriteRectangle;
@@ -188,6 +189,24 @@ public class MinecraftGridRenderer implements GridRenderer {
 				(int) Math.round(bounds.getY()),
 				itemDecorations.getCountText()
 		);
+	}
+
+	@Override
+	public void render(MapImage mapImage) {
+		Rect bounds = mapImage.getBounds();
+		var pose = graphics.pose();
+		pose.pushMatrix();
+		try {
+			pose.translate((float) bounds.getX(), (float) bounds.getY());
+			var mapRenderState = mapImage.getMapRenderState();
+			Objects.requireNonNull(
+					mapRenderState.texture,
+					"MapRenderState must be extracted by MapRenderer before drawing"
+			);
+			graphics.map(mapRenderState);
+		} finally {
+			pose.popMatrix();
+		}
 	}
 
 	@Override

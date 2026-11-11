@@ -5,6 +5,7 @@ import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.ItemDecorations;
 import me.hua.gridium.controls.ItemIcon;
+import me.hua.gridium.controls.MapImage;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.SpriteRectangle;
@@ -48,6 +49,8 @@ public interface GridRenderer {
 	void render(FakeItemIcon itemIcon);
 
 	void render(ItemDecorations itemDecorations);
+
+	void render(MapImage mapImage);
 
 	void render(Rectangle rectangle);
 

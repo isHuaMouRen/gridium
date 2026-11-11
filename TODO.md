@@ -15,7 +15,7 @@ Only list work that is not implemented yet. Remove an item from this file when i
   - [x] Backdrop rendering (`textWithBackdrop`).
 - [x] Add fake item drawing support for `fakeItem` and its seed option.
 - [x] Add item decoration support for `itemDecorations`, including optional count text.
-- [ ] Add map rendering support for `map`.
+- [x] Add map rendering support for `map`.
 - [ ] Add entity preview support for `entity`, preserving scale, translation, rotation, camera override, and bounds.
 - [ ] Add player skin rendering support for `skin`.
 - [ ] Add book preview support for `book`, preserving open and flip state.
