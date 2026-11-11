@@ -95,6 +95,8 @@ To draw a component with Minecraft's configured text backdrop, construct `Text` 
 
 `MapImage` renders a 128-by-128 map from a `MapRenderState`. Populate that state with `Minecraft.getInstance().getMapRenderer().extractRenderState(mapId, mapData, state)` before drawing; map decorations and labels are included by Minecraft's native `map` renderer.
 
+`EntityPreview` renders an `EntityRenderState` into its layout bounds. Its constructor preserves the native scale, translation, entity rotation, and optional camera-angle override; refresh its state with `Minecraft.getInstance().getEntityRenderDispatcher().extractEntity(entity, partialTick)` as the entity changes.
+
 `TextureRectangle` uses its layout bounds as the destination rectangle. Its default `Identifier` constructor samples the full texture using normalized UVs; the UV overload accepts explicit normalized bounds. The `RenderPipeline` overload instead accepts pixel source coordinates and dimensions plus the full texture dimensions, with an optional tint color. Source-region dimensions are independent of the destination size, so alignment or layout scaling does not change the sampled texture region.
 
 For GPU textures, pass a `GpuTextureView` and `GpuSampler`; this native overload uses normalized UV bounds, the default GUI textured pipeline, and a white tint.

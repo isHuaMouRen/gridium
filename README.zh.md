@@ -95,6 +95,8 @@ public void extractRenderState(
 
 `MapImage` 使用 `MapRenderState` 绘制 128×128 地图。绘制前需调用 `Minecraft.getInstance().getMapRenderer().extractRenderState(mapId, mapData, state)` 填充状态；地图标记和标签由 Minecraft 原生 `map` 绘制方法一并处理。
 
+`EntityPreview` 将 `EntityRenderState` 绘制到自身布局边界内。构造参数保留原生缩放、平移、实体旋转和可选相机角度覆盖；实体状态变化时可用 `Minecraft.getInstance().getEntityRenderDispatcher().extractEntity(entity, partialTick)` 更新。
+
 `TextureRectangle` 使用布局边界作为目标绘制区域。默认 `Identifier` 构造器使用归一化 UV 采样整张纹理；UV 重载允许指定归一化边界。`RenderPipeline` 重载则使用像素坐标描述源区域，并接收纹理完整尺寸及可选 tint 颜色。源区域尺寸与目标尺寸相互独立，因此对齐或布局缩放不会改变采样区域。
 
 绘制 GPU 纹理时，传入 `GpuTextureView` 和 `GpuSampler`；对应原生重载使用归一化 UV、默认 GUI 纹理管线和白色 tint。

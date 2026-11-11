@@ -1,6 +1,7 @@
 package me.hua.gridium.rendering;
 
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
+import me.hua.gridium.controls.EntityPreview;
 import me.hua.gridium.controls.FakeItemIcon;
 import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.HorizontalLine;
@@ -207,6 +208,22 @@ public class MinecraftGridRenderer implements GridRenderer {
 		} finally {
 			pose.popMatrix();
 		}
+	}
+
+	@Override
+	public void render(EntityPreview entityPreview) {
+		Rect bounds = entityPreview.getBounds();
+		graphics.entity(
+				entityPreview.getRenderState(),
+				entityPreview.getScale(),
+				entityPreview.getTranslation(),
+				entityPreview.getRotation(),
+				entityPreview.getOverrideCameraAngle(),
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				(int) Math.round(bounds.getRight()),
+				(int) Math.round(bounds.getBottom())
+		);
 	}
 
 	@Override

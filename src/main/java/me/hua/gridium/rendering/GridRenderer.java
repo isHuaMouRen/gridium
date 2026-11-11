@@ -1,5 +1,6 @@
 package me.hua.gridium.rendering;
 
+import me.hua.gridium.controls.EntityPreview;
 import me.hua.gridium.controls.FakeItemIcon;
 import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.HorizontalLine;
@@ -51,6 +52,8 @@ public interface GridRenderer {
 	void render(ItemDecorations itemDecorations);
 
 	void render(MapImage mapImage);
+
+	void render(EntityPreview entityPreview);
 
 	void render(Rectangle rectangle);
 
