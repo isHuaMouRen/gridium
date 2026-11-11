@@ -4,6 +4,7 @@ import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import me.hua.gridium.controls.FakeItemIcon;
 import me.hua.gridium.controls.GradientRectangle;
 import me.hua.gridium.controls.HorizontalLine;
+import me.hua.gridium.controls.ItemDecorations;
 import me.hua.gridium.controls.ItemIcon;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
@@ -174,6 +175,18 @@ public class MinecraftGridRenderer implements GridRenderer {
 				(int) Math.round(bounds.getX()),
 				(int) Math.round(bounds.getY()),
 				itemIcon.getSeed()
+		);
+	}
+
+	@Override
+	public void render(ItemDecorations itemDecorations) {
+		Rect bounds = itemDecorations.getBounds();
+		graphics.itemDecorations(
+				itemDecorations.getFont(),
+				itemDecorations.getItemStack(),
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				itemDecorations.getCountText()
 		);
 	}
 

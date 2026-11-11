@@ -91,6 +91,8 @@ To draw a component with Minecraft's configured text backdrop, construct `Text` 
 
 `FakeItemIcon` uses Minecraft's native `fakeItem` rendering path, without a player or entity owner. It supports the default or explicit render seed.
 
+`ItemDecorations` draws Minecraft's native item bar, cooldown overlay, and count text over an item area. Add it after an item element at the same layout position; the optional count text overrides the stack count shown.
+
 `TextureRectangle` uses its layout bounds as the destination rectangle. Its default `Identifier` constructor samples the full texture using normalized UVs; the UV overload accepts explicit normalized bounds. The `RenderPipeline` overload instead accepts pixel source coordinates and dimensions plus the full texture dimensions, with an optional tint color. Source-region dimensions are independent of the destination size, so alignment or layout scaling does not change the sampled texture region.
 
 For GPU textures, pass a `GpuTextureView` and `GpuSampler`; this native overload uses normalized UV bounds, the default GUI textured pipeline, and a white tint.
