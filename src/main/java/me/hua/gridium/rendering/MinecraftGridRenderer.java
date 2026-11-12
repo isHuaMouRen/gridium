@@ -10,6 +10,7 @@ import me.hua.gridium.controls.ItemIcon;
 import me.hua.gridium.controls.MapImage;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
+import me.hua.gridium.controls.SkinPreview;
 import me.hua.gridium.controls.SpriteRectangle;
 import me.hua.gridium.controls.Text;
 import me.hua.gridium.controls.TextHighlight;
@@ -219,6 +220,23 @@ public class MinecraftGridRenderer implements GridRenderer {
 				entityPreview.getTranslation(),
 				entityPreview.getRotation(),
 				entityPreview.getOverrideCameraAngle(),
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				(int) Math.round(bounds.getRight()),
+				(int) Math.round(bounds.getBottom())
+		);
+	}
+
+	@Override
+	public void render(SkinPreview skinPreview) {
+		Rect bounds = skinPreview.getBounds();
+		graphics.skin(
+				skinPreview.getPlayerModel(),
+				skinPreview.getTexture(),
+				skinPreview.getScale(),
+				skinPreview.getRotationX(),
+				skinPreview.getRotationY(),
+				skinPreview.getPivotY(),
 				(int) Math.round(bounds.getX()),
 				(int) Math.round(bounds.getY()),
 				(int) Math.round(bounds.getRight()),

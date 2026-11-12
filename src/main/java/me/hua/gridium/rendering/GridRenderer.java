@@ -9,6 +9,7 @@ import me.hua.gridium.controls.ItemIcon;
 import me.hua.gridium.controls.MapImage;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
+import me.hua.gridium.controls.SkinPreview;
 import me.hua.gridium.controls.SpriteRectangle;
 import me.hua.gridium.controls.Text;
 import me.hua.gridium.controls.TextHighlight;
@@ -54,6 +55,8 @@ public interface GridRenderer {
 	void render(MapImage mapImage);
 
 	void render(EntityPreview entityPreview);
+
+	void render(SkinPreview skinPreview);
 
 	void render(Rectangle rectangle);
 
