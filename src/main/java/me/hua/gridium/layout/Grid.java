@@ -6,6 +6,7 @@ import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.Size;
 import me.hua.gridium.core.UIElement;
 import me.hua.gridium.core.VerticalAlignment;
+import me.hua.gridium.controls.GridTooltip;
 import me.hua.gridium.rendering.GridRenderer;
 import me.hua.gridium.rendering.MinecraftGridRenderer;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -13,6 +14,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 public class Grid extends FrameworkElement<Grid> {
 	private final List<UIElement> children = new ArrayList<>();
@@ -45,10 +47,14 @@ public class Grid extends FrameworkElement<Grid> {
 		return List.copyOf(children);
 	}
 
-	public void draw(GuiGraphicsExtractor graphics) {
+	public void draw(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
 		Objects.requireNonNull(graphics, "graphics");
 		layout(graphics.guiWidth(), graphics.guiHeight());
 		render(new MinecraftGridRenderer(graphics));
+		GridTooltip tooltip = findTooltipAt(mouseX, mouseY);
+		if (tooltip != null) {
+			tooltip.show(graphics, mouseX, mouseY);
+		}
 	}
 
 	private void layout(double width, double height) {
@@ -124,5 +130,39 @@ public class Grid extends FrameworkElement<Grid> {
 			}
 		}
 		return false;
+	}
+
+	private @Nullable GridTooltip findTooltipAt(double x, double y) {
+		FrameworkElement.LocalPoint localPoint = toLocalPoint(x, y);
+		Rect bounds = getBounds();
+		if (!isVisible()
+				|| localPoint == null
+				|| !contains(localPoint, bounds)) {
+			return null;
+		}
+
+		List<UIElement> orderedChildren = children;
+		for (int i = orderedChildren.size() - 1; i >= 0; i--) {
+			UIElement child = orderedChildren.get(i);
+			if (child instanceof Grid grid) {
+				GridTooltip tooltip = grid.findTooltipAt(localPoint.x(), localPoint.y());
+				if (tooltip != null) {
+					return tooltip;
+				}
+			} else if (child instanceof FrameworkElement<?> element
+					&& element.isVisible()
+					&& element.getTooltip() != null
+					&& element.containsPoint(localPoint.x(), localPoint.y())) {
+				return element.getTooltip();
+			}
+		}
+		return getTooltip();
+	}
+
+	private static boolean contains(FrameworkElement.LocalPoint point, Rect bounds) {
+		return point.x() >= bounds.getX()
+				&& point.x() <= bounds.getRight()
+				&& point.y() >= bounds.getY()
+				&& point.y() <= bounds.getBottom();
 	}
 }

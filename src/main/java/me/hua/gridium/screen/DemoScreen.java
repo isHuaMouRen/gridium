@@ -54,7 +54,7 @@ public class DemoScreen extends Screen {
 	@Override
 	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
 		super.extractRenderState(graphics, mouseX, mouseY, partialTick);
-		grid.draw(graphics);
+		grid.draw(graphics, mouseX, mouseY);
 	}
 
 	@Override

@@ -1,6 +1,9 @@
 package me.hua.gridium.core;
 
+import me.hua.gridium.controls.GridTooltip;
+
 import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UIElement {
 	private Thickness margin = Thickness.ZERO;
@@ -11,6 +14,16 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	private RenderTransform renderTransform = RenderTransform.IDENTITY;
 	private double renderTransformOriginX;
 	private double renderTransformOriginY;
+	private @Nullable GridTooltip tooltip;
+
+	public final @Nullable GridTooltip getTooltip() {
+		return tooltip;
+	}
+
+	public final T setTooltip(GridTooltip tooltip) {
+		this.tooltip = Objects.requireNonNull(tooltip, "tooltip");
+		return self();
+	}
 
 	public final Thickness getMargin() {
 		return margin;
@@ -106,6 +119,44 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 		return self();
 	}
 
+	public final boolean containsPoint(double x, double y) {
+		LocalPoint point = toLocalPoint(x, y);
+		Rect bounds = getBounds();
+		return point != null
+				&& point.x() >= bounds.getX()
+				&& point.x() <= bounds.getRight()
+				&& point.y() >= bounds.getY()
+				&& point.y() <= bounds.getBottom();
+	}
+
+	public final @Nullable LocalPoint toLocalPoint(double x, double y) {
+		if (!Double.isFinite(x) || !Double.isFinite(y)) {
+			return null;
+		}
+
+		Rect bounds = getBounds();
+		RenderTransform transform = getRenderTransform();
+		if (transform.scaleX() == 0.0 || transform.scaleY() == 0.0) {
+			return null;
+		}
+
+		double originX = bounds.getX() + bounds.getWidth() * layoutScaleX * renderTransformOriginX;
+		double originY = bounds.getY() + bounds.getHeight() * layoutScaleY * renderTransformOriginY;
+		double translatedX = x - transform.translationX() - originX;
+		double translatedY = y - transform.translationY() - originY;
+		double radians = Math.toRadians(transform.rotationDegrees());
+		double cosine = Math.cos(radians);
+		double sine = Math.sin(radians);
+		double scaledX = (cosine * translatedX + sine * translatedY) / transform.scaleX();
+		double scaledY = (-sine * translatedX + cosine * translatedY) / transform.scaleY();
+		double layoutX = originX + scaledX;
+		double layoutY = originY + scaledY;
+		return new LocalPoint(
+				bounds.getX() + (layoutX - bounds.getX()) / layoutScaleX,
+				bounds.getY() + (layoutY - bounds.getY()) / layoutScaleY
+		);
+	}
+
 	protected abstract T self();
 
 	@Override
@@ -157,4 +208,6 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 		}
 	}
 
+	public record LocalPoint(double x, double y) {
+	}
 }

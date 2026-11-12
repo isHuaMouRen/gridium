@@ -73,7 +73,7 @@ public void extractRenderState(
     float partialTick
 ) {
     super.extractRenderState(graphics, mouseX, mouseY, partialTick);
-    grid.draw(graphics);
+    grid.draw(graphics, mouseX, mouseY);
 }
 ```
 
@@ -104,6 +104,10 @@ To draw a component with Minecraft's configured text backdrop, construct `Text` 
 `BannerPatternPreview` renders a banner pattern within its layout bounds. Supply a baked `BannerFlagModel`, base `DyeColor`, and `BannerPatternLayers`; create the model by baking `ModelLayers.STANDING_BANNER_FLAG`.
 
 `ProfilerChart` renders profiler results within its layout bounds. Supply the `ResultField` list and viewport dimensions; each field retains the native percentage, global percentage, count, and name data.
+
+`GridTooltip` supports both explicit native-style use and layout hover use. For explicit control, call `tooltip.show(graphics, x, y)` during screen extraction. For automatic layout hover, attach it to any `FrameworkElement` with `.setTooltip(tooltip)` and call `grid.draw(graphics, mouseX, mouseY)`. The grid checks visible elements from front to back, including nested grids and visual transforms; the `Screen` extraction lifecycle handles the deferred tooltip stage.
+
+Construct a tooltip from a `Component` or component lines, or use `GridTooltip.formatted(...)` to supply formatted lines, an optional image, a positioner, replacement behavior, and style. The `Font` and `ItemStack` constructor delegates to Minecraft's native item-tooltip handling.
 
 `TextureRectangle` uses its layout bounds as the destination rectangle. Its default `Identifier` constructor samples the full texture using normalized UVs; the UV overload accepts explicit normalized bounds. The `RenderPipeline` overload instead accepts pixel source coordinates and dimensions plus the full texture dimensions, with an optional tint color. Source-region dimensions are independent of the destination size, so alignment or layout scaling does not change the sampled texture region.
 

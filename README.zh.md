@@ -73,7 +73,7 @@ public void extractRenderState(
     float partialTick
 ) {
     super.extractRenderState(graphics, mouseX, mouseY, partialTick);
-    grid.draw(graphics);
+    grid.draw(graphics, mouseX, mouseY);
 }
 ```
 
@@ -104,6 +104,10 @@ public void extractRenderState(
 `BannerPatternPreview` 在布局边界内绘制旗帜图案。传入烘焙后的 `BannerFlagModel`、底色 `DyeColor` 和 `BannerPatternLayers`；模型通过烘焙 `ModelLayers.STANDING_BANNER_FLAG` 创建。
 
 `ProfilerChart` 在布局边界内绘制性能分析结果。传入 `ResultField` 列表和视口尺寸；每个结果项保留原生的百分比、全局百分比、计数和名称数据。
+
+`GridTooltip` 同时支持显式调用和布局悬停。高级用法是在 Screen 提取阶段调用 `tooltip.show(graphics, x, y)`；便携用法是给任意 `FrameworkElement` 调用 `.setTooltip(tooltip)`，并使用 `grid.draw(graphics, mouseX, mouseY)`。Grid 会从前到后检查可见元素，包括嵌套 Grid 和视觉变换；Screen 的提取生命周期负责后续的延迟 Tooltip 阶段。
+
+Tooltip 可由 `Component` 或组件列表创建；需要格式化文本时使用 `GridTooltip.formatted(...)`，传入可选图片、定位器、替换行为和样式。`Font` 与 `ItemStack` 构造器则使用 Minecraft 原生物品 Tooltip 逻辑。
 
 `TextureRectangle` 使用布局边界作为目标绘制区域。默认 `Identifier` 构造器使用归一化 UV 采样整张纹理；UV 重载允许指定归一化边界。`RenderPipeline` 重载则使用像素坐标描述源区域，并接收纹理完整尺寸及可选 tint 颜色。源区域尺寸与目标尺寸相互独立，因此对齐或布局缩放不会改变采样区域。
 
