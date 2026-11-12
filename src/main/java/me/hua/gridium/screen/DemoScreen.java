@@ -11,12 +11,12 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-public class TestScreen extends Screen {
+public class DemoScreen extends Screen {
 	private final Screen parent;
 	private Grid grid;
 
-	public TestScreen(Screen parent) {
-		super(Component.literal("Gridium Test Screen"));
+	public DemoScreen(Screen parent) {
+		super(Component.literal("Gridium Demo"));
 		this.parent = parent;
 	}
 

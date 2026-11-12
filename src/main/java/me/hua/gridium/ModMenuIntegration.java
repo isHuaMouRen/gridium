@@ -2,7 +2,7 @@ package me.hua.gridium;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import me.hua.gridium.screen.TestScreen;
+import me.hua.gridium.screen.DemoScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -11,6 +11,6 @@ public class ModMenuIntegration implements ModMenuApi {
 
 	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory() {
-		return TestScreen::new;
+		return DemoScreen::new;
 	}
 }
