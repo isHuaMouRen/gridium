@@ -2,6 +2,7 @@ package me.hua.gridium.rendering;
 
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import me.hua.gridium.controls.BookPreview;
+import me.hua.gridium.controls.BannerPatternPreview;
 import me.hua.gridium.controls.EntityPreview;
 import me.hua.gridium.controls.FakeItemIcon;
 import me.hua.gridium.controls.GradientRectangle;
@@ -254,6 +255,20 @@ public class MinecraftGridRenderer implements GridRenderer {
 				bookPreview.getScale(),
 				bookPreview.getOpen(),
 				bookPreview.getFlip(),
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				(int) Math.round(bounds.getRight()),
+				(int) Math.round(bounds.getBottom())
+		);
+	}
+
+	@Override
+	public void render(BannerPatternPreview bannerPatternPreview) {
+		Rect bounds = bannerPatternPreview.getBounds();
+		graphics.bannerPattern(
+				bannerPatternPreview.getFlagModel(),
+				bannerPatternPreview.getBaseColor(),
+				bannerPatternPreview.getPatterns(),
 				(int) Math.round(bounds.getX()),
 				(int) Math.round(bounds.getY()),
 				(int) Math.round(bounds.getRight()),

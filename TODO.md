@@ -19,7 +19,7 @@ Only list work that is not implemented yet. Remove an item from this file when i
 - [x] Add entity preview support for `entity`, preserving scale, translation, rotation, camera override, and bounds.
 - [x] Add player skin rendering support for `skin`.
 - [x] Add book preview support for `book`, preserving open and flip state.
-- [ ] Add banner pattern rendering support for `bannerPattern`.
+- [x] Add banner pattern rendering support for `bannerPattern`.
 - [ ] Add profiler chart rendering support for `profilerChart`.
 
 ## Tooltips and interactive text
