@@ -1,6 +1,7 @@
 package me.hua.gridium.rendering;
 
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
+import me.hua.gridium.controls.BookPreview;
 import me.hua.gridium.controls.EntityPreview;
 import me.hua.gridium.controls.FakeItemIcon;
 import me.hua.gridium.controls.GradientRectangle;
@@ -237,6 +238,22 @@ public class MinecraftGridRenderer implements GridRenderer {
 				skinPreview.getRotationX(),
 				skinPreview.getRotationY(),
 				skinPreview.getPivotY(),
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				(int) Math.round(bounds.getRight()),
+				(int) Math.round(bounds.getBottom())
+		);
+	}
+
+	@Override
+	public void render(BookPreview bookPreview) {
+		Rect bounds = bookPreview.getBounds();
+		graphics.book(
+				bookPreview.getBookModel(),
+				bookPreview.getTexture(),
+				bookPreview.getScale(),
+				bookPreview.getOpen(),
+				bookPreview.getFlip(),
 				(int) Math.round(bounds.getX()),
 				(int) Math.round(bounds.getY()),
 				(int) Math.round(bounds.getRight()),

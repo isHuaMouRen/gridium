@@ -99,6 +99,8 @@ public void extractRenderState(
 
 `SkinPreview` 将玩家模型和皮肤纹理绘制到自身布局边界内。传入 `Model.Simple`、皮肤 `Identifier`、缩放、X/Y 旋转角度及枢轴 Y；模型可从 `Minecraft.getInstance().getEntityModels()` 和玩家的 `PlayerSkin` 构造。缩放使用原生模型单位而非像素；常规玩家预览可使用 `0.97f * viewportHeight / 2.125f`，枢轴 Y 使用 `-1.0625f`。
 
+`BookPreview` 在布局边界内绘制 Minecraft 书本模型。传入 `BookModel`、书本纹理、缩放、打开程度和翻页值；模型通过烘焙 `ModelLayers.BOOK` 创建。
+
 `TextureRectangle` 使用布局边界作为目标绘制区域。默认 `Identifier` 构造器使用归一化 UV 采样整张纹理；UV 重载允许指定归一化边界。`RenderPipeline` 重载则使用像素坐标描述源区域，并接收纹理完整尺寸及可选 tint 颜色。源区域尺寸与目标尺寸相互独立，因此对齐或布局缩放不会改变采样区域。
 
 绘制 GPU 纹理时，传入 `GpuTextureView` 和 `GpuSampler`；对应原生重载使用归一化 UV、默认 GUI 纹理管线和白色 tint。

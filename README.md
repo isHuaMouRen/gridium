@@ -99,6 +99,8 @@ To draw a component with Minecraft's configured text backdrop, construct `Text` 
 
 `SkinPreview` renders a player model and skin texture into its layout bounds. Supply the `Model.Simple`, skin `Identifier`, scale, X/Y rotations, and pivot Y; the model can be built from `Minecraft.getInstance().getEntityModels()` and the player's `PlayerSkin`. Scale is in native model units rather than pixels; for a typical player preview, use `0.97f * viewportHeight / 2.125f` and pivot Y `-1.0625f`.
 
+`BookPreview` renders Minecraft's book model within its layout bounds. Supply the `BookModel`, book texture, scale, open amount, and page-flip value; create the model by baking `ModelLayers.BOOK`.
+
 `TextureRectangle` uses its layout bounds as the destination rectangle. Its default `Identifier` constructor samples the full texture using normalized UVs; the UV overload accepts explicit normalized bounds. The `RenderPipeline` overload instead accepts pixel source coordinates and dimensions plus the full texture dimensions, with an optional tint color. Source-region dimensions are independent of the destination size, so alignment or layout scaling does not change the sampled texture region.
 
 For GPU textures, pass a `GpuTextureView` and `GpuSampler`; this native overload uses normalized UV bounds, the default GUI textured pipeline, and a white tint.
