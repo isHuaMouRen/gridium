@@ -103,6 +103,8 @@ To draw a component with Minecraft's configured text backdrop, construct `Text` 
 
 `BannerPatternPreview` renders a banner pattern within its layout bounds. Supply a baked `BannerFlagModel`, base `DyeColor`, and `BannerPatternLayers`; create the model by baking `ModelLayers.STANDING_BANNER_FLAG`.
 
+`ProfilerChart` renders profiler results within its layout bounds. Supply the `ResultField` list and viewport dimensions; each field retains the native percentage, global percentage, count, and name data.
+
 `TextureRectangle` uses its layout bounds as the destination rectangle. Its default `Identifier` constructor samples the full texture using normalized UVs; the UV overload accepts explicit normalized bounds. The `RenderPipeline` overload instead accepts pixel source coordinates and dimensions plus the full texture dimensions, with an optional tint color. Source-region dimensions are independent of the destination size, so alignment or layout scaling does not change the sampled texture region.
 
 For GPU textures, pass a `GpuTextureView` and `GpuSampler`; this native overload uses normalized UV bounds, the default GUI textured pipeline, and a white tint.

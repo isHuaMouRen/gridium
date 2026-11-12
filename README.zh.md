@@ -103,6 +103,8 @@ public void extractRenderState(
 
 `BannerPatternPreview` 在布局边界内绘制旗帜图案。传入烘焙后的 `BannerFlagModel`、底色 `DyeColor` 和 `BannerPatternLayers`；模型通过烘焙 `ModelLayers.STANDING_BANNER_FLAG` 创建。
 
+`ProfilerChart` 在布局边界内绘制性能分析结果。传入 `ResultField` 列表和视口尺寸；每个结果项保留原生的百分比、全局百分比、计数和名称数据。
+
 `TextureRectangle` 使用布局边界作为目标绘制区域。默认 `Identifier` 构造器使用归一化 UV 采样整张纹理；UV 重载允许指定归一化边界。`RenderPipeline` 重载则使用像素坐标描述源区域，并接收纹理完整尺寸及可选 tint 颜色。源区域尺寸与目标尺寸相互独立，因此对齐或布局缩放不会改变采样区域。
 
 绘制 GPU 纹理时，传入 `GpuTextureView` 和 `GpuSampler`；对应原生重载使用归一化 UV、默认 GUI 纹理管线和白色 tint。

@@ -9,6 +9,7 @@ import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.ItemDecorations;
 import me.hua.gridium.controls.ItemIcon;
 import me.hua.gridium.controls.MapImage;
+import me.hua.gridium.controls.ProfilerChart;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.SkinPreview;
@@ -63,6 +64,8 @@ public interface GridRenderer {
 	void render(BookPreview bookPreview);
 
 	void render(BannerPatternPreview bannerPatternPreview);
+
+	void render(ProfilerChart profilerChart);
 
 	void render(Rectangle rectangle);
 

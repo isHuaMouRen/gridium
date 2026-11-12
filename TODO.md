@@ -20,7 +20,7 @@ Only list work that is not implemented yet. Remove an item from this file when i
 - [x] Add player skin rendering support for `skin`.
 - [x] Add book preview support for `book`, preserving open and flip state.
 - [x] Add banner pattern rendering support for `bannerPattern`.
-- [ ] Add profiler chart rendering support for `profilerChart`.
+- [x] Add profiler chart rendering support for `profilerChart`.
 
 ## Tooltips and interactive text
 

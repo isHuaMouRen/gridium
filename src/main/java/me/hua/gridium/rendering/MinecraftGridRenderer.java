@@ -10,6 +10,7 @@ import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.ItemDecorations;
 import me.hua.gridium.controls.ItemIcon;
 import me.hua.gridium.controls.MapImage;
+import me.hua.gridium.controls.ProfilerChart;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.RectangleOutline;
 import me.hua.gridium.controls.SkinPreview;
@@ -269,6 +270,18 @@ public class MinecraftGridRenderer implements GridRenderer {
 				bannerPatternPreview.getFlagModel(),
 				bannerPatternPreview.getBaseColor(),
 				bannerPatternPreview.getPatterns(),
+				(int) Math.round(bounds.getX()),
+				(int) Math.round(bounds.getY()),
+				(int) Math.round(bounds.getRight()),
+				(int) Math.round(bounds.getBottom())
+		);
+	}
+
+	@Override
+	public void render(ProfilerChart profilerChart) {
+		Rect bounds = profilerChart.getBounds();
+		graphics.profilerChart(
+				profilerChart.getChartData(),
 				(int) Math.round(bounds.getX()),
 				(int) Math.round(bounds.getY()),
 				(int) Math.round(bounds.getRight()),
