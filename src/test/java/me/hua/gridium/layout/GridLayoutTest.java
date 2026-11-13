@@ -79,6 +79,47 @@ class GridLayoutTest {
 		assertEquals(18.0, grid.getDesiredSize().getHeight());
 	}
 
+	@Test
+	void nestedGridMarginOffsetsItsChildrenAsAGroup() {
+		Grid root = new Grid();
+		Grid childGrid = new Grid().setMargin(new Thickness(10.0, 20.0, 30.0, 40.0));
+		FixedElement firstChild = new FixedElement(12.0, 6.0)
+				.setMargin(new Thickness(1.0, 2.0, 3.0, 4.0));
+		FixedElement secondChild = new FixedElement(8.0, 4.0);
+		childGrid.add(firstChild);
+		childGrid.add(secondChild);
+		root.add(childGrid);
+
+		root.measure(new Size(200.0, 120.0));
+		root.arrange(new Rect(5.0, 7.0, 200.0, 120.0));
+
+		assertEquals(56.0, childGrid.getDesiredSize().getWidth());
+		assertEquals(72.0, childGrid.getDesiredSize().getHeight());
+		assertEquals(15.0, childGrid.getBounds().getX());
+		assertEquals(27.0, childGrid.getBounds().getY());
+		assertEquals(16.0, childGrid.getBounds().getWidth());
+		assertEquals(12.0, childGrid.getBounds().getHeight());
+		assertBounds(firstChild, new Rect(16.0, 29.0, 12.0, 6.0));
+		assertBounds(secondChild, new Rect(15.0, 27.0, 8.0, 4.0));
+	}
+
+	@Test
+	void nestedGridMarginsReduceAvailableSizeForItsChildren() {
+		Grid root = new Grid();
+		Grid childGrid = new Grid().setMargin(new Thickness(10.0, 20.0, 30.0, 40.0));
+		FixedElement child = new FixedElement(12.0, 6.0)
+				.setMargin(new Thickness(1.0, 2.0, 3.0, 4.0));
+		childGrid.add(child);
+		root.add(childGrid);
+
+		root.measure(new Size(200.0, 120.0));
+
+		assertEquals(156.0, child.getLastAvailableSize().getWidth());
+		assertEquals(54.0, child.getLastAvailableSize().getHeight());
+		assertEquals(56.0, root.getDesiredSize().getWidth());
+		assertEquals(72.0, root.getDesiredSize().getHeight());
+	}
+
 	private static void layout(Grid grid, Rect bounds) {
 		grid.measure(bounds.getSize());
 		grid.arrange(bounds);

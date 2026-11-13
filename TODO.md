@@ -5,7 +5,7 @@ Only list work that is not implemented yet. Keep tasks aligned with Gridium's go
 ## 1. Establish regression coverage
 
 - [x] Add tests for core geometry and layout: input validation, measurement, margins, alignment, stretch, and layout scaling.
-- [ ] Test nested-grid measurement and arrangement, including how a nested grid's margin offsets its content as a group within the parent grid.
+- [x] Test nested-grid measurement and arrangement, including how a nested grid's margin offsets its content as a group within the parent grid.
 - [ ] Test visual transforms and inverse hit testing, including transform origins and zero-scale transforms.
 - [ ] Test rendering adapters with a recording renderer or equivalent seam. Verify layout changes destination geometry without changing drawing options such as texture source regions, UVs, colors, and text properties.
 
