@@ -48,9 +48,13 @@ public class Grid extends FrameworkElement<Grid> {
 	}
 
 	public void draw(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+		draw(graphics, mouseX, mouseY, 0.0F);
+	}
+
+	public void draw(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
 		Objects.requireNonNull(graphics, "graphics");
 		layout(graphics.guiWidth(), graphics.guiHeight());
-		render(new MinecraftGridRenderer(graphics));
+		render(new MinecraftGridRenderer(graphics, mouseX, mouseY, partialTick));
 		GridTooltip tooltip = findTooltipAt(mouseX, mouseY);
 		if (tooltip != null) {
 			tooltip.show(graphics, mouseX, mouseY);

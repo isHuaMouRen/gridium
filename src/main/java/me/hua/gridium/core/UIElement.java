@@ -17,11 +17,11 @@ public class UIElement {
 		return desiredSize;
 	}
 
-	public final boolean isVisible() {
+	public boolean isVisible() {
 		return visible;
 	}
 
-	public final void setVisible(boolean visible) {
+	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
 

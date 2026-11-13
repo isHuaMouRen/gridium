@@ -11,12 +11,12 @@ Only list work that is not implemented yet. Keep tasks aligned with Gridium's go
 
 ## 2. Integrate native Minecraft widgets with Grid layout
 
-- [ ] Preserve the ordinary Minecraft widget construction API (`Button.builder(...)`, `Checkbox.builder(...)`, `EditBox`, and similar) and use the native widget as the source of truth for its value, input, focus, tooltip, and narration behavior.
-- [ ] Add a small Gridium adapter that measures a native widget from its preferred/current size, applies Grid-arranged position and size to it, and extracts its native render state from the Grid drawing pass.
-- [ ] Provide a Screen integration path that registers adapted widgets through Minecraft's input/narration registration without also registering them for Screen rendering; Grid should draw each adapted widget exactly once.
-- [ ] Keep registration and layout ownership clear in the public API, with a concise example that creates a normal native widget, registers it with the Screen, adds its adapter to a root Grid, and draws only that root.
-- [ ] Synchronize arranged widget bounds after screen initialization and resize, and define how visibility and active/enabled state stay consistent between the adapter and the native widget.
-- [ ] Initially support layout positioning and sizing only. Do not claim Gridium layout scale, visual transforms, clipping, or custom hit regions work for native widgets until rendering and native input hit testing are verified to agree.
+- [x] Preserve the ordinary Minecraft widget construction API (`Button.builder(...)`, `Checkbox.builder(...)`, `EditBox`, and similar) and use the native widget as the source of truth for its value, input, focus, tooltip, and narration behavior.
+- [x] Add a small Gridium adapter that measures a native widget from its preferred/current size, applies Grid-arranged position and size to it, and extracts its native render state from the Grid drawing pass.
+- [x] Provide a Screen integration path that registers adapted widgets through Minecraft's input/narration registration without also registering them for Screen rendering; Grid should draw each adapted widget exactly once.
+- [x] Keep registration and layout ownership clear in the public API, with a concise example that creates a normal native widget, registers it with the Screen, adds its adapter to a root Grid, and draws only that root.
+- [x] Synchronize arranged widget bounds after screen initialization and resize, and define how visibility and active/enabled state stay consistent between the adapter and the native widget.
+- [x] Initially support layout positioning and sizing only. Do not claim Gridium layout scale, visual transforms, clipping, or custom hit regions work for native widgets until rendering and native input hit testing are verified to agree.
 - [ ] Verify representative native widgets end to end, including a button, slider, checkbox or cycle button, and text input; confirm mouse/keyboard behavior, focus traversal, tooltips, narration, and no duplicate rendering.
 
 ## 3. Define custom interaction boundaries

@@ -21,6 +21,7 @@ import me.hua.gridium.controls.TextureRectangle;
 import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.RenderTransform;
+import me.hua.gridium.controls.MinecraftWidget;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.network.chat.Component;
@@ -34,9 +35,19 @@ import java.util.Objects;
 
 public class MinecraftGridRenderer implements GridRenderer {
 	private final GuiGraphicsExtractor graphics;
+	private final int mouseX;
+	private final int mouseY;
+	private final float partialTick;
 
 	public MinecraftGridRenderer(GuiGraphicsExtractor graphics) {
+		this(graphics, 0, 0, 0.0F);
+	}
+
+	public MinecraftGridRenderer(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
 		this.graphics = Objects.requireNonNull(graphics, "graphics");
+		this.mouseX = mouseX;
+		this.mouseY = mouseY;
+		this.partialTick = partialTick;
 	}
 
 	@Override
@@ -194,6 +205,11 @@ public class MinecraftGridRenderer implements GridRenderer {
 				(int) Math.round(bounds.getY()),
 				itemDecorations.getCountText()
 		);
+	}
+
+	@Override
+	public void render(MinecraftWidget widget) {
+		widget.getWidget().extractRenderState(graphics, mouseX, mouseY, partialTick);
 	}
 
 	@Override

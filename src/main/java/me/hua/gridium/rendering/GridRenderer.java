@@ -20,6 +20,7 @@ import me.hua.gridium.controls.TextureRectangle;
 import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.RenderTransform;
+import me.hua.gridium.controls.MinecraftWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;
@@ -54,6 +55,8 @@ public interface GridRenderer {
 	void render(FakeItemIcon itemIcon);
 
 	void render(ItemDecorations itemDecorations);
+
+	void render(MinecraftWidget widget);
 
 	void render(MapImage mapImage);
 
