@@ -5,37 +5,35 @@ Only list work that is not implemented yet. Keep tasks aligned with Gridium's go
 ## 1. Establish regression coverage
 
 - [ ] Add tests for core geometry and layout: input validation, measurement, margins, alignment, stretch, layout scaling, and nested grids.
+- [ ] Test nested-grid measurement and arrangement, including how a nested grid's margin offsets its content as a group within the parent grid.
 - [ ] Test visual transforms and inverse hit testing, including transform origins and zero-scale transforms.
 - [ ] Test rendering adapters with a recording renderer or equivalent seam. Verify layout changes destination geometry without changing drawing options such as texture source regions, UVs, colors, and text properties.
 
-## 2. Separate drawable and interactive element bases
+## 2. Integrate native Minecraft widgets with Grid layout
 
-- [ ] Clarify the common element responsibilities, then introduce a drawable base for elements that render content and an interactive base that **inherits from the drawable base** and adds input behavior.
-- [ ] Keep focus, enabled state, pointer/keyboard handlers, and other interaction-only behavior out of render-only elements. Share only the layout and geometry capabilities that both branches need.
-- [ ] Keep containers such as `Grid` focused on layout and orchestration; do not force containers or render-only elements into the interactive branch.
-- [ ] Decide where tooltip state and hit testing belong so existing tooltips remain usable without adding unnecessary interaction state to every drawable element.
+- [ ] Preserve the ordinary Minecraft widget construction API (`Button.builder(...)`, `Checkbox.builder(...)`, `EditBox`, and similar) and use the native widget as the source of truth for its value, input, focus, tooltip, and narration behavior.
+- [ ] Add a small Gridium adapter that measures a native widget from its preferred/current size, applies Grid-arranged position and size to it, and extracts its native render state from the Grid drawing pass.
+- [ ] Provide a Screen integration path that registers adapted widgets through Minecraft's input/narration registration without also registering them for Screen rendering; Grid should draw each adapted widget exactly once.
+- [ ] Keep registration and layout ownership clear in the public API, with a concise example that creates a normal native widget, registers it with the Screen, adds its adapter to a root Grid, and draws only that root.
+- [ ] Synchronize arranged widget bounds after screen initialization and resize, and define how visibility and active/enabled state stay consistent between the adapter and the native widget.
+- [ ] Initially support layout positioning and sizing only. Do not claim Gridium layout scale, visual transforms, clipping, or custom hit regions work for native widgets until rendering and native input hit testing are verified to agree.
+- [ ] Verify representative native widgets end to end, including a button, slider, checkbox or cycle button, and text input; confirm mouse/keyboard behavior, focus traversal, tooltips, narration, and no duplicate rendering.
 
-## 3. Add interaction routing
+## 3. Define custom interaction boundaries
 
-- [ ] Define how the screen host forwards pointer, keyboard, and focus events to interactive elements without making the core layout model depend on global screen state.
-- [ ] Implement topmost-first hit testing and event dispatch for nested elements, respecting visibility, visual transforms, and clipping.
-- [ ] Add focus, enabled/disabled, activation, and keyboard-navigation behavior, including deterministic focus traversal.
-- [ ] Add pointer capture and release so drag interactions continue after the pointer leaves an element; define deterministic cursor request/application behavior.
+- [ ] Prefer native-widget adaptation when it preserves Minecraft behavior and the desired layout experience. Add Gridium-owned interactive controls only for capabilities that cannot be provided cleanly by native widgets.
+- [ ] If custom interactive controls are needed, keep their interaction state and input behavior separate from render-only controls, sharing only common layout, geometry, and drawing capabilities.
+- [ ] Define how the Screen host routes input to any Gridium-owned interactive controls without making the core layout model depend on global Screen state; define ordering relative to native widgets.
+- [ ] Add custom focus, enabled/disabled, keyboard navigation, pointer capture, and cursor behavior only for the Gridium-owned interaction path, avoiding duplicate implementations when Minecraft already provides the behavior.
 
-## 4. Add initial interactive controls
-
-- [ ] Add a button with visual states, activation callbacks, keyboard activation, focus indication, and native-compatible narration/accessibility behavior.
-- [ ] Add a slider with a bounded value, change callbacks, pointer dragging, keyboard adjustment, and visible track/thumb states.
-- [ ] Verify controls participate in measure, arrange, and render like other elements. Reuse Minecraft's native widget behavior where it preserves expected input, narration, and rendering semantics.
-
-## 5. Complete rendering and native interaction integration
+## 4. Complete layout and rendering integration
 
 - [ ] Add scoped scissor clipping with guaranteed state restoration, and make hit testing respect active clipping regions.
 - [ ] Add stratum ordering and blur controls only where needed to expose corresponding native rendering behavior without requiring callers to manage raw rendering state.
 - [ ] Inspect the target version's tooltip extraction paths; add direct `tooltip` support only if it provides distinct functionality beyond the existing `GridTooltip` APIs.
 - [ ] Collect interactive text regions from `textRenderer` and `textRendererForWidget`, preserving native hover effects and style callbacks while connecting them to Gridium layout and hit testing.
 
-## 6. Verify interaction end to end
+## 5. Verify the framework end to end
 
-- [ ] Add tests for event routing, hit testing, focus, keyboard activation, pointer capture, and visual-transform-aware interaction.
-- [ ] Add focused client-side tests or a repeatable manual verification checklist for native widget integration, narration, tooltip timing, and screen lifecycle behavior.
+- [ ] Add tests for event routing, hit testing, focus, keyboard activation, pointer capture, and visual-transform-aware interaction where those behaviors are owned by Gridium.
+- [ ] Add focused client-side tests or a repeatable manual verification checklist for native widget integration, narration, tooltip timing, resize behavior, and Screen lifecycle behavior.
