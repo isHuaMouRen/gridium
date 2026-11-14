@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: checkout repository
         uses: actions/checkout@v6
-      - name: fix gradle wrapper download url
-        run: sed -i 's|^distributionUrl=.*|distributionUrl=https\\://services.gradle.org/distributions/gradle-9.8.2-bin.zip|' gradle/wrapper/gradle-wrapper.properties && cat gradle/wrapper/gradle-wrapper.properties
       - name: validate gradle wrapper
         uses: gradle/actions/wrapper-validation@v6
       - name: setup jdk
