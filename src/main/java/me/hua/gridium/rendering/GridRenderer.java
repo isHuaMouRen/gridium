@@ -20,7 +20,7 @@ import me.hua.gridium.controls.TextureRectangle;
 import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.RenderTransform;
-import me.hua.gridium.controls.MinecraftWidget;
+import me.hua.gridium.integration.minecraft.MinecraftWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;

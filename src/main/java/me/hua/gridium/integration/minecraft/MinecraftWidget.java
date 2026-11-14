@@ -1,4 +1,4 @@
-package me.hua.gridium.controls;
+package me.hua.gridium.integration.minecraft;
 
 import me.hua.gridium.core.FrameworkElement;
 import me.hua.gridium.core.Rect;

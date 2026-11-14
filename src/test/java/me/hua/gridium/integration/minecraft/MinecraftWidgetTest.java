@@ -1,6 +1,5 @@
 package me.hua.gridium.integration.minecraft;
 
-import me.hua.gridium.controls.MinecraftWidget;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.Size;
 import net.minecraft.client.gui.components.Button;
