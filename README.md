@@ -4,7 +4,7 @@
 
 ---
 
-![Gridium](src/main/resources/assets/gridium/icon.png)
+<img src="src/main/resources/assets/gridium/icon.png" alt="Gridium" width="128">
 
 **Gridium** is a UI layout framework for Minecraft Java Edition Fabric mods. It adds layout support to Minecraft's native rendering capabilities: developers describe what to draw and how to align it, while the framework measures, arranges, and calculates rendering positions—reducing the need to manually calculate screen coordinates.
 
