@@ -19,7 +19,7 @@
 			"me.hua.gridium.Gridium"
 		],
 		"modmenu": [
-			"me.hua.gridium.ModMenuIntegration"
+          "me.hua.gridium.integration.modmenu.ModMenuIntegration"
 		]
 	},
 	"mixins": [
