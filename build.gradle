@@ -65,9 +65,8 @@ jar {
 	def projectName = project.name
 	inputs.property "projectName", projectName
 
-	from("LICENSE.md") {
-		rename { "${it}_$projectName"}
-	}
+	from("LICENSE.md")
+    from("CHANGELOG.md")
 }
 
 // configure the maven publication
