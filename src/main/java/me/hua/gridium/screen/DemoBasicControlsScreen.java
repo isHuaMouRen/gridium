@@ -63,34 +63,40 @@ public class DemoBasicControlsScreen extends Screen {
 
 		//STACKPANEL START
 		var panel = new StackPanel().setSpacing(5);
+		var panel2 = new StackPanel().setSpacing(5);
 		grid.add(panel
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
+				.setHorizontalAlignment(HorizontalAlignment.STRETCH)
 				.setVerticalAlignment(VerticalAlignment.STRETCH)
-				.setMargin(new Thickness(0, 10 + 24 + 10, 0, 0))
+				.setMargin(new Thickness(10, 10 + 24 + 10, (double) width / 2, 10))
+		);
+		grid.add(panel2
+				.setHorizontalAlignment(HorizontalAlignment.STRETCH)
+				.setVerticalAlignment(VerticalAlignment.STRETCH)
+				.setMargin(new Thickness((double) width / 2 + 10, 10 + 24 + 10, 10, 10))
 		);
 
 		panel.add(new Text(font, Component.literal("§lText"), 0xFFFFFFFF, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER).setHorizontalAlignment(HorizontalAlignment.CENTER));
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 		panel.add(new Text(font, Component.literal("Hello, Gridium!"), 0xFFFFFF55, true)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 
 		panel.add(new Text(font, Component.literal("§lRectangle"), 0xFFFFFFFF, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 		panel.add(new Rectangle(64, 18, 0xFF3F76E4).setHorizontalAlignment(HorizontalAlignment.CENTER)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 
 		panel.add(new Text(font, Component.literal("§lRectangleOutline"), 0xFFFFFFFF, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 		panel.add(new RectangleOutline(64, 18, 0xFFFFFFFF)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 
 		panel.add(new Text(font, Component.literal("§lGradientRectangle"), 0xFFFFFFFF, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 		panel.add(new GradientRectangle(64, 18, 0xFF3F76E4, 0xFF8A44CC)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 
 		panel.add(new Text(font, Component.literal("§lTextureRectangle"), 0xFFFFFFFF, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 		panel.add(new TextureRectangle(
 				RenderPipelines.GUI_TEXTURED,
 				Gridium.id("icon.png"),
@@ -98,39 +104,39 @@ public class DemoBasicControlsScreen extends Screen {
 				0, 0,
 				128, 128,
 				128, 128)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 
-		panel.add(new Text(font, Component.literal("§lSpriteRectangle"), 0xFFFFFFFF, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
-		panel.add(new SpriteRectangle(
+		panel2.add(new Text(font, Component.literal("§lSpriteRectangle"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
+		panel2.add(new SpriteRectangle(
 				RenderPipelines.GUI_TEXTURED,
 				Identifier.fromNamespaceAndPath("minecraft", "widget/button"),
 				80, 20)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 
-		panel.add(new Text(font, Component.literal("§lHorizontalLine"), 0xFFFFFFFF, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
-		panel.add(new HorizontalLine(80, 0xFFFF5555)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel2.add(new Text(font, Component.literal("§lHorizontalLine"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
+		panel2.add(new HorizontalLine(80, 0xFFFF5555)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 
-		panel.add(new Text(font, Component.literal("§lVerticalLine"), 0xFFFFFFFF, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
-		panel.add(new VerticalLine(24, 0xFF55FF55)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel2.add(new Text(font, Component.literal("§lVerticalLine"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
+		panel2.add(new VerticalLine(24, 0xFF55FF55)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 
-		panel.add(new Text(font, Component.literal("§lTextHighlight"), 0xFFFFFFFF, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
-		panel.add(new TextHighlight(80, 18, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
-		panel.add(new Text(font, Component.literal("Highlighted text"), 0xFFFFFFFF, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel2.add(new Text(font, Component.literal("§lTextHighlight"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
+		panel2.add(new TextHighlight(80, 18, false)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
+		panel2.add(new Text(font, Component.literal("Highlighted text"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 
-		panel.add(new Text(font, Component.literal("§lMinecraft Button"), 0xFFFFFFFF, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel2.add(new Text(font, Component.literal("§lMinecraft Button"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 		var nativeButton = Button.builder(Component.literal("Click me"), clicked -> clicked.setMessage(Component.literal("Clicked!"))).size(80, 20).build();
 		addWidget(nativeButton);
-		panel.add(new MinecraftWidget(nativeButton)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel2.add(new MinecraftWidget(nativeButton)
+				.setHorizontalAlignment(HorizontalAlignment.LEFT));
 
 
 		//STACKPANEL END
