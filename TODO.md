@@ -17,7 +17,7 @@ Only list work that is not implemented yet. Keep tasks aligned with Gridium's go
 - [x] Keep registration and layout ownership clear in the public API, with a concise example that creates a normal native widget, registers it with the Screen, adds its adapter to a root Grid, and draws only that root.
 - [x] Synchronize arranged widget bounds after screen initialization and resize, and define how visibility and active/enabled state stay consistent between the adapter and the native widget.
 - [x] Initially support layout positioning and sizing only. Do not claim Gridium layout scale, visual transforms, clipping, or custom hit regions work for native widgets until rendering and native input hit testing are verified to agree.
-- [ ] Verify representative native widgets end to end, including a button, slider, checkbox or cycle button, and text input; confirm mouse/keyboard behavior, focus traversal, tooltips, narration, and no duplicate rendering.
+- [x] Run `DemoWidgetsScreen` in Minecraft and verify the adapted button, checkbox, cycle button, slider, and single-line/multi-line text inputs; confirm mouse/keyboard behavior, focus traversal, tooltips, narration, resize behavior, and no duplicate rendering.
 
 ## 3. Define custom interaction boundaries
 

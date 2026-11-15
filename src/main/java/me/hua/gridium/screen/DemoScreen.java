@@ -80,6 +80,15 @@ public class DemoScreen extends Screen {
 				.setMargin(new Thickness(0, 10, 0, 0))
 		);
 
+		var widgetsButton = Button.builder(Component.literal("Widgets"), clicked -> minecraft.setScreenAndShow(new DemoWidgetsScreen(this)))
+				.build();
+		addWidget(widgetsButton);
+		grid2.add(new MinecraftWidget(widgetsButton)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER)
+				.setVerticalAlignment(VerticalAlignment.TOP)
+				.setMargin(new Thickness(0, 1 * (basicControlsButton.getHeight() + 10) + 10, 0, 0))
+		);
+
 
 		//GRID2 END
 
