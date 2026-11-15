@@ -12,21 +12,27 @@ The layout design is inspired by WPF (Windows Presentation Foundation), but this
 
 > This project is developed with the assistance of AI.
 
-## Build and Run
+## Add Gridium as a Dependency
 
-After cloning the repository, run the following command from the project root:
+In a project using Fabric Loom, add the Modrinth Maven repository and declare Gridium as a dependency:
 
-```bash
-./gradlew build
+```gradle
+repositories {
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+}
+
+dependencies {
+    modImplementation "maven.modrinth:gridium:<version>"
+}
 ```
 
-Build artifacts are located in `build/libs/` . To launch the development client, run:
-
-```bash
-./gradlew runClient
-```
-
-With Mod Menu installed in the development client, you can use Gridium's test screen to view the current basic elements and layout behavior.
+Replace `<version>` with the version of Gridium published on Modrinth.
 
 ## License
 
