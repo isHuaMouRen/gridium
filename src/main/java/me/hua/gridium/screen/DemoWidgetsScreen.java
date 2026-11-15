@@ -7,6 +7,7 @@ import me.hua.gridium.core.Thickness;
 import me.hua.gridium.core.VerticalAlignment;
 import me.hua.gridium.integration.minecraft.MinecraftWidget;
 import me.hua.gridium.layout.Grid;
+import me.hua.gridium.layout.StackPanel;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.AbstractSliderButton;
@@ -55,30 +56,29 @@ public class DemoWidgetsScreen extends Screen {
 				.setMargin(new Thickness(0, 10 + 24 - 2, 10, 0))
 		);
 
-		//GRID2 START
-		var grid2 = new Grid();
-		grid.add(grid2
-				.setHorizontalAlignment(HorizontalAlignment.STRETCH)
+		//STACKPANEL START
+		var panel = new StackPanel().setSpacing(5);
+		grid.add(panel
+				.setHorizontalAlignment(HorizontalAlignment.CENTER)
 				.setVerticalAlignment(VerticalAlignment.STRETCH)
-				.setMargin(new Thickness(0, 10 + 24, 0, 0))
+				.setMargin(new Thickness(0, 10 + 24 + 10, 0, 0))
 		);
 
 		int columnWidth = Math.max(160, width - 20);
-
-		addLabel(grid2, "Interactive widgets", 10, 4);
+		panel.add(new Text(font, Component.literal("§lInteractive widgets"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
 		int[] clickCount = {0};
-		addWidget(grid2, Button.builder(Component.literal("Button: click me"), button -> {
+		addWidget(panel, Button.builder(Component.literal("Button: click me"), button -> {
 			clickCount[0]++;
 			button.setMessage(Component.literal("Button clicked " + clickCount[0] + " times"));
-		}).size(columnWidth, 20).build(), 10, 24);
+		}).size(columnWidth, 20).build());
 
 		Checkbox checkbox = Checkbox.builder(Component.literal("Checkbox (selected)"), font)
-				.pos(10, 54)
 				.selected(true)
 				.maxWidth(columnWidth)
 				.build();
-		addWidget(grid2, checkbox, 10, 54);
+		addWidget(panel, checkbox);
 
 		CycleButton<String> cycleButton = CycleButton.<String>builder(
 						value -> Component.literal("Cycle: " + value),
@@ -88,7 +88,7 @@ public class DemoWidgetsScreen extends Screen {
 				.create(Component.literal("Cycle button"), (button, value) -> {
 				});
 		cycleButton.setSize(columnWidth, 20);
-		addWidget(grid2, cycleButton, 10, 82);
+		addWidget(panel, cycleButton);
 
 		AbstractSliderButton slider = new AbstractSliderButton(
 				0,
@@ -111,34 +111,28 @@ public class DemoWidgetsScreen extends Screen {
 			protected void applyValue() {
 			}
 		};
-		addWidget(grid2, slider, 10, 110);
+		addWidget(panel, slider);
 
 		EditBox editBox = new EditBox(font, columnWidth, 20, Component.literal("Single-line input"));
 		editBox.setHint(Component.literal("Type here..."));
 		editBox.setValue("Gridium");
-		addWidget(grid2, editBox, 10, 138);
+		addWidget(panel, editBox);
 
 		MultiLineEditBox multiLineEditBox = MultiLineEditBox.builder()
 				.setPlaceholder(Component.literal("Multi-line input"))
 				.build(font, columnWidth, 58, Component.literal("Multi-line input"));
 		multiLineEditBox.setValue("Edit multiple lines here.");
-		addWidget(grid2, multiLineEditBox, 10, 166);
+		addWidget(panel, multiLineEditBox);
 
 		//GRID2 END
 		//GRID END
 	}
 
-	private void addLabel(Grid target, String text, double x, double y) {
-		target.add(new Text(font, Component.literal(text), 0xFFFFFFFF, false)
-				.setMargin(new Thickness(x, y, 0, 0)));
-	}
-
-	private void addWidget(Grid target, AbstractWidget widget, double x, double y) {
+	private void addWidget(StackPanel target, AbstractWidget widget) {
 		addWidget(widget);
 		target.add(new MinecraftWidget(widget)
-				.setHorizontalAlignment(HorizontalAlignment.LEFT)
-				.setVerticalAlignment(VerticalAlignment.TOP)
-				.setMargin(new Thickness(x, y, 0, 0)));
+				.setHorizontalAlignment(HorizontalAlignment.CENTER)
+		);
 	}
 
 	@Override

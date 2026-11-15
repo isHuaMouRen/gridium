@@ -7,6 +7,7 @@ import me.hua.gridium.core.Thickness;
 import me.hua.gridium.core.VerticalAlignment;
 import me.hua.gridium.integration.minecraft.MinecraftWidget;
 import me.hua.gridium.layout.Grid;
+import me.hua.gridium.layout.StackPanel;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -63,34 +64,30 @@ public class DemoScreen extends Screen {
 		);
 
 
-		//GRID2 START
-		var grid2 = new Grid();
-		grid.add(grid2
+		//STACKPANEL START
+		var panel = new StackPanel().setSpacing(5);
+		grid.add(panel
 				.setHorizontalAlignment(HorizontalAlignment.STRETCH)
 				.setVerticalAlignment(VerticalAlignment.STRETCH)
-				.setMargin(new Thickness(0, 10 + 24, 0, 0))
+				.setMargin(new Thickness(0, 10 + 24 + 10, 0, 0))
 		);
 
 		var basicControlsButton = Button.builder(Component.literal("Basic Controls"), clicked -> minecraft.setScreenAndShow(new DemoBasicControlsScreen(this)))
 				.build();
 		addWidget(basicControlsButton);
-		grid2.add(new MinecraftWidget(basicControlsButton)
+		panel.add(new MinecraftWidget(basicControlsButton)
 				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-				.setVerticalAlignment(VerticalAlignment.TOP)
-				.setMargin(new Thickness(0, 10, 0, 0))
 		);
 
 		var widgetsButton = Button.builder(Component.literal("Widgets"), clicked -> minecraft.setScreenAndShow(new DemoWidgetsScreen(this)))
 				.build();
 		addWidget(widgetsButton);
-		grid2.add(new MinecraftWidget(widgetsButton)
+		panel.add(new MinecraftWidget(widgetsButton)
 				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-				.setVerticalAlignment(VerticalAlignment.TOP)
-				.setMargin(new Thickness(0, 1 * (basicControlsButton.getHeight() + 10) + 10, 0, 0))
 		);
 
 
-		//GRID2 END
+		//STACKPANEL END
 
 
 		//GRID END

@@ -15,6 +15,7 @@ import me.hua.gridium.core.Thickness;
 import me.hua.gridium.core.VerticalAlignment;
 import me.hua.gridium.integration.minecraft.MinecraftWidget;
 import me.hua.gridium.layout.Grid;
+import me.hua.gridium.layout.StackPanel;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -60,83 +61,79 @@ public class DemoBasicControlsScreen extends Screen {
 				.setMargin(new Thickness(0, 10 + 24 - 2, 10, 0))
 		);
 
-		//GRID2 START
-		var grid2 = new Grid();
-		grid.add(grid2
-				.setHorizontalAlignment(HorizontalAlignment.STRETCH)
+		//STACKPANEL START
+		var panel = new StackPanel().setSpacing(5);
+		grid.add(panel
+				.setHorizontalAlignment(HorizontalAlignment.CENTER)
 				.setVerticalAlignment(VerticalAlignment.STRETCH)
-				.setMargin(new Thickness(0, 10 + 24, 0, 0))
+				.setMargin(new Thickness(0, 10 + 24 + 10, 0, 0))
 		);
 
-		int rightColumn = width / 2;
+		panel.add(new Text(font, Component.literal("§lText"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER).setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel.add(new Text(font, Component.literal("Hello, Gridium!"), 0xFFFFFF55, true)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
-		grid2.add(new Text(font, Component.literal("Text"), 0xFFFFFFFF, false)
-				.setMargin(new Thickness(10, 10, 0, 0)));
-		grid2.add(new Text(font, Component.literal("Hello, Gridium!"), 0xFFFFFF55, true)
-				.setMargin(new Thickness(10, 24, 0, 0)));
+		panel.add(new Text(font, Component.literal("§lRectangle"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel.add(new Rectangle(64, 18, 0xFF3F76E4).setHorizontalAlignment(HorizontalAlignment.CENTER)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
-		grid2.add(new Text(font, Component.literal("Rectangle"), 0xFFFFFFFF, false)
-				.setMargin(new Thickness(10, 48, 0, 0)));
-		grid2.add(new Rectangle(64, 18, 0xFF3F76E4)
-				.setMargin(new Thickness(10, 62, 0, 0)));
+		panel.add(new Text(font, Component.literal("§lRectangleOutline"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel.add(new RectangleOutline(64, 18, 0xFFFFFFFF)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
-		grid2.add(new Text(font, Component.literal("RectangleOutline"), 0xFFFFFFFF, false)
-				.setMargin(new Thickness(10, 88, 0, 0)));
-		grid2.add(new RectangleOutline(64, 18, 0xFFFFFFFF)
-				.setMargin(new Thickness(10, 102, 0, 0)));
+		panel.add(new Text(font, Component.literal("§lGradientRectangle"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel.add(new GradientRectangle(64, 18, 0xFF3F76E4, 0xFF8A44CC)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
-		grid2.add(new Text(font, Component.literal("GradientRectangle"), 0xFFFFFFFF, false)
-				.setMargin(new Thickness(10, 128, 0, 0)));
-		grid2.add(new GradientRectangle(64, 18, 0xFF3F76E4, 0xFF8A44CC)
-				.setMargin(new Thickness(10, 142, 0, 0)));
-
-		grid2.add(new Text(font, Component.literal("TextureRectangle"), 0xFFFFFFFF, false)
-				.setMargin(new Thickness(10, 168, 0, 0)));
-		grid2.add(new TextureRectangle(
+		panel.add(new Text(font, Component.literal("§lTextureRectangle"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel.add(new TextureRectangle(
 				RenderPipelines.GUI_TEXTURED,
 				Gridium.id("icon.png"),
 				24, 24,
 				0, 0,
 				128, 128,
-				128, 128
-		).setMargin(new Thickness(10, 182, 0, 0)));
+				128, 128)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
-		grid2.add(new Text(font, Component.literal("SpriteRectangle"), 0xFFFFFFFF, false)
-				.setMargin(new Thickness(rightColumn, 10, 0, 0)));
-		grid2.add(new SpriteRectangle(
+		panel.add(new Text(font, Component.literal("§lSpriteRectangle"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel.add(new SpriteRectangle(
 				RenderPipelines.GUI_TEXTURED,
 				Identifier.fromNamespaceAndPath("minecraft", "widget/button"),
-				80, 20
-		).setMargin(new Thickness(rightColumn, 24, 0, 0)));
+				80, 20)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
-		grid2.add(new Text(font, Component.literal("HorizontalLine"), 0xFFFFFFFF, false)
-				.setMargin(new Thickness(rightColumn, 52, 0, 0)));
-		grid2.add(new HorizontalLine(80, 0xFFFF5555)
-				.setMargin(new Thickness(rightColumn, 72, 0, 0)));
+		panel.add(new Text(font, Component.literal("§lHorizontalLine"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel.add(new HorizontalLine(80, 0xFFFF5555)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
-		grid2.add(new Text(font, Component.literal("VerticalLine"), 0xFFFFFFFF, false)
-				.setMargin(new Thickness(rightColumn, 92, 0, 0)));
-		grid2.add(new VerticalLine(24, 0xFF55FF55)
-				.setMargin(new Thickness(rightColumn, 110, 0, 0)));
+		panel.add(new Text(font, Component.literal("§lVerticalLine"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel.add(new VerticalLine(24, 0xFF55FF55)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
-		grid2.add(new Text(font, Component.literal("TextHighlight"), 0xFFFFFFFF, false)
-				.setMargin(new Thickness(rightColumn, 132, 0, 0)));
-		grid2.add(new TextHighlight(80, 18, false)
-				.setMargin(new Thickness(rightColumn, 146, 0, 0)));
-		grid2.add(new Text(font, Component.literal("Highlighted text"), 0xFFFFFFFF, false)
-				.setMargin(new Thickness(rightColumn + 3, 148, 0, 0)));
+		panel.add(new Text(font, Component.literal("§lTextHighlight"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel.add(new TextHighlight(80, 18, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
+		panel.add(new Text(font, Component.literal("Highlighted text"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
-		grid2.add(new Text(font, Component.literal("Minecraft Button"), 0xFFFFFFFF, false)
-				.setMargin(new Thickness(rightColumn, 168, 0, 0)));
+		panel.add(new Text(font, Component.literal("§lMinecraft Button"), 0xFFFFFFFF, false)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
 		var nativeButton = Button.builder(Component.literal("Click me"), clicked -> clicked.setMessage(Component.literal("Clicked!"))).size(80, 20).build();
 		addWidget(nativeButton);
-		grid2.add(new MinecraftWidget(nativeButton)
-				.setHorizontalAlignment(HorizontalAlignment.LEFT)
-				.setVerticalAlignment(VerticalAlignment.TOP)
-				.setMargin(new Thickness(rightColumn, 182, 0, 0)));
+		panel.add(new MinecraftWidget(nativeButton)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER));
 
 
-		//GRID2 END
+		//STACKPANEL END
 		//GRID END
 	}
 
