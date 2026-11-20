@@ -4,11 +4,11 @@
 
 ### 更新
 
-* 为 `Thickness` 添加两个重载 `Thickness(double all)` & `Thickness(double horizontal, double vertcal)`
+* 为 `Thickness` 添加两个重载 `Thickness(double all)` 和 `Thickness(double horizontal, double vertical)`
 
 ### 更改
 
-* 清空演示屏幕
+* 重写演示屏幕
 
 ## 0.1.1+26.3
 

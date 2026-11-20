@@ -58,14 +58,27 @@ public class DemoScreen extends Screen {
 
 
 		//STACKPANEL START
-		var panel = new StackPanel().setSpacing(5);
+		var panel = new StackPanel()
+				.setSpacing(5);
 		grid.add(panel
 				.setHorizontalAlignment(HorizontalAlignment.STRETCH)
 				.setVerticalAlignment(VerticalAlignment.STRETCH)
 				.setMargin(new Thickness(0, 10 + 24 + 10, 0, 0))
 		);
 
+		var basicControlButton = Button.builder(Component.literal("Basic Controls"), clicked -> minecraft.setScreenAndShow(new DemoBasicControlsScreen(this)))
+				.build();
+		addWidget(basicControlButton);
+		panel.add(new MinecraftWidget(basicControlButton)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER)
+		);
 
+		var widgetsButton = Button.builder(Component.literal("Layout & Widgets"), clicked -> minecraft.setScreenAndShow(new DemoWidgetsScreen(this)))
+				.build();
+		addWidget(widgetsButton);
+		panel.add(new MinecraftWidget(widgetsButton)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER)
+		);
 
 
 		//STACKPANEL END
