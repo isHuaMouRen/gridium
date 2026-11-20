@@ -35,21 +35,15 @@ public class DemoScreen extends Screen {
 				128, 128,
 				128, 128,
 				0xFFFFFFFF)
-				.setHorizontalAlignment(HorizontalAlignment.LEFT)
-				.setVerticalAlignment(VerticalAlignment.TOP)
 				.setMargin(new Thickness(10, 10, 0, 0))
 		);
 
 		grid.add(new Text(font, Component.literal("§lGridium Demo"), 0xFFFFFFFF, true)
-				.setHorizontalAlignment(HorizontalAlignment.LEFT)
-				.setVerticalAlignment(VerticalAlignment.TOP)
 				.setMargin(new Thickness(10 + 24 + 10, 10, 0, 0))
 				.setLayoutScale(2, 2)
 		);
 
 		grid.add(new Rectangle(width - (10 + 24 + 10) - (10 + 24 + 10), 2, 0xFFFFFFFF)
-				.setHorizontalAlignment(HorizontalAlignment.LEFT)
-				.setVerticalAlignment(VerticalAlignment.TOP)
 				.setMargin(new Thickness(10 + 24 + 10, 10 + 24 - 2, 0, 0))
 		);
 
@@ -59,7 +53,6 @@ public class DemoScreen extends Screen {
 		addWidget(exitButton);
 		grid.add(new MinecraftWidget(exitButton)
 				.setHorizontalAlignment(HorizontalAlignment.RIGHT)
-				.setVerticalAlignment(VerticalAlignment.TOP)
 				.setMargin(new Thickness(0, 10, 10, 0))
 		);
 
@@ -72,19 +65,7 @@ public class DemoScreen extends Screen {
 				.setMargin(new Thickness(0, 10 + 24 + 10, 0, 0))
 		);
 
-		var basicControlsButton = Button.builder(Component.literal("Basic Controls"), clicked -> minecraft.setScreenAndShow(new DemoBasicControlsScreen(this)))
-				.build();
-		addWidget(basicControlsButton);
-		panel.add(new MinecraftWidget(basicControlsButton)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-		);
 
-		var widgetsButton = Button.builder(Component.literal("Widgets"), clicked -> minecraft.setScreenAndShow(new DemoWidgetsScreen(this)))
-				.build();
-		addWidget(widgetsButton);
-		panel.add(new MinecraftWidget(widgetsButton)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-		);
 
 
 		//STACKPANEL END
