@@ -24,10 +24,6 @@ import net.minecraft.world.item.Items;
 
 import java.util.List;
 
-/**
- * 展示布局、变换、原生 Widget、物品控件和 Tooltip。
- * 复杂 Minecraft 模型控件需要真实运行时状态，因此这里只展示可安全创建的控件。
- */
 public class DemoWidgetsScreen extends Screen {
 	private final Screen parent;
 	private Grid grid;
