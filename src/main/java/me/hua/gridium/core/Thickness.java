@@ -17,6 +17,14 @@ public class Thickness {
 		requireFinite(this.top + this.bottom, "vertical");
 	}
 
+	public Thickness(double all) {
+		this(all, all, all, all);
+	}
+
+	public Thickness(double horizontal, double vertical) {
+		this(horizontal, vertical, horizontal, vertical);
+	}
+
 	public static Thickness uniform(double uniform) {
 		return new Thickness(uniform, uniform, uniform, uniform);
 	}
