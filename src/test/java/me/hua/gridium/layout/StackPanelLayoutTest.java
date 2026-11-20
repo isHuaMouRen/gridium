@@ -12,8 +12,10 @@ import net.minecraft.network.chat.Component;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StackPanelLayoutTest {
 	@Test
@@ -106,6 +108,47 @@ class StackPanelLayoutTest {
 		assertBounds(first, new Rect(0.0, 0.0, 10.0, 8.0));
 		assertBounds(hidden, Rect.EMPTY);
 		assertBounds(last, new Rect(0.0, 12.0, 12.0, 6.0));
+	}
+
+	@Test
+	void zeroSizedVisibleChildStillSeparatesStackedChildrenBySpacing() {
+		StackPanel panel = new StackPanel(StackOrientation.VERTICAL).setSpacing(4.0);
+		FixedElement zeroSized = new FixedElement(0.0, 0.0);
+		FixedElement next = new FixedElement(10.0, 5.0);
+		panel.add(zeroSized);
+		panel.add(next);
+
+		panel.measure(new Size(0.0, 0.0));
+		panel.arrange(new Rect(2.0, 3.0, 0.0, 0.0));
+
+		assertSize(panel.getDesiredSize(), new Size(10.0, 9.0));
+		assertBounds(zeroSized, new Rect(2.0, 3.0, 0.0, 0.0));
+		assertBounds(next, new Rect(2.0, 7.0, 10.0, 5.0));
+	}
+
+	@Test
+	void addingAndRemovingChildrenUpdatesTheNextLayoutPass() {
+		StackPanel panel = new StackPanel(StackOrientation.VERTICAL).setSpacing(2.0);
+		FixedElement first = new FixedElement(10.0, 5.0);
+		FixedElement second = new FixedElement(20.0, 7.0);
+		panel.add(first);
+
+		panel.measure(new Size(100.0, 100.0));
+		panel.arrange(new Rect(0.0, 0.0, 100.0, 100.0));
+		assertSize(panel.getDesiredSize(), new Size(10.0, 5.0));
+
+		panel.add(second);
+		panel.measure(new Size(100.0, 100.0));
+		panel.arrange(new Rect(0.0, 0.0, 100.0, 100.0));
+		assertSize(panel.getDesiredSize(), new Size(20.0, 14.0));
+		assertBounds(second, new Rect(0.0, 7.0, 20.0, 7.0));
+
+		assertTrue(panel.remove(first));
+		panel.measure(new Size(100.0, 100.0));
+		panel.arrange(new Rect(0.0, 0.0, 100.0, 100.0));
+		assertSize(panel.getDesiredSize(), new Size(20.0, 7.0));
+		assertBounds(second, new Rect(0.0, 0.0, 20.0, 7.0));
+		assertFalse(panel.remove(first));
 	}
 
 	@Test

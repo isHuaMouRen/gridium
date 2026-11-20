@@ -76,6 +76,36 @@ class GridLayoutTest {
 	}
 
 	@Test
+	void childKeepsDesiredSizeInANarrowViewport() {
+		Grid grid = new Grid();
+		FixedElement child = new FixedElement(30.0, 20.0)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER)
+				.setVerticalAlignment(VerticalAlignment.CENTER);
+		grid.add(child);
+
+		layout(grid, new Rect(0.0, 0.0, 12.0, 8.0));
+
+		assertBounds(child, new Rect(-9.0, -6.0, 30.0, 20.0));
+	}
+
+	@Test
+	void marginsLargerThanTheAvailableAreaProduceZeroSizedContent() {
+		Grid grid = new Grid();
+		FixedElement child = new FixedElement(10.0, 5.0)
+				.setHorizontalAlignment(HorizontalAlignment.STRETCH)
+				.setVerticalAlignment(VerticalAlignment.STRETCH)
+				.setMargin(new Thickness(100.0, 75.0, 100.0, 75.0));
+		grid.add(child);
+
+		grid.measure(new Size(20.0, 10.0));
+		grid.arrange(new Rect(0.0, 0.0, 20.0, 10.0));
+
+		assertEquals(210.0, child.getDesiredSize().getWidth());
+		assertEquals(155.0, child.getDesiredSize().getHeight());
+		assertBounds(child, new Rect(100.0, 75.0, 0.0, 0.0));
+	}
+
+	@Test
 	void childMeasurementUsesAvailableSize() {
 		Grid grid = new Grid();
 		FixedElement child = new FixedElement(20.0, 10.0)
