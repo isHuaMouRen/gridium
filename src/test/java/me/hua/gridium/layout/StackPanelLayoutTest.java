@@ -5,6 +5,7 @@ import me.hua.gridium.core.HorizontalAlignment;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.Size;
 import me.hua.gridium.core.Thickness;
+import me.hua.gridium.core.UIElement;
 import me.hua.gridium.core.VerticalAlignment;
 import me.hua.gridium.testutil.FixedElement;
 import net.minecraft.client.gui.Font;
@@ -169,6 +170,36 @@ class StackPanelLayoutTest {
 	}
 
 	@Test
+	void stretchedNestedStackPanelAlignsAndStretchesChildrenWithinMargins() {
+		Grid root = new Grid();
+		StackPanel stack = new StackPanel()
+				.setSpacing(3.0)
+				.setHorizontalAlignment(HorizontalAlignment.STRETCH)
+				.setVerticalAlignment(VerticalAlignment.STRETCH)
+				.setMargin(new Thickness(5.0, 4.0, 15.0, 6.0));
+		FixedElement rightAligned = new FixedElement(20.0, 10.0)
+				.setHorizontalAlignment(HorizontalAlignment.RIGHT);
+		FixedElement stretched = new FixedElement(12.0, 15.0)
+				.setHorizontalAlignment(HorizontalAlignment.STRETCH)
+				.setMargin(new Thickness(2.0, 0.0, 4.0, 0.0));
+		stack.add(rightAligned);
+		stack.add(stretched);
+		root.add(stack);
+
+		root.measure(new Size(100.0, 80.0));
+
+		assertSize(stack.getDesiredSize(), new Size(40.0, 38.0));
+		assertEquals(74.0, stretched.getLastAvailableSize().getWidth());
+		assertEquals(70.0, stretched.getLastAvailableSize().getHeight());
+
+		root.arrange(new Rect(3.0, 4.0, 100.0, 80.0));
+
+		assertBounds(stack, new Rect(8.0, 8.0, 80.0, 70.0));
+		assertBounds(rightAligned, new Rect(68.0, 8.0, 20.0, 10.0));
+		assertBounds(stretched, new Rect(10.0, 21.0, 74.0, 15.0));
+	}
+
+	@Test
 	void mixedPanelsRejectCyclesInEitherNestingOrder() {
 		Grid grid = new Grid();
 		StackPanel stack = new StackPanel();
@@ -240,7 +271,7 @@ class StackPanelLayoutTest {
 		});
 	}
 
-	private static void assertBounds(FixedElement element, Rect expected) {
+	private static void assertBounds(UIElement element, Rect expected) {
 		assertEquals(expected.getX(), element.getBounds().getX());
 		assertEquals(expected.getY(), element.getBounds().getY());
 		assertEquals(expected.getWidth(), element.getBounds().getWidth());

@@ -4,6 +4,7 @@ import me.hua.gridium.core.HorizontalAlignment;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.Size;
 import me.hua.gridium.core.Thickness;
+import me.hua.gridium.core.UIElement;
 import me.hua.gridium.core.VerticalAlignment;
 import me.hua.gridium.testutil.FixedElement;
 import org.junit.jupiter.api.Test;
@@ -163,12 +164,44 @@ class GridLayoutTest {
 		assertEquals(72.0, root.getDesiredSize().getHeight());
 	}
 
+	@Test
+	void stretchedScaledNestedGridMeasuresAndArrangesWithinItsMarginAdjustedSlot() {
+		Grid root = new Grid();
+		Grid nestedGrid = new Grid()
+				.setLayoutScale(2.0, 2.0)
+				.setHorizontalAlignment(HorizontalAlignment.STRETCH)
+				.setVerticalAlignment(VerticalAlignment.STRETCH)
+				.setMargin(new Thickness(5.0, 3.0, 7.0, 9.0));
+		FixedElement child = new FixedElement(12.0, 8.0)
+				.setHorizontalAlignment(HorizontalAlignment.RIGHT)
+				.setVerticalAlignment(VerticalAlignment.BOTTOM)
+				.setMargin(new Thickness(2.0, 1.0, 4.0, 3.0));
+		nestedGrid.add(child);
+		root.add(nestedGrid);
+
+		root.measure(new Size(120.0, 80.0));
+
+		assertEquals(48.0, nestedGrid.getDesiredSize().getWidth());
+		assertEquals(36.0, nestedGrid.getDesiredSize().getHeight());
+		assertEquals(48.0, child.getLastAvailableSize().getWidth());
+		assertEquals(30.0, child.getLastAvailableSize().getHeight());
+		assertEquals(48.0, root.getDesiredSize().getWidth());
+		assertEquals(36.0, root.getDesiredSize().getHeight());
+
+		root.arrange(new Rect(5.0, 7.0, 120.0, 80.0));
+
+		assertBounds(nestedGrid, new Rect(10.0, 10.0, 54.0, 34.0));
+		assertEquals(108.0, nestedGrid.getActualWidth());
+		assertEquals(68.0, nestedGrid.getActualHeight());
+		assertBounds(child, new Rect(48.0, 33.0, 12.0, 8.0));
+	}
+
 	private static void layout(Grid grid, Rect bounds) {
 		grid.measure(bounds.getSize());
 		grid.arrange(bounds);
 	}
 
-	private static void assertBounds(FixedElement element, Rect expected) {
+	private static void assertBounds(UIElement element, Rect expected) {
 		assertEquals(expected.getX(), element.getBounds().getX());
 		assertEquals(expected.getY(), element.getBounds().getY());
 		assertEquals(expected.getWidth(), element.getBounds().getWidth());
