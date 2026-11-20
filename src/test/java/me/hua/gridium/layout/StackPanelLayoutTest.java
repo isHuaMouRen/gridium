@@ -33,6 +33,22 @@ class StackPanelLayoutTest {
 	}
 
 	@Test
+	void horizontalStackKeepsDesiredSizesAndSpacingWhenItOverflows() {
+		StackPanel panel = new StackPanel(StackOrientation.HORIZONTAL).setSpacing(5.0);
+		FixedElement first = new FixedElement(60.0, 10.0);
+		FixedElement second = new FixedElement(50.0, 10.0);
+		panel.add(first);
+		panel.add(second);
+
+		panel.measure(new Size(100.0, 30.0));
+		panel.arrange(new Rect(10.0, 20.0, 100.0, 30.0));
+
+		assertSize(panel.getDesiredSize(), new Size(115.0, 10.0));
+		assertBounds(first, new Rect(10.0, 20.0, 60.0, 10.0));
+		assertBounds(second, new Rect(75.0, 20.0, 50.0, 10.0));
+	}
+
+	@Test
 	void verticalStackMeasuresChildrenAndAppliesCrossAxisAlignment() {
 		StackPanel panel = new StackPanel().setSpacing(3.0);
 		FixedElement first = new FixedElement(20.0, 10.0)
@@ -137,6 +153,25 @@ class StackPanelLayoutTest {
 		root.arrange(new Rect(0.0, 0.0, 100.0, 100.0));
 
 		assertSame(tooltip, root.findTooltipAt(5.0, 5.0));
+	}
+
+	@Test
+	void tooltipCanBeFoundOutsideAnAncestorPanelBoundsWhenItsChildOverflows() {
+		Grid root = new Grid();
+		Grid nestedGrid = new Grid()
+				.setHorizontalAlignment(HorizontalAlignment.STRETCH)
+				.setVerticalAlignment(VerticalAlignment.STRETCH)
+				.setMargin(new Thickness(0.0, 0.0, 50.0, 0.0));
+		GridTooltip tooltip = new GridTooltip(testFont(), Component.literal("Overflow tooltip"));
+		FixedElement child = new FixedElement(80.0, 10.0).setTooltip(tooltip);
+		nestedGrid.add(child);
+		root.add(nestedGrid);
+
+		root.measure(new Size(100.0, 50.0));
+		root.arrange(new Rect(0.0, 0.0, 100.0, 50.0));
+
+		assertBounds(child, new Rect(0.0, 0.0, 80.0, 10.0));
+		assertSame(tooltip, root.findTooltipAt(60.0, 5.0));
 	}
 
 	@Test

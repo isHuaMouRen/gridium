@@ -86,9 +86,7 @@ public abstract class Panel<T extends Panel<T>> extends FrameworkElement<T> {
 	final @Nullable GridTooltip findTooltipAt(double x, double y) {
 		FrameworkElement.LocalPoint localPoint = toLocalPoint(x, y);
 		Rect bounds = getBounds();
-		if (!isVisible()
-				|| localPoint == null
-				|| !contains(localPoint, bounds)) {
+		if (!isVisible() || localPoint == null) {
 			return null;
 		}
 
@@ -106,7 +104,7 @@ public abstract class Panel<T extends Panel<T>> extends FrameworkElement<T> {
 				return element.getTooltip();
 			}
 		}
-		return getTooltip();
+		return contains(localPoint, bounds) ? getTooltip() : null;
 	}
 
 	private boolean contains(Panel<?> target) {

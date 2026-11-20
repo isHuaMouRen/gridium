@@ -63,6 +63,19 @@ class GridLayoutTest {
 	}
 
 	@Test
+	void nonStretchChildKeepsDesiredSizeWhenItOverflowsAvailableArea() {
+		Grid grid = new Grid();
+		FixedElement child = new FixedElement(120.0, 100.0)
+				.setHorizontalAlignment(HorizontalAlignment.CENTER)
+				.setVerticalAlignment(VerticalAlignment.BOTTOM);
+		grid.add(child);
+
+		layout(grid, new Rect(10.0, 20.0, 100.0, 80.0));
+
+		assertBounds(child, new Rect(0.0, 0.0, 120.0, 100.0));
+	}
+
+	@Test
 	void childMeasurementUsesAvailableSize() {
 		Grid grid = new Grid();
 		FixedElement child = new FixedElement(20.0, 10.0)
