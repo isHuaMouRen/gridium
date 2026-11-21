@@ -27,7 +27,7 @@ public class ItemDecorations extends FrameworkElement<ItemDecorations> {
 	public ItemDecorations(Font font, ItemStack itemStack, String countText) {
 		this.font = Objects.requireNonNull(font, "font");
 		this.itemStack = Objects.requireNonNull(itemStack, "itemStack");
-		this.countText = Objects.requireNonNull(countText, "countText");
+		this.countText = countText;
 	}
 
 	public Font getFont() {

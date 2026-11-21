@@ -1,5 +1,6 @@
 package me.hua.gridium.rendering;
 
+import me.hua.gridium.controls.ItemDecorations;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.Text;
 import me.hua.gridium.controls.TextureRectangle;
@@ -13,10 +14,12 @@ import me.hua.gridium.testutil.RecordingGridRenderer;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 class RenderDispatchTest {
@@ -91,6 +94,13 @@ class RenderDispatchTest {
 		assertEquals(texture.getRenderTransform(), recordingRenderer.calls().get(0).arguments()[3]);
 		assertEquals(0.25, recordingRenderer.calls().get(0).arguments()[4]);
 		assertEquals(0.75, recordingRenderer.calls().get(0).arguments()[5]);
+	}
+
+	@Test
+	void itemDecorationsCanUseMinecraftDefaultCountText() {
+		ItemDecorations decorations = new ItemDecorations(testFont(), ItemStack.EMPTY);
+
+		assertNull(decorations.getCountText());
 	}
 
 	private static Font testFont() {

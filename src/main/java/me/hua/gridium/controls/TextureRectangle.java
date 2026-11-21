@@ -177,6 +177,7 @@ public class TextureRectangle extends FrameworkElement<TextureRectangle> {
 		renderer.render(this);
 	}
 
+	/** Normalized source-texture coordinates, independent of the destination layout bounds. */
 	public record UvRegion(float u0, float u1, float v0, float v1) {
 		public UvRegion {
 			requireFinite(u0, "u0");
@@ -186,6 +187,10 @@ public class TextureRectangle extends FrameworkElement<TextureRectangle> {
 		}
 	}
 
+	/**
+	 * Source-texture crop in pixels: {@code u}/{@code v} locate its top-left, source dimensions
+	 * describe the crop, and texture dimensions describe the full source image.
+	 */
 	public record PixelRegion(
 			float u,
 			float v,

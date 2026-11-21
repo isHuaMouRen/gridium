@@ -177,6 +177,10 @@ public class SpriteRectangle extends FrameworkElement<SpriteRectangle> {
 		renderer.render(this);
 	}
 
+	/**
+	 * Pixel crop from a GUI sprite. Sprite dimensions describe the full source sprite; source
+	 * coordinates and dimensions are independent of the destination layout bounds.
+	 */
 	public record SourceRegion(
 			int spriteWidth,
 			int spriteHeight,
