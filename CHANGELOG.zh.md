@@ -5,6 +5,8 @@
 ### 更新
 
 * 为 `Thickness` 添加两个重载 `Thickness(double all)` 和 `Thickness(double horizontal, double vertical)`
+* 明确容器溢出后的调整策略
+* 明确 `MinecraftWidget` 布局限制边界
 
 ### 更改
 

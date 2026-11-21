@@ -3,6 +3,7 @@ package me.hua.gridium.integration.minecraft;
 import me.hua.gridium.core.FrameworkElement;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.Size;
+import me.hua.gridium.core.RenderTransform;
 import me.hua.gridium.rendering.GridRenderer;
 import net.minecraft.client.gui.components.AbstractWidget;
 
@@ -11,7 +12,12 @@ import java.util.Objects;
 /**
  * Adapts a native Minecraft widget to Grid layout. Register the wrapped widget with its Screen
  * using {@code addWidget}, not {@code addRenderableWidget}; this element extracts its render state.
- * Layout transforms and clipping are not supported because native input still uses widget bounds.
+ *
+ * <p>Layout scaling and visual render transforms are not supported because they would separate the
+ * rendered widget from its native hitbox. The native widget's hitbox is exactly the rounded,
+ * arranged {@link Rect} position and size, and may extend beyond a panel or the screen viewport;
+ * Gridium does not clip widget drawing or input. Use a native widget only inside an area you intend
+ * to expose for input.</p>
  */
 public class MinecraftWidget extends FrameworkElement<MinecraftWidget> {
 	private final AbstractWidget widget;
@@ -23,6 +29,27 @@ public class MinecraftWidget extends FrameworkElement<MinecraftWidget> {
 
 	public AbstractWidget getWidget() {
 		return widget;
+	}
+
+	@Override
+	public MinecraftWidget setLayoutScale(double scaleX, double scaleY) {
+		if (scaleX != 1.0 || scaleY != 1.0) {
+			throw new IllegalStateException(
+					"MinecraftWidget does not support layout scaling; native input uses the widget bounds"
+			);
+		}
+		return super.setLayoutScale(scaleX, scaleY);
+	}
+
+	@Override
+	public MinecraftWidget setRenderTransform(RenderTransform renderTransform) {
+		Objects.requireNonNull(renderTransform, "renderTransform");
+		if (!renderTransform.isIdentity()) {
+			throw new IllegalStateException(
+					"MinecraftWidget does not support render transforms; native input uses the widget bounds"
+			);
+		}
+		return super.setRenderTransform(renderTransform);
 	}
 
 	@Override

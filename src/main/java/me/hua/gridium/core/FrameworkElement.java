@@ -79,7 +79,7 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	/**
 	 * Scales content during measurement, arrangement, and drawing. Margins remain unscaled.
 	 */
-	public final T setLayoutScale(double scaleX, double scaleY) {
+	public T setLayoutScale(double scaleX, double scaleY) {
 		double newScaleX = requireLayoutScale(scaleX, "scaleX");
 		double newScaleY = requireLayoutScale(scaleY, "scaleY");
 		layoutScaleX = newScaleX;
@@ -94,7 +94,7 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 	/**
 	 * Sets a visual transform that does not affect measurement, arrangement, or actual size.
 	 */
-	public final T setRenderTransform(RenderTransform renderTransform) {
+	public T setRenderTransform(RenderTransform renderTransform) {
 		this.renderTransform = Objects.requireNonNull(renderTransform, "renderTransform");
 		return self();
 	}
