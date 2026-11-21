@@ -2,8 +2,8 @@ package me.hua.gridium.integration.minecraft;
 
 import me.hua.gridium.core.FrameworkElement;
 import me.hua.gridium.core.Rect;
-import me.hua.gridium.core.Size;
 import me.hua.gridium.core.RenderTransform;
+import me.hua.gridium.core.Size;
 import me.hua.gridium.rendering.GridRenderer;
 import net.minecraft.client.gui.components.AbstractWidget;
 
@@ -17,7 +17,8 @@ import java.util.Objects;
  * rendered widget from its native hitbox. The native widget's hitbox is exactly the rounded,
  * arranged {@link Rect} position and size, and may extend beyond a panel or the screen viewport;
  * Gridium does not clip widget drawing or input. Use a native widget only inside an area you intend
- * to expose for input.</p>
+ * to expose for input. Hiding the element also disables native input, while preserving the native
+ * widget's focus; showing it again makes it interactive with that focus state intact.</p>
  */
 public class MinecraftWidget extends FrameworkElement<MinecraftWidget> {
 	private final AbstractWidget widget;
