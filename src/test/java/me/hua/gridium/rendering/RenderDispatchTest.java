@@ -1,5 +1,6 @@
 package me.hua.gridium.rendering;
 
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import me.hua.gridium.controls.ItemDecorations;
 import me.hua.gridium.controls.Rectangle;
 import me.hua.gridium.controls.Text;
@@ -12,11 +13,19 @@ import me.hua.gridium.core.VerticalAlignment;
 import me.hua.gridium.layout.Grid;
 import me.hua.gridium.testutil.RecordingGridRenderer;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -48,6 +57,77 @@ class RenderDispatchTest {
 		RecordingGridRenderer.Call renderCall = recordingRenderer.calls().getFirst();
 		assertEquals("render", renderCall.methodName());
 		assertSame(texture, renderCall.arguments()[0]);
+	}
+
+	@Test
+	void textureRectangleRendererDispatchesDestinationBoundsAndUvCoordinates() {
+		Identifier textureId = Identifier.fromNamespaceAndPath("gridium", "uv-test");
+		TextureRectangle texture = new TextureRectangle(
+				textureId,
+				14.0,
+				9.0,
+				0.125F,
+				0.875F,
+				0.25F,
+				0.75F
+		);
+		texture.arrange(new Rect(10.6, 20.4, 14.4, 8.6));
+		RecordingTextureBlitter recordingBlitter = new RecordingTextureBlitter();
+
+		new TextureRectangleRenderer(recordingBlitter.blitter()).render(texture);
+
+		assertBlitCall(
+				recordingBlitter.calls().getFirst(),
+				textureId,
+				11,
+				20,
+				25,
+				29,
+				0.125F,
+				0.875F,
+				0.25F,
+				0.75F
+		);
+	}
+
+	@Test
+	void textureRectangleRendererDispatchesPixelSourceRegionColorAndPipeline() {
+		RenderPipeline pipeline = RenderPipelines.GUI_TEXTURED;
+		Identifier textureId = Identifier.fromNamespaceAndPath("gridium", "pixel-test");
+		TextureRectangle texture = new TextureRectangle(
+				pipeline,
+				textureId,
+				31.0,
+				19.0,
+				7.5F,
+				11.25F,
+				13,
+				17,
+				128,
+				96,
+				0x7F12AB34
+		);
+		texture.arrange(new Rect(4.6, 7.4, 31.6, 18.6));
+		RecordingTextureBlitter recordingBlitter = new RecordingTextureBlitter();
+
+		new TextureRectangleRenderer(recordingBlitter.blitter()).render(texture);
+
+		assertBlitCall(
+				recordingBlitter.calls().getFirst(),
+				pipeline,
+				textureId,
+				5,
+				7,
+				7.5F,
+				11.25F,
+				31,
+				19,
+				13,
+				17,
+				128,
+				96,
+				0x7F12AB34
+		);
 	}
 
 	@Test
@@ -103,6 +183,11 @@ class RenderDispatchTest {
 		assertNull(decorations.getCountText());
 	}
 
+	private static void assertBlitCall(BlitCall call, Object... expectedArguments) {
+		assertEquals("blit", call.methodName());
+		assertArrayEquals(expectedArguments, call.arguments());
+	}
+
 	private static Font testFont() {
 		return new Font(new Font.Provider() {
 			@Override
@@ -115,6 +200,33 @@ class RenderDispatchTest {
 				return null;
 			}
 		});
+	}
+
+	private static final class RecordingTextureBlitter implements InvocationHandler {
+		private final List<BlitCall> calls = new ArrayList<>();
+		private final TextureRectangleRenderer.TextureBlitter blitter =
+				(TextureRectangleRenderer.TextureBlitter) Proxy.newProxyInstance(
+						TextureRectangleRenderer.TextureBlitter.class.getClassLoader(),
+						new Class<?>[]{TextureRectangleRenderer.TextureBlitter.class},
+						this
+				);
+
+		TextureRectangleRenderer.TextureBlitter blitter() {
+			return blitter;
+		}
+
+		List<BlitCall> calls() {
+			return List.copyOf(calls);
+		}
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] arguments) {
+			calls.add(new BlitCall(method.getName(), arguments.clone()));
+			return null;
+		}
+	}
+
+	private record BlitCall(String methodName, Object[] arguments) {
 	}
 
 	private static void assertBounds(Rect actual, Rect expected) {

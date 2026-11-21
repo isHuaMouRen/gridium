@@ -1,6 +1,8 @@
 package me.hua.gridium.rendering;
 
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.textures.GpuSampler;
+import com.mojang.renderpearl.api.textures.GpuTextureView;
 import me.hua.gridium.controls.BookPreview;
 import me.hua.gridium.controls.BannerPatternPreview;
 import me.hua.gridium.controls.EntityPreview;
@@ -38,6 +40,7 @@ public class MinecraftGridRenderer implements GridRenderer {
 	private final int mouseX;
 	private final int mouseY;
 	private final float partialTick;
+	private final TextureRectangleRenderer textureRectangleRenderer;
 
 	public MinecraftGridRenderer(GuiGraphicsExtractor graphics) {
 		this(graphics, 0, 0, 0.0F);
@@ -48,6 +51,71 @@ public class MinecraftGridRenderer implements GridRenderer {
 		this.mouseX = mouseX;
 		this.mouseY = mouseY;
 		this.partialTick = partialTick;
+		this.textureRectangleRenderer = new TextureRectangleRenderer(new TextureRectangleRenderer.TextureBlitter() {
+			@Override
+			public void blit(
+					Identifier texture,
+					int left,
+					int top,
+					int right,
+					int bottom,
+					float u0,
+					float u1,
+					float v0,
+					float v1
+			) {
+				MinecraftGridRenderer.this.graphics.blit(texture, left, top, right, bottom, u0, u1, v0, v1);
+			}
+
+			@Override
+			public void blit(
+					GpuTextureView textureView,
+					GpuSampler sampler,
+					int left,
+					int top,
+					int right,
+					int bottom,
+					float u0,
+					float u1,
+					float v0,
+					float v1
+			) {
+				MinecraftGridRenderer.this.graphics.blit(textureView, sampler, left, top, right, bottom, u0, u1, v0, v1);
+			}
+
+			@Override
+			public void blit(
+					RenderPipeline renderPipeline,
+					Identifier texture,
+					int x,
+					int y,
+					float u,
+					float v,
+					int width,
+					int height,
+					int sourceWidth,
+					int sourceHeight,
+					int textureWidth,
+					int textureHeight,
+					int color
+			) {
+				MinecraftGridRenderer.this.graphics.blit(
+						renderPipeline,
+						texture,
+						x,
+						y,
+						u,
+						v,
+						width,
+						height,
+						sourceWidth,
+						sourceHeight,
+						textureWidth,
+						textureHeight,
+						color
+				);
+			}
+		});
 	}
 
 	@Override
@@ -345,61 +413,7 @@ public class MinecraftGridRenderer implements GridRenderer {
 
 	@Override
 	public void render(TextureRectangle rectangle) {
-		PixelBounds bounds = PixelBounds.from(rectangle.getBounds());
-		int left = bounds.left();
-		int top = bounds.top();
-		int right = bounds.right();
-		int bottom = bounds.bottom();
-		var textureView = rectangle.getTextureView();
-		if (textureView != null) {
-			TextureRectangle.UvRegion uvRegion = Objects.requireNonNull(rectangle.getUvRegion(), "uvRegion");
-			graphics.blit(
-					textureView,
-					Objects.requireNonNull(rectangle.getSampler(), "sampler"),
-					left,
-					top,
-					right,
-					bottom,
-					uvRegion.u0(),
-					uvRegion.u1(),
-					uvRegion.v0(),
-					uvRegion.v1()
-			);
-			return;
-		}
-
-		Identifier texture = Objects.requireNonNull(rectangle.getTexture(), "texture");
-		TextureRectangle.PixelRegion pixelRegion = rectangle.getPixelRegion();
-		if (pixelRegion != null) {
-			graphics.blit(
-					Objects.requireNonNull(rectangle.getRenderPipeline(), "renderPipeline"),
-					texture,
-					left,
-					top,
-					pixelRegion.u(),
-					pixelRegion.v(),
-					bounds.width(),
-					bounds.height(),
-					pixelRegion.sourceWidth(),
-					pixelRegion.sourceHeight(),
-					pixelRegion.textureWidth(),
-					pixelRegion.textureHeight(),
-					rectangle.getColor()
-			);
-		} else {
-			TextureRectangle.UvRegion uvRegion = Objects.requireNonNull(rectangle.getUvRegion(), "uvRegion");
-			graphics.blit(
-					texture,
-					left,
-					top,
-					right,
-					bottom,
-					uvRegion.u0(),
-					uvRegion.u1(),
-					uvRegion.v0(),
-					uvRegion.v1()
-			);
-		}
+		textureRectangleRenderer.render(rectangle);
 	}
 
 	@Override
