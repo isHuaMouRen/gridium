@@ -92,13 +92,13 @@ class MinecraftWidgetTest {
 		}).size(80, 20).build();
 		MinecraftWidget element = new MinecraftWidget(widget);
 
-		element.arrange(new Rect(10.4, 15.6, 30.6, 20.4));
+		element.arrange(new Rect(10.6, 15.2, 30.6, 20.6));
 
-		assertEquals(10, widget.getX());
-		assertEquals(16, widget.getY());
-		assertEquals(31, widget.getWidth());
-		assertEquals(20, widget.getHeight());
-		assertTrue(widget.isMouseOver(10.0, 16.0));
+		assertEquals(11, widget.getX());
+		assertEquals(15, widget.getY());
+		assertEquals(30, widget.getWidth());
+		assertEquals(21, widget.getHeight());
+		assertTrue(widget.isMouseOver(11.0, 15.0));
 		assertTrue(widget.isMouseOver(40.0, 35.0));
 		assertFalse(widget.isMouseOver(41.0, 36.0));
 	}

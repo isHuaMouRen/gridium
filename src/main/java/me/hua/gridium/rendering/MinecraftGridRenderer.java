@@ -82,10 +82,10 @@ public class MinecraftGridRenderer implements GridRenderer {
 	@SuppressWarnings("deprecation")
 	public void render(Text text, @Nullable String string) {
 		Rect bounds = text.getBounds();
-		int x = (int) Math.round(bounds.getX());
-		int y = (int) Math.round(bounds.getY());
+		int x = PixelBounds.roundCoordinate(bounds.getX());
+		int y = PixelBounds.roundCoordinate(bounds.getY());
 		if (text.isCentered() && string != null) {
-			int centerX = (int) Math.round(bounds.getX() + bounds.getWidth() / 2.0);
+			int centerX = PixelBounds.roundCoordinate(bounds.getX() + bounds.getWidth() / 2.0);
 			if (text.drawsShadow()) {
 				x = centerX - text.getFont().width(string) / 2;
 			} else {
@@ -100,10 +100,10 @@ public class MinecraftGridRenderer implements GridRenderer {
 	@SuppressWarnings("deprecation")
 	public void render(Text text, FormattedCharSequence formattedCharSequence) {
 		Rect bounds = text.getBounds();
-		int x = (int) Math.round(bounds.getX());
-		int y = (int) Math.round(bounds.getY());
+		int x = PixelBounds.roundCoordinate(bounds.getX());
+		int y = PixelBounds.roundCoordinate(bounds.getY());
 		if (text.isCentered()) {
-			int centerX = (int) Math.round(bounds.getX() + bounds.getWidth() / 2.0);
+			int centerX = PixelBounds.roundCoordinate(bounds.getX() + bounds.getWidth() / 2.0);
 			if (text.drawsShadow()) {
 				x = centerX - text.getFont().width(formattedCharSequence) / 2;
 			} else {
@@ -118,10 +118,10 @@ public class MinecraftGridRenderer implements GridRenderer {
 	@SuppressWarnings("deprecation")
 	public void render(Text text, Component component) {
 		Rect bounds = text.getBounds();
-		int x = (int) Math.round(bounds.getX());
-		int y = (int) Math.round(bounds.getY());
+		int x = PixelBounds.roundCoordinate(bounds.getX());
+		int y = PixelBounds.roundCoordinate(bounds.getY());
 		if (text.isCentered()) {
-			int centerX = (int) Math.round(bounds.getX() + bounds.getWidth() / 2.0);
+			int centerX = PixelBounds.roundCoordinate(bounds.getX() + bounds.getWidth() / 2.0);
 			if (text.drawsShadow()) {
 				x = centerX - text.getFont().width(component) / 2;
 			} else {
@@ -138,8 +138,8 @@ public class MinecraftGridRenderer implements GridRenderer {
 		graphics.textWithWordWrap(
 				text.getFont(),
 				formattedText,
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
+				PixelBounds.roundCoordinate(bounds.getX()),
+				PixelBounds.roundCoordinate(bounds.getY()),
 				text.getWrapWidth(),
 				text.getColor(),
 				text.drawsShadow()
@@ -152,8 +152,8 @@ public class MinecraftGridRenderer implements GridRenderer {
 		graphics.textWithBackdrop(
 				text.getFont(),
 				component,
-				(int) Math.round(bounds.getX()) + 2,
-				(int) Math.round(bounds.getY()) + 2,
+				PixelBounds.roundCoordinate(bounds.getX() + 2.0),
+				PixelBounds.roundCoordinate(bounds.getY() + 2.0),
 				text.getBackdropWidth(),
 				text.getColor()
 		);
@@ -161,12 +161,12 @@ public class MinecraftGridRenderer implements GridRenderer {
 
 	@Override
 	public void render(TextHighlight highlight) {
-		Rect bounds = highlight.getBounds();
+		PixelBounds bounds = PixelBounds.from(highlight.getBounds());
 		graphics.textHighlight(
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
-				(int) Math.round(bounds.getRight()),
-				(int) Math.round(bounds.getBottom()),
+				bounds.left(),
+				bounds.top(),
+				bounds.right(),
+				bounds.bottom(),
 				highlight.invertsText()
 		);
 	}
@@ -174,8 +174,8 @@ public class MinecraftGridRenderer implements GridRenderer {
 	@Override
 	public void render(ItemIcon itemIcon) {
 		Rect bounds = itemIcon.getBounds();
-		int x = (int) Math.round(bounds.getX());
-		int y = (int) Math.round(bounds.getY());
+		int x = PixelBounds.roundCoordinate(bounds.getX());
+		int y = PixelBounds.roundCoordinate(bounds.getY());
 		LivingEntity owner = itemIcon.getOwner();
 		if (owner != null) {
 			graphics.item(owner, itemIcon.getItemStack(), x, y, itemIcon.getSeed());
@@ -189,8 +189,8 @@ public class MinecraftGridRenderer implements GridRenderer {
 		Rect bounds = itemIcon.getBounds();
 		graphics.fakeItem(
 				itemIcon.getItemStack(),
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
+				PixelBounds.roundCoordinate(bounds.getX()),
+				PixelBounds.roundCoordinate(bounds.getY()),
 				itemIcon.getSeed()
 		);
 	}
@@ -201,8 +201,8 @@ public class MinecraftGridRenderer implements GridRenderer {
 		graphics.itemDecorations(
 				itemDecorations.getFont(),
 				itemDecorations.getItemStack(),
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
+				PixelBounds.roundCoordinate(bounds.getX()),
+				PixelBounds.roundCoordinate(bounds.getY()),
 				itemDecorations.getCountText()
 		);
 	}
@@ -232,23 +232,23 @@ public class MinecraftGridRenderer implements GridRenderer {
 
 	@Override
 	public void render(EntityPreview entityPreview) {
-		Rect bounds = entityPreview.getBounds();
+		PixelBounds bounds = PixelBounds.from(entityPreview.getBounds());
 		graphics.entity(
 				entityPreview.getRenderState(),
 				entityPreview.getScale(),
 				entityPreview.getTranslation(),
 				entityPreview.getRotation(),
 				entityPreview.getOverrideCameraAngle(),
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
-				(int) Math.round(bounds.getRight()),
-				(int) Math.round(bounds.getBottom())
+				bounds.left(),
+				bounds.top(),
+				bounds.right(),
+				bounds.bottom()
 		);
 	}
 
 	@Override
 	public void render(SkinPreview skinPreview) {
-		Rect bounds = skinPreview.getBounds();
+		PixelBounds bounds = PixelBounds.from(skinPreview.getBounds());
 		graphics.skin(
 				skinPreview.getPlayerModel(),
 				skinPreview.getTexture(),
@@ -256,62 +256,62 @@ public class MinecraftGridRenderer implements GridRenderer {
 				skinPreview.getRotationX(),
 				skinPreview.getRotationY(),
 				skinPreview.getPivotY(),
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
-				(int) Math.round(bounds.getRight()),
-				(int) Math.round(bounds.getBottom())
+				bounds.left(),
+				bounds.top(),
+				bounds.right(),
+				bounds.bottom()
 		);
 	}
 
 	@Override
 	public void render(BookPreview bookPreview) {
-		Rect bounds = bookPreview.getBounds();
+		PixelBounds bounds = PixelBounds.from(bookPreview.getBounds());
 		graphics.book(
 				bookPreview.getBookModel(),
 				bookPreview.getTexture(),
 				bookPreview.getScale(),
 				bookPreview.getOpen(),
 				bookPreview.getFlip(),
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
-				(int) Math.round(bounds.getRight()),
-				(int) Math.round(bounds.getBottom())
+				bounds.left(),
+				bounds.top(),
+				bounds.right(),
+				bounds.bottom()
 		);
 	}
 
 	@Override
 	public void render(BannerPatternPreview bannerPatternPreview) {
-		Rect bounds = bannerPatternPreview.getBounds();
+		PixelBounds bounds = PixelBounds.from(bannerPatternPreview.getBounds());
 		graphics.bannerPattern(
 				bannerPatternPreview.getFlagModel(),
 				bannerPatternPreview.getBaseColor(),
 				bannerPatternPreview.getPatterns(),
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
-				(int) Math.round(bounds.getRight()),
-				(int) Math.round(bounds.getBottom())
+				bounds.left(),
+				bounds.top(),
+				bounds.right(),
+				bounds.bottom()
 		);
 	}
 
 	@Override
 	public void render(ProfilerChart profilerChart) {
-		Rect bounds = profilerChart.getBounds();
+		PixelBounds bounds = PixelBounds.from(profilerChart.getBounds());
 		graphics.profilerChart(
 				profilerChart.getChartData(),
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
-				(int) Math.round(bounds.getRight()),
-				(int) Math.round(bounds.getBottom())
+				bounds.left(),
+				bounds.top(),
+				bounds.right(),
+				bounds.bottom()
 		);
 	}
 
 	@Override
 	public void render(Rectangle rectangle) {
-		Rect bounds = rectangle.getBounds();
-		int left = (int) Math.round(bounds.getX());
-		int top = (int) Math.round(bounds.getY());
-		int right = (int) Math.round(bounds.getRight());
-		int bottom = (int) Math.round(bounds.getBottom());
+		PixelBounds bounds = PixelBounds.from(rectangle.getBounds());
+		int left = bounds.left();
+		int top = bounds.top();
+		int right = bounds.right();
+		int bottom = bounds.bottom();
 		RenderPipeline renderPipeline = rectangle.getRenderPipeline();
 		TextureSetup textureSetup = rectangle.getTextureSetup();
 		if (textureSetup != null) {
@@ -345,11 +345,11 @@ public class MinecraftGridRenderer implements GridRenderer {
 
 	@Override
 	public void render(TextureRectangle rectangle) {
-		Rect bounds = rectangle.getBounds();
-		int left = (int) Math.round(bounds.getX());
-		int top = (int) Math.round(bounds.getY());
-		int right = (int) Math.round(bounds.getRight());
-		int bottom = (int) Math.round(bounds.getBottom());
+		PixelBounds bounds = PixelBounds.from(rectangle.getBounds());
+		int left = bounds.left();
+		int top = bounds.top();
+		int right = bounds.right();
+		int bottom = bounds.bottom();
 		var textureView = rectangle.getTextureView();
 		if (textureView != null) {
 			TextureRectangle.UvRegion uvRegion = Objects.requireNonNull(rectangle.getUvRegion(), "uvRegion");
@@ -378,8 +378,8 @@ public class MinecraftGridRenderer implements GridRenderer {
 					top,
 					pixelRegion.u(),
 					pixelRegion.v(),
-					right - left,
-					bottom - top,
+					bounds.width(),
+					bounds.height(),
 					pixelRegion.sourceWidth(),
 					pixelRegion.sourceHeight(),
 					pixelRegion.textureWidth(),
@@ -404,11 +404,11 @@ public class MinecraftGridRenderer implements GridRenderer {
 
 	@Override
 	public void render(SpriteRectangle spriteRectangle) {
-		Rect bounds = spriteRectangle.getBounds();
-		int left = (int) Math.round(bounds.getX());
-		int top = (int) Math.round(bounds.getY());
-		int width = (int) Math.round(bounds.getRight()) - left;
-		int height = (int) Math.round(bounds.getBottom()) - top;
+		PixelBounds bounds = PixelBounds.from(spriteRectangle.getBounds());
+		int left = bounds.left();
+		int top = bounds.top();
+		int width = bounds.width();
+		int height = bounds.height();
 		if (width <= 0 || height <= 0) {
 			return;
 		}
@@ -479,12 +479,12 @@ public class MinecraftGridRenderer implements GridRenderer {
 
 	@Override
 	public void render(GradientRectangle rectangle) {
-		Rect bounds = rectangle.getBounds();
+		PixelBounds bounds = PixelBounds.from(rectangle.getBounds());
 		graphics.fillGradient(
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
-				(int) Math.round(bounds.getRight()),
-				(int) Math.round(bounds.getBottom()),
+				bounds.left(),
+				bounds.top(),
+				bounds.right(),
+				bounds.bottom(),
 				rectangle.getFirstColor(),
 				rectangle.getSecondColor()
 		);
@@ -492,13 +492,13 @@ public class MinecraftGridRenderer implements GridRenderer {
 
 	@Override
 	public void render(HorizontalLine line) {
-		Rect bounds = line.getBounds();
-		int length = (int) Math.round(bounds.getWidth());
+		PixelBounds bounds = PixelBounds.from(line.getBounds());
+		int length = bounds.width();
 		if (length > 0) {
 			graphics.horizontalLine(
-					(int) Math.round(bounds.getX()),
-					(int) Math.round(bounds.getX()) + length - 1,
-					(int) Math.round(bounds.getY()),
+					bounds.left(),
+					bounds.right() - 1,
+					bounds.top(),
 					line.getColor()
 			);
 		}
@@ -506,15 +506,14 @@ public class MinecraftGridRenderer implements GridRenderer {
 
 	@Override
 	public void render(VerticalLine line) {
-		Rect bounds = line.getBounds();
-		int length = (int) Math.round(bounds.getHeight());
+		PixelBounds bounds = PixelBounds.from(line.getBounds());
+		int length = bounds.height();
 		if (length > 0) {
-			int top = (int) Math.round(bounds.getY());
 			// The native verticalLine offsets its first Y by one and treats the second as exclusive.
 			graphics.verticalLine(
-					(int) Math.round(bounds.getX()),
-					top - 1,
-					top + length,
+					bounds.left(),
+					bounds.top() - 1,
+					bounds.bottom(),
 					line.getColor()
 			);
 		}
@@ -522,12 +521,12 @@ public class MinecraftGridRenderer implements GridRenderer {
 
 	@Override
 	public void render(RectangleOutline outline) {
-		Rect bounds = outline.getBounds();
+		PixelBounds bounds = PixelBounds.from(outline.getBounds());
 		graphics.outline(
-				(int) Math.round(bounds.getX()),
-				(int) Math.round(bounds.getY()),
-				(int) Math.round(bounds.getWidth()),
-				(int) Math.round(bounds.getHeight()),
+				bounds.left(),
+				bounds.top(),
+				bounds.width(),
+				bounds.height(),
 				outline.getColor()
 		);
 	}
