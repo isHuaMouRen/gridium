@@ -2,9 +2,12 @@ package me.hua.gridium.rendering;
 
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import me.hua.gridium.controls.ItemDecorations;
+import me.hua.gridium.controls.HorizontalLine;
 import me.hua.gridium.controls.Rectangle;
+import me.hua.gridium.controls.SpriteRectangle;
 import me.hua.gridium.controls.Text;
 import me.hua.gridium.controls.TextureRectangle;
+import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.HorizontalAlignment;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.RenderTransform;
@@ -15,6 +18,7 @@ import me.hua.gridium.testutil.RecordingGridRenderer;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import org.junit.jupiter.api.Test;
@@ -150,6 +154,65 @@ class RenderDispatchTest {
 		assertFalse(text.drawsShadow());
 		assertBounds(rectangle.getBounds(), new Rect(3.0, 5.0, 12.0, 8.0));
 		assertBounds(text.getBounds(), new Rect(21.0, 34.0, 40.0, 9.0));
+	}
+
+	@Test
+	void zeroWidthWrappedTextDispatchesItsContentAndLayoutBounds() {
+		FormattedText content = Component.literal("wrapped text");
+		Text text = new Text(testFont(), content, 0, 0xFFABCDEF, false);
+		text.arrange(new Rect(4.5, 6.5, 0.0, 8.0));
+		RecordingGridRenderer recordingRenderer = new RecordingGridRenderer();
+
+		text.render(recordingRenderer.renderer());
+
+		RecordingGridRenderer.Call call = recordingRenderer.calls().getFirst();
+		assertEquals("renderWrapped", call.methodName());
+		assertSame(text, call.arguments()[0]);
+		assertSame(content, call.arguments()[1]);
+		assertEquals(0, text.getWrapWidth());
+		assertEquals(0xFFABCDEF, text.getColor());
+		assertFalse(text.drawsShadow());
+		assertBounds(text.getBounds(), new Rect(4.5, 6.5, 0.0, 8.0));
+	}
+
+	@Test
+	void zeroLengthLinesAndEdgeCropSpritesStillDispatchTheirDrawingData() {
+		int color = 0x7F12AB34;
+		HorizontalLine horizontalLine = new HorizontalLine(0.0, color);
+		VerticalLine verticalLine = new VerticalLine(0.0, color);
+		SpriteRectangle sprite = new SpriteRectangle(
+				RenderPipelines.GUI_TEXTURED,
+				Identifier.fromNamespaceAndPath("gridium", "sprite-boundary"),
+				4.0,
+				4.0,
+				16,
+				16,
+				12,
+				12,
+				4,
+				4,
+				color
+		);
+		horizontalLine.arrange(new Rect(1.5, 2.5, 0.0, 1.0));
+		verticalLine.arrange(new Rect(3.5, 4.5, 1.0, 0.0));
+		sprite.arrange(new Rect(7.5, 8.5, 4.0, 4.0));
+		RecordingGridRenderer recordingRenderer = new RecordingGridRenderer();
+
+		horizontalLine.render(recordingRenderer.renderer());
+		verticalLine.render(recordingRenderer.renderer());
+		sprite.render(recordingRenderer.renderer());
+
+		assertEquals(3, recordingRenderer.calls().size());
+		assertSame(horizontalLine, recordingRenderer.calls().get(0).arguments()[0]);
+		assertSame(verticalLine, recordingRenderer.calls().get(1).arguments()[0]);
+		assertSame(sprite, recordingRenderer.calls().get(2).arguments()[0]);
+		assertEquals(color, horizontalLine.getColor());
+		assertEquals(color, verticalLine.getColor());
+		assertEquals(color, sprite.getColor());
+		assertEquals(new SpriteRectangle.SourceRegion(16, 16, 12, 12, 4, 4), sprite.getSourceRegion());
+		assertBounds(horizontalLine.getBounds(), new Rect(1.5, 2.5, 0.0, 1.0));
+		assertBounds(verticalLine.getBounds(), new Rect(3.5, 4.5, 1.0, 0.0));
+		assertBounds(sprite.getBounds(), new Rect(7.5, 8.5, 4.0, 4.0));
 	}
 
 	@Test

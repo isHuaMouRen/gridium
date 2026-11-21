@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -246,6 +247,21 @@ class StackPanelLayoutTest {
 
 		assertBounds(child, new Rect(0.0, 0.0, 80.0, 10.0));
 		assertSame(tooltip, root.findTooltipAt(60.0, 5.0));
+	}
+
+	@Test
+	void tooltipHitTestingIncludesElementEdgesButExcludesPointsJustOutside() {
+		Grid root = new Grid();
+		GridTooltip tooltip = new GridTooltip(testFont(), Component.literal("Boundary tooltip"));
+		FixedElement child = new FixedElement(10.0, 10.0).setTooltip(tooltip);
+		root.add(child);
+		root.measure(new Size(10.0, 10.0));
+		root.arrange(new Rect(0.0, 0.0, 10.0, 10.0));
+
+		assertSame(tooltip, root.findTooltipAt(0.0, 0.0));
+		assertSame(tooltip, root.findTooltipAt(10.0, 10.0));
+		assertNull(root.findTooltipAt(10.0001, 5.0));
+		assertNull(root.findTooltipAt(5.0, 10.0001));
 	}
 
 	@Test

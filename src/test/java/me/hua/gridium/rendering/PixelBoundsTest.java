@@ -27,4 +27,16 @@ class PixelBoundsTest {
 		assertEquals(1, bounds.right());
 		assertEquals(9, bounds.bottom());
 	}
+
+	@Test
+	void subpixelBoundsCanCollapseToZeroNativeWidthAndHeight() {
+		PixelBounds bounds = PixelBounds.from(new Rect(1.1, 2.1, 0.2, 0.2));
+
+		assertEquals(1, bounds.left());
+		assertEquals(1, bounds.right());
+		assertEquals(2, bounds.top());
+		assertEquals(2, bounds.bottom());
+		assertEquals(0, bounds.width());
+		assertEquals(0, bounds.height());
+	}
 }
