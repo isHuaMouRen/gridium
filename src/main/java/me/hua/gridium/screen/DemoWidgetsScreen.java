@@ -12,7 +12,7 @@ import me.hua.gridium.core.Thickness;
 import me.hua.gridium.core.VerticalAlignment;
 import me.hua.gridium.integration.minecraft.MinecraftWidget;
 import me.hua.gridium.layout.Grid;
-import me.hua.gridium.layout.StackOrientation;
+import me.hua.gridium.core.StackOrientation;
 import me.hua.gridium.layout.StackPanel;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;

@@ -12,6 +12,7 @@
 
 ### 更改
 
+* **移动命名空间: `me.hua.gridium.layout.StackOrientation` -> `me.hua.gridium.core.StackOrientation`**
 * 移除 `Text` 的 `centered` 属性及其配套的方法
 
 ## 0.1.2+26.3

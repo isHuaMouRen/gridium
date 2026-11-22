@@ -1,4 +1,4 @@
-package me.hua.gridium.layout;
+package me.hua.gridium.core;
 
 public enum StackOrientation {
 	HORIZONTAL,

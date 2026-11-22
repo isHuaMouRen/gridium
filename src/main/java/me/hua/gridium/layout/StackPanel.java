@@ -2,6 +2,7 @@ package me.hua.gridium.layout;
 
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.Size;
+import me.hua.gridium.core.StackOrientation;
 import me.hua.gridium.core.UIElement;
 
 import java.util.Objects;
