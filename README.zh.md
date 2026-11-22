@@ -103,7 +103,7 @@ grid.add(new MinecraftWidget(button)
 );
 ```
 
-这里的 `MinecraftWdiget` 作为桥接控件，仅控制其布局，无法控制其他内容
+这里的 `MinecraftWidget` 作为桥接控件，仅控制其布局，无法控制其他内容
 
 ## 许可证
 
