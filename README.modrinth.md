@@ -48,7 +48,7 @@ import net.minecraft.network.chat.Component;
 public final class ExampleScreen extends Screen {
     private Grid grid;
 
-    public ExampleScreen(Screen parent) {
+    public ExampleScreen() {
         super(Component.literal("Example screen"));
     }
 

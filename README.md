@@ -52,7 +52,7 @@ import net.minecraft.network.chat.Component;
 public final class ExampleScreen extends Screen {
     private Grid grid;
 
-    public ExampleScreen(Screen parent) {
+    public ExampleScreen() {
         super(Component.literal("Example screen"));
     }
 
@@ -87,6 +87,24 @@ public final class ExampleScreen extends Screen {
 ```
 
 By default, `Grid` arranges child elements from the top-left of its layout area. In the example above, the title is horizontally centered, and a vertically arranged content area is placed below the title.
+
+More detailed implementation examples can be found in the demo screen: [DemoScreen.java](/src/main/java/me/hua/gridium/screen/DemoScreen.java)
+
+### Layout Lifecycle and Element Ownership
+
+The layout is measured and arranged again whenever `Grid.draw(...)` is called. `setVisible(false)` removes an element from measurement and arrangement, while the element retains its layout state for a later layout pass.
+
+`Panel.add(...)` returns the panel itself, so child setup can be chained. `remove(...)` and `clear()` detach children before they can be moved to another panel:
+
+```java
+grid.add(new Rectangle(64, 18, 0xFF3F76E4))
+    .add(new Text(font, "Added fluently", 0xFFFFFFFF, false));
+
+grid.remove(element);
+grid.clear();
+```
+
+An element can belong to only one panel at a time. Grid and StackPanel do not clip or automatically compress overflowing children.
 
 ### Bridging Native Minecraft Widgets
 

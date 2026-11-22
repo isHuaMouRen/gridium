@@ -52,7 +52,7 @@ import net.minecraft.network.chat.Component;
 public final class ExampleScreen extends Screen {
     private Grid grid;
 
-    public ExampleScreen(Screen parent) {
+    public ExampleScreen() {
         super(Component.literal("Example screen"));
     }
 
@@ -88,7 +88,25 @@ public final class ExampleScreen extends Screen {
 
 `Grid` 默认从其布局区域的左上方开始排列子元素。上例将标题水平居中，并在标题下方放置一个纵向排列的内容区域。
 
-### 桥接 Minecraft 原生 Native
+更详细的编写示例可在 [DemoScreen.java](/src/main/java/me/hua/gridium/screen/DemoScreen.java) 演示屏幕查看
+
+### 布局生命周期与元素所有权
+
+每次调用 `Grid.draw(...)` 时都会重新测量和排列布局。调用 `setVisible(false)` 后，元素不再参与测量、排列和绘制；之后重新显示时，需由下一个布局过程恢复其状态。
+
+`Panel.add(...)` 会返回面板本身，因此可以进行链式添加。移动元素到另一个面板前，应先使用 `remove(...)` 或 `clear()` 解除原有附属关系：
+
+```java
+grid.add(new Rectangle(64, 18, 0xFF3F76E4))
+    .add(new Text(font, "链式添加", 0xFFFFFFFF, false));
+
+grid.remove(element);
+grid.clear();
+```
+
+一个元素同时只能属于一个面板。 `Grid` 和 `StackPanel` 不会裁剪或自动压缩溢出的子元素。
+
+### 桥接 Minecraft 原生 Widget
 
 Minecraft Widget 不受 GuiGraphicsExtractor 管理。需要将其构建之后注册到 Screen 的输入系统，再用 `MinecraftWidget` 桥接进 Grid。此示例使用 `net.minecraft.client.gui.components.Button` ：
 
