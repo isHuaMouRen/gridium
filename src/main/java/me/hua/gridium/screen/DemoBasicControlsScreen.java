@@ -47,9 +47,7 @@ public class DemoBasicControlsScreen extends Screen {
 		grid.add(new Text(font, Component.literal("§lBasic Controls"), 0xFFFFFFFF, true)
 				.setLayoutScale(2, 2)
 				.setMargin(new Thickness(44, 10, 10, 0))
-		);
-
-		grid.add(new Rectangle(width - 54, 2, 0xFFFFFFFF)
+		).add(new Rectangle(width - 54, 2, 0xFFFFFFFF)
 				.setHorizontalAlignment(HorizontalAlignment.RIGHT)
 				.setMargin(new Thickness(44, 32, 10, 0))
 		);
@@ -68,54 +66,56 @@ public class DemoBasicControlsScreen extends Screen {
 				.setMargin(new Thickness((double) width / 2 + 10, 44, 10, 10))
 		);
 
-		leftColumn.add(new Text(font, "§lText", 0xFFFFFFFF, false));
-		leftColumn.add(new Text(font, Component.literal("§lHello World!"), 0xFFFFFFFF, false)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-		);
+		leftColumn
+				.add(new Text(font, "§lText", 0xFFFFFFFF, false))
+				.add(new Text(font, Component.literal("§lHello World!"), 0xFFFFFFFF, false)
+						.setHorizontalAlignment(HorizontalAlignment.CENTER)
+				)
 
-		leftColumn.add(sectionTitle("Rectangle"));
-		leftColumn.add(new Rectangle(64, 18, 0xFF3F76E4));
+				.add(sectionTitle("Rectangle"))
+				.add(new Rectangle(64, 18, 0xFF3F76E4))
 
-		leftColumn.add(sectionTitle("RectangleOutline"));
-		leftColumn.add(new RectangleOutline(64, 18, 0xFFFFFFFF));
+				.add(sectionTitle("RectangleOutline"))
+				.add(new RectangleOutline(64, 18, 0xFFFFFFFF))
 
-		leftColumn.add(sectionTitle("GradientRectangle"));
-		leftColumn.add(new GradientRectangle(64, 18, 0xFF3F76E4, 0xFF8A44CC));
+				.add(sectionTitle("GradientRectangle"))
+				.add(new GradientRectangle(64, 18, 0xFF3F76E4, 0xFF8A44CC))
 
-		leftColumn.add(sectionTitle("TextureRectangle - Source"));
-		leftColumn.add(new TextureRectangle(
-				RenderPipelines.GUI_TEXTURED,
-				Gridium.id("icon.png"),
-				24, 24,
-				0, 0,
-				128, 128,
-				128, 128
-		));
+				.add(sectionTitle("TextureRectangle - Source"))
+				.add(new TextureRectangle(
+						RenderPipelines.GUI_TEXTURED,
+						Gridium.id("icon.png"),
+						24, 24,
+						0, 0,
+						128, 128,
+						128, 128
+				))
 
-		leftColumn.add(sectionTitle("TextureRectangle - UV"));
-		leftColumn.add(new TextureRectangle(
-				Gridium.id("icon.png"),
-				24, 24,
-				0.0F, 0.5F,
-				0.0F, 0.5F
-		));
+				.add(sectionTitle("TextureRectangle - UV"))
+				.add(new TextureRectangle(
+						Gridium.id("icon.png"),
+						24, 24,
+						0.0F, 0.5F,
+						0.0F, 0.5F
+				));
 
-		rightColumn.add(sectionTitle("SpriteRectangle"));
-		rightColumn.add(new SpriteRectangle(
-				RenderPipelines.GUI_TEXTURED,
-				Identifier.fromNamespaceAndPath("minecraft", "widget/button"),
-				80, 20
-		));
+		rightColumn
+				.add(sectionTitle("SpriteRectangle"))
+				.add(new SpriteRectangle(
+						RenderPipelines.GUI_TEXTURED,
+						Identifier.fromNamespaceAndPath("minecraft", "widget/button"),
+						80, 20
+				))
 
-		rightColumn.add(sectionTitle("HorizontalLine"));
-		rightColumn.add(new HorizontalLine(80, 0xFFFF5555));
+				.add(sectionTitle("HorizontalLine"))
+				.add(new HorizontalLine(80, 0xFFFF5555))
 
-		rightColumn.add(sectionTitle("VerticalLine"));
-		rightColumn.add(new VerticalLine(24, 0xFF55FF55));
+				.add(sectionTitle("VerticalLine"))
+				.add(new VerticalLine(24, 0xFF55FF55))
 
-		rightColumn.add(sectionTitle("TextHighlight"));
-		rightColumn.add(new TextHighlight(80, 18, false));
-		rightColumn.add(new Text(font, Component.literal("Highlight text"), 0xFFFFFFFF, false));
+				.add(sectionTitle("TextHighlight"))
+				.add(new TextHighlight(80, 18, false))
+				.add(new Text(font, Component.literal("Highlight text"), 0xFFFFFFFF, false));
 	}
 
 	private Text sectionTitle(String title) {

@@ -27,25 +27,24 @@ public class DemoScreen extends Screen {
 	protected void init() {
 		grid = new Grid();
 		//GRID START
-		grid.add(new TextureRectangle(
-				RenderPipelines.GUI_TEXTURED,
-				Gridium.id("icon.png"),
-				24, 24,
-				0, 0,
-				128, 128,
-				128, 128,
-				0xFFFFFFFF)
-				.setMargin(new Thickness(10, 10, 0, 0))
-		);
-
-		grid.add(new Text(font, Component.literal("§lGridium Demo"), 0xFFFFFFFF, true)
-				.setMargin(new Thickness(10 + 24 + 10, 10, 0, 0))
-				.setLayoutScale(2, 2)
-		);
-
-		grid.add(new Rectangle(width - (10 + 24 + 10) - (10 + 24 + 10), 2, 0xFFFFFFFF)
-				.setMargin(new Thickness(10 + 24 + 10, 10 + 24 - 2, 0, 0))
-		);
+		grid
+				.add(new TextureRectangle(
+						RenderPipelines.GUI_TEXTURED,
+						Gridium.id("icon.png"),
+						24, 24,
+						0, 0,
+						128, 128,
+						128, 128,
+						0xFFFFFFFF)
+						.setMargin(new Thickness(10, 10, 0, 0))
+				)
+				.add(new Text(font, Component.literal("§lGridium Demo"), 0xFFFFFFFF, true)
+						.setMargin(new Thickness(10 + 24 + 10, 10, 0, 0))
+						.setLayoutScale(2, 2)
+				)
+				.add(new Rectangle(width - (10 + 24 + 10) - (10 + 24 + 10), 2, 0xFFFFFFFF)
+						.setMargin(new Thickness(10 + 24 + 10, 10 + 24 - 2, 0, 0))
+				);
 
 		var exitButton = Button.builder(Component.literal("❌"), clicked -> onClose())
 				.size(24, 24)
@@ -68,17 +67,19 @@ public class DemoScreen extends Screen {
 
 		var basicControlButton = Button.builder(Component.literal("Basic Controls"), clicked -> minecraft.setScreenAndShow(new DemoBasicControlsScreen(this)))
 				.build();
-		addWidget(basicControlButton);
-		panel.add(new MinecraftWidget(basicControlButton)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-		);
-
 		var widgetsButton = Button.builder(Component.literal("Layout & Widgets"), clicked -> minecraft.setScreenAndShow(new DemoWidgetsScreen(this)))
 				.build();
+
+		addWidget(basicControlButton);
 		addWidget(widgetsButton);
-		panel.add(new MinecraftWidget(widgetsButton)
-				.setHorizontalAlignment(HorizontalAlignment.CENTER)
-		);
+
+		panel
+				.add(new MinecraftWidget(basicControlButton)
+						.setHorizontalAlignment(HorizontalAlignment.CENTER)
+				)
+				.add(new MinecraftWidget(widgetsButton)
+						.setHorizontalAlignment(HorizontalAlignment.CENTER)
+				);
 
 
 		//STACKPANEL END
