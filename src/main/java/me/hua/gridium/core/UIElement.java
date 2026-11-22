@@ -3,11 +3,13 @@ package me.hua.gridium.core;
 import me.hua.gridium.rendering.GridRenderer;
 
 import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 public class UIElement {
 	private Rect bounds = Rect.EMPTY;
 	private Size desiredSize = Size.ZERO;
 	private boolean visible = true;
+	private @Nullable UIElement parent;
 
 	public final Rect getBounds() {
 		return bounds;
@@ -23,6 +25,14 @@ public class UIElement {
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+
+	public final @Nullable UIElement getParent() {
+		return parent;
+	}
+
+	public final void setParent(@Nullable UIElement parent) {
+		this.parent = parent;
 	}
 
 	public final void measure(Size availableSize) {

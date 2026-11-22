@@ -154,6 +154,37 @@ class StackPanelLayoutTest {
 	}
 
 	@Test
+	void panelMutationsSupportFluentUseAndClear() {
+		StackPanel panel = new StackPanel();
+		FixedElement first = new FixedElement(10.0, 5.0);
+		FixedElement second = new FixedElement(20.0, 7.0);
+
+		assertSame(panel, panel.add(first));
+		assertSame(panel, first.getParent());
+		assertSame(panel, panel.add(second).setSpacing(2.0));
+
+		assertSame(panel, panel.clear());
+		assertEquals(0, panel.getChildren().size());
+		assertNull(first.getParent());
+		assertNull(second.getParent());
+	}
+
+	@Test
+	void anElementCannotBeOwnedByMoreThanOnePanel() {
+		Grid firstPanel = new Grid();
+		StackPanel secondPanel = new StackPanel();
+		FixedElement child = new FixedElement(10.0, 5.0);
+		firstPanel.add(child);
+
+		assertThrows(IllegalArgumentException.class, () -> secondPanel.add(child));
+		assertSame(firstPanel, child.getParent());
+		assertTrue(firstPanel.remove(child));
+		assertNull(child.getParent());
+		assertSame(secondPanel, secondPanel.add(child));
+		assertSame(secondPanel, child.getParent());
+	}
+
+	@Test
 	void nestedGridAndStackPanelArrangeChildren() {
 		Grid root = new Grid();
 		StackPanel stack = new StackPanel(StackOrientation.VERTICAL).setSpacing(2.0);

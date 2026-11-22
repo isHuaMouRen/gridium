@@ -17,7 +17,7 @@ import java.util.Objects;
 public abstract class Panel<T extends Panel<T>> extends FrameworkElement<T> {
 	private final List<UIElement> children = new ArrayList<>();
 
-	public final void add(UIElement element) {
+	public final T add(UIElement element) {
 		Objects.requireNonNull(element, "element");
 		if (element == this) {
 			throw new IllegalArgumentException("A panel cannot contain itself");
@@ -25,15 +25,32 @@ public abstract class Panel<T extends Panel<T>> extends FrameworkElement<T> {
 		if (element instanceof Panel<?> panel && panel.contains(this)) {
 			throw new IllegalArgumentException("Adding this panel would create a cycle");
 		}
+		if (element.getParent() != null) {
+			throw new IllegalArgumentException("An element cannot belong to more than one panel");
+		}
 		if (children.contains(element)) {
 			throw new IllegalArgumentException("An element cannot be added to the same panel twice");
 		}
 
 		children.add(element);
+		element.setParent(this);
+		return self();
 	}
 
 	public final boolean remove(UIElement element) {
-		return children.remove(element);
+		if (!children.remove(element)) {
+			return false;
+		}
+		element.setParent(null);
+		return true;
+	}
+
+	public final T clear() {
+		for (UIElement child : children) {
+			child.setParent(null);
+		}
+		children.clear();
+		return self();
 	}
 
 	public final List<UIElement> getChildren() {
