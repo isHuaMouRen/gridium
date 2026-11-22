@@ -10,12 +10,24 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 
+/**
+ * Overlapping layout container. By default children are arranged from the top-left. Horizontal and
+ * vertical alignment control each child's position or stretching independently.
+ *
+ * <p>Children are measured against the same available size. Grid does not compress or clip
+ * overflowing children.</p>
+ */
 public class Grid extends Panel<Grid> {
 	@Override
 	protected Grid self() {
 		return this;
 	}
 
+	/**
+	 * Measures and arranges this grid for the graphics viewport, then renders its elements.
+	 *
+	 * <p>The partial tick defaults to zero.</p>
+	 */
 	public void draw(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
 		draw(graphics, mouseX, mouseY, 0.0F);
 	}

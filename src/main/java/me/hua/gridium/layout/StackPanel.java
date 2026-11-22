@@ -6,6 +6,12 @@ import me.hua.gridium.core.UIElement;
 
 import java.util.Objects;
 
+/**
+ * Sequential layout container that arranges visible children along a horizontal or vertical axis.
+ *
+ * <p>Children keep their measured desired size on the stack axis. Spacing is inserted only between
+ * visible children. Overflow remains outside the container and is not clipped or compressed.</p>
+ */
 public class StackPanel extends Panel<StackPanel> {
 	private StackOrientation orientation;
 	private double spacing;
@@ -22,6 +28,7 @@ public class StackPanel extends Panel<StackPanel> {
 		return orientation;
 	}
 
+	/** Changes the stacking axis and returns this panel for fluent composition. */
 	public StackPanel setOrientation(StackOrientation orientation) {
 		this.orientation = Objects.requireNonNull(orientation, "orientation");
 		return this;
@@ -31,6 +38,7 @@ public class StackPanel extends Panel<StackPanel> {
 		return spacing;
 	}
 
+	/** Sets the distance between visible children and returns this panel for fluent composition. */
 	public StackPanel setSpacing(double spacing) {
 		if (!Double.isFinite(spacing) || spacing < 0.0) {
 			throw new IllegalArgumentException("spacing must be finite and non-negative");

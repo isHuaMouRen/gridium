@@ -1,5 +1,6 @@
 package me.hua.gridium.core;
 
+/** Finite, non-negative two-dimensional layout size. */
 public class Size {
 	public static final Size ZERO = new Size(0.0, 0.0);
 

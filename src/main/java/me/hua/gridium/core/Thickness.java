@@ -1,5 +1,11 @@
 package me.hua.gridium.core;
 
+/**
+ * Four edge values used for element margins and rectangle insets.
+ *
+ * <p>Each constructor or factory rejects non-finite values. Horizontal and vertical totals must
+ * also remain finite.</p>
+ */
 public class Thickness {
 	public static final Thickness ZERO = new Thickness(0.0, 0.0, 0.0, 0.0);
 

@@ -5,6 +5,13 @@ import me.hua.gridium.rendering.GridRenderer;
 import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 
+/**
+ * Base layout and rendering node. An element is first measured against an available size, then
+ * arranged into a final {@link Rect}, and optionally rendered through a {@link GridRenderer}.
+ *
+ * <p>{@link #setVisible(boolean)} removes the element from visible layout: measurement reports
+ * {@link Size#ZERO} and arrangement produces a zero-sized bounds at the arranged position.</p>
+ */
 public class UIElement {
 	private Rect bounds = Rect.EMPTY;
 	private Size desiredSize = Size.ZERO;
@@ -15,26 +22,44 @@ public class UIElement {
 		return bounds;
 	}
 
+	/** Returns the last measured desired size, or {@link Size#ZERO} before the first layout pass. */
 	public final Size getDesiredSize() {
 		return desiredSize;
 	}
 
+	/** Returns whether the element participates in measurement, arrangement, and rendering. */
 	public boolean isVisible() {
 		return visible;
 	}
 
+	/**
+	 * Sets whether the element participates in layout and rendering.
+	 *
+	 * <p>Hidden elements do not consume their desired size. Call {@link #measure(Size)} and
+	 * {@link #arrange(Rect)} again, or run the owning container's next layout pass, to update
+	 * the layout.</p>
+	 */
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
 
+	/** Returns the panel that owns this element, or {@code null} if it is not attached. */
 	public final @Nullable UIElement getParent() {
 		return parent;
 	}
 
+	/**
+	 * Updates the owning panel.
+	 *
+	 * <p>This method is intended for panel attachment and detachment. Callers should normally use
+	 * {@link me.hua.gridium.layout.Panel#add(UIElement)} and
+	 * {@link me.hua.gridium.layout.Panel#remove(UIElement)} instead.</p>
+	 */
 	public final void setParent(@Nullable UIElement parent) {
 		this.parent = parent;
 	}
 
+	/** Measures this element against a finite, non-negative available size. */
 	public final void measure(Size availableSize) {
 		Objects.requireNonNull(availableSize, "availableSize");
 		desiredSize = visible

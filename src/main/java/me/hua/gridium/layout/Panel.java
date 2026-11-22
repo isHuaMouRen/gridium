@@ -14,9 +14,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Base container for layout elements.
+ *
+ * <p>An element may belong to only one panel at a time. Use {@link #remove(UIElement)} or
+ * {@link #clear()} before attaching it elsewhere. Containers do not automatically compress or clip
+ * overflowing children. An element retains its desired size unless an alignment or stack axis
+ * explicitly changes the arranged size.</p>
+ */
 public abstract class Panel<T extends Panel<T>> extends FrameworkElement<T> {
 	private final List<UIElement> children = new ArrayList<>();
 
+	/**
+	 * Adds a child and returns this panel for fluent composition.
+	 *
+	 * @throws NullPointerException if {@code element} is {@code null}
+	 * @throws IllegalArgumentException if the element is already owned, is this panel, duplicates
+	 *         an existing child, or would create a nesting cycle
+	 */
 	public final T add(UIElement element) {
 		Objects.requireNonNull(element, "element");
 		if (element == this) {
@@ -37,6 +52,11 @@ public abstract class Panel<T extends Panel<T>> extends FrameworkElement<T> {
 		return self();
 	}
 
+	/**
+	 * Removes a child and releases its panel ownership.
+	 *
+	 * @return {@code true} if the element was attached to this panel
+	 */
 	public final boolean remove(UIElement element) {
 		if (!children.remove(element)) {
 			return false;
@@ -45,6 +65,7 @@ public abstract class Panel<T extends Panel<T>> extends FrameworkElement<T> {
 		return true;
 	}
 
+	/** Removes every child and returns this panel for fluent composition. */
 	public final T clear() {
 		for (UIElement child : children) {
 			child.setParent(null);
@@ -53,6 +74,7 @@ public abstract class Panel<T extends Panel<T>> extends FrameworkElement<T> {
 		return self();
 	}
 
+	/** Returns an immutable snapshot of children in layout and rendering order. */
 	public final List<UIElement> getChildren() {
 		return List.copyOf(children);
 	}

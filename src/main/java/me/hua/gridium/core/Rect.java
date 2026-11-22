@@ -2,6 +2,12 @@ package me.hua.gridium.core;
 
 import java.util.Objects;
 
+/**
+ * Non-negative layout rectangle with finite coordinates and dimensions.
+ *
+ * <p>Width and height are non-negative. Insetting a rectangle creates a non-negative content area
+ * and does not create negative width or height.</p>
+ */
 public class Rect {
 	public static final Rect EMPTY = new Rect(0.0, 0.0, 0.0, 0.0);
 

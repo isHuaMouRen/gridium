@@ -5,6 +5,14 @@ import me.hua.gridium.controls.GridTooltip;
 import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 
+/**
+ * Layout-enabled element with margin, alignment, layout scaling, render transform, and tooltip
+ * support. Layout properties do not change the element's drawing content.
+ *
+ * <p>Margins reduce the content area and contribute to desired size. Layout scaling affects
+ * measurement and arrangement but leaves margins unscaled. Render transforms affect only visual
+ * drawing and do not participate in hit testing or layout bounds.</p>
+ */
 public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UIElement {
 	private Thickness margin = Thickness.ZERO;
 	private HorizontalAlignment horizontalAlignment = HorizontalAlignment.LEFT;
