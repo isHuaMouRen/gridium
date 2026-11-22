@@ -58,4 +58,45 @@ class FrameworkElementLayoutTest {
 		assertThrows(NullPointerException.class, () -> element.measure(null));
 		assertThrows(NullPointerException.class, () -> element.arrange(null));
 	}
+
+	@Test
+	void sizeConstraintsClampDesiredSizeAndStretchedArrangement() {
+		FixedElement minimum = new FixedElement(10.0, 5.0)
+				.setMinSize(30.0, 20.0);
+		minimum.measure(new Size(200.0, 200.0));
+		assertEquals(30.0, minimum.getDesiredSize().getWidth());
+		assertEquals(20.0, minimum.getDesiredSize().getHeight());
+		minimum.arrange(new Rect(5.0, 7.0, 200.0, 200.0));
+		assertEquals(200.0, minimum.getBounds().getWidth());
+		assertEquals(200.0, minimum.getBounds().getHeight());
+
+		FixedElement maximum = new FixedElement(120.0, 100.0)
+				.setMaxSize(50.0, 30.0);
+		maximum.measure(new Size(200.0, 200.0));
+		assertEquals(50.0, maximum.getDesiredSize().getWidth());
+		assertEquals(30.0, maximum.getDesiredSize().getHeight());
+		maximum.arrange(new Rect(5.0, 7.0, 200.0, 200.0));
+		assertEquals(50.0, maximum.getBounds().getWidth());
+		assertEquals(30.0, maximum.getBounds().getHeight());
+	}
+
+	@Test
+	void sizeConstraintsIncludeMarginsAndRejectInvalidRanges() {
+		FixedElement element = new FixedElement(10.0, 5.0)
+				.setMargin(new Thickness(4.0, 3.0, 6.0, 5.0))
+				.setMinSize(30.0, 20.0)
+				.setMaxSize(80.0, 60.0);
+
+		element.measure(new Size(200.0, 200.0));
+		assertEquals(30.0, element.getDesiredSize().getWidth());
+		assertEquals(20.0, element.getDesiredSize().getHeight());
+
+		element.arrange(new Rect(0.0, 0.0, 200.0, 200.0));
+		assertEquals(70.0, element.getBounds().getWidth());
+		assertEquals(52.0, element.getBounds().getHeight());
+
+		assertThrows(IllegalArgumentException.class, () -> element.setMinSize(-1.0, 0.0));
+		assertThrows(IllegalArgumentException.class, () -> element.setMaxSize(10.0, 60.0));
+		assertThrows(IllegalArgumentException.class, () -> new FixedElement(1.0, 1.0).setMaxSize(10.0, 10.0).setMinSize(20.0, 5.0));
+	}
 }

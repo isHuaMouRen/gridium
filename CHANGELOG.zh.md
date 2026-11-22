@@ -8,6 +8,7 @@
 * 新增 `Panel.clear()`，并支持通过 `remove()` 解除元素与面板的附属关系
 * 限制一个元素不能被添加进多个容器
 * 补充公开 API Javadoc，说明布局语义和原生 Widget 限制
+* 为 `FrameworkElement` 添加最大/最小尺寸属性：`minWidth` `maxWidth` `minHeight` `maxHeight`
 
 ### 更改
 
