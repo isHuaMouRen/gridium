@@ -36,92 +36,21 @@ dependencies {
 
 ## 快速开始
 
-下面的示例展示了在 `Screen` 中创建 Grid、添加文本和纵向 `StackPanel` ，并在 Screen 的渲染状态提取阶段绘制布局。
+在 `Screen` 中创建 `Grid` ，添加带布局意图的元素，并在渲染状态提取阶段绘制：
 
 ```java
-import me.hua.gridium.controls.Rectangle;
-import me.hua.gridium.controls.Text;
-import me.hua.gridium.core.HorizontalAlignment;
-import me.hua.gridium.core.Thickness;
-import me.hua.gridium.layout.Grid;
-import me.hua.gridium.layout.StackPanel;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
+Grid grid = new Grid();
 
-public final class ExampleScreen extends Screen {
-    private Grid grid;
-
-    public ExampleScreen() {
-        super(Component.literal("Example screen"));
-    }
-
-    @Override
-    protected void init() {
-        grid = new Grid();
-
-        grid.add(new Text(font, Component.literal("Gridium"), 0xFFFFFFFF)
-                .setHorizontalAlignment(HorizontalAlignment.CENTER)
-                .setMargin(new Thickness(0, 24, 0, 0)));
-
-        var content = new StackPanel()
-                .setSpacing(8);
-        content.add(new Rectangle(120, 24, 0xFF3F76E4));
-        content.add(new Text(font, "Laid out without manual coordinates", 0xFFFFFFFF, false));
-        grid.add(content
-                .setHorizontalAlignment(HorizontalAlignment.STRETCH)
-                .setMargin(new Thickness(16, 56, 16, 16)));
-    }
-
-    @Override
-    public void extractRenderState(
-            GuiGraphicsExtractor graphics,
-            int mouseX,
-            int mouseY,
-            float partialTick
-    ) {
-        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
-        grid.draw(graphics, mouseX, mouseY, partialTick);
-    }
-}
-```
-
-`Grid` 默认从其布局区域的左上方开始排列子元素。上例将标题水平居中，并在标题下方放置一个纵向排列的内容区域。
-
-更详细的编写示例可在 [DemoScreen.java](/src/main/java/me/hua/gridium/screen/DemoScreen.java) 演示屏幕查看
-
-### 布局生命周期与元素所有权
-
-每次调用 `Grid.draw(...)` 时都会重新测量和排列布局。调用 `setVisible(false)` 后，元素不再参与测量、排列和绘制；之后重新显示时，需由下一个布局过程恢复其状态。
-
-`Panel.add(...)` 会返回面板本身，因此可以进行链式添加。移动元素到另一个面板前，应先使用 `remove(...)` 或 `clear()` 解除原有附属关系：
-
-```java
-grid.add(new Rectangle(64, 18, 0xFF3F76E4))
-    .add(new Text(font, "链式添加", 0xFFFFFFFF, false));
-
-grid.remove(element);
-grid.clear();
-```
-
-一个元素同时只能属于一个面板。 `Grid` 和 `StackPanel` 不会裁剪或自动压缩溢出的子元素。
-
-### 桥接 Minecraft 原生 Widget
-
-Minecraft Widget 不受 GuiGraphicsExtractor 管理。需要将其构建之后注册到 Screen 的输入系统，再用 `MinecraftWidget` 桥接进 Grid。此示例使用 `net.minecraft.client.gui.components.Button` ：
-
-```java
-var button = Button.builder(Component.literal("Click me"), clicked -> {
-    clicked.setMessage(Component.literal("Clicked"));
-}).size(96, 20).build();
-
-addWidget(button);
-grid.add(new MinecraftWidget(button)
+grid.add(new Text(font, Component.literal("Gridium"), 0xFFFFFFFF)
         .setHorizontalAlignment(HorizontalAlignment.CENTER)
+        .setMargin(new Thickness(10))
 );
+
+//在extractRenderState内：
+grid.draw(graphics, mouseX, mouseY, partialTick);
 ```
 
-这里的 `MinecraftWidget` 作为桥接控件，仅控制其布局，无法控制其他内容
+一个最小的实现示例； `font` 、 `graphics` 、 `mouseX/Y` 和 `partialTick` 来自 Screen 生命周期。完整可复制的 Screen、布局行为、动态增删和原生 Widget 桥接示例见[详细编写指南](./GUIDE.zh.md)。仓库还提供了[演示屏幕](./src/main/java/me/hua/gridium/screen/DemoScreen.java) 以供参考。
 
 ## 许可证
 
