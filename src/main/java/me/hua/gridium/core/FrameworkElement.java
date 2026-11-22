@@ -12,8 +12,9 @@ import org.jspecify.annotations.Nullable;
  * <p>Margins reduce the content area and contribute to desired size. Layout scaling affects
  * measurement and arrangement but leaves margins unscaled. Render transforms affect only visual
  * drawing and do not participate in hit testing or layout bounds. Minimum and maximum sizes
- * constrain the element's outer size, including margins; STRETCH fills the available slot only
- * up to the maximum and the desired size is clamped between minimum and maximum.</p>
+ * constrain the measured outer desired size, including margins. During arrangement, STRETCH fills
+ * the available slot up to the maximum; if the slot is smaller than the minimum, the arranged
+ * element is clamped to the slot and may be smaller than its minimum.</p>
  */
 public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UIElement {
 	private Thickness margin = Thickness.ZERO;
@@ -82,7 +83,10 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 		return maxHeight;
 	}
 
-	/** Sets minimum outer width and height, including margins. */
+	/**
+	 * Sets minimum outer width and height, including margins. The minimum constrains measured
+	 * desired size; arrangement may be smaller when the allocated slot cannot fit it.
+	 */
 	public final T setMinSize(double width, double height) {
 		double newMinWidth = requireConstraint(width, "minWidth");
 		double newMinHeight = requireConstraint(height, "minHeight");
@@ -97,7 +101,7 @@ public abstract class FrameworkElement<T extends FrameworkElement<T>> extends UI
 		return self();
 	}
 
-	/** Sets maximum outer width and height, including margins. */
+	/** Sets maximum outer width and height, including margins, for measurement and arrangement. */
 	public final T setMaxSize(double width, double height) {
 		double newMaxWidth = requireConstraint(width, "maxWidth");
 		double newMaxHeight = requireConstraint(height, "maxHeight");

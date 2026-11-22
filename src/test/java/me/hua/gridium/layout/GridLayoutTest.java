@@ -79,6 +79,22 @@ class GridLayoutTest {
 	}
 
 	@Test
+	void stretchClampsToAvailableSlotWhenItIsSmallerThanMinimum() {
+		Grid grid = new Grid();
+		FixedElement constrained = new FixedElement(10.0, 5.0)
+				.setHorizontalAlignment(HorizontalAlignment.STRETCH)
+				.setVerticalAlignment(VerticalAlignment.STRETCH)
+				.setMinSize(40.0, 30.0);
+		grid.add(constrained);
+
+		layout(grid, new Rect(10.0, 20.0, 12.0, 8.0));
+
+		assertEquals(40.0, constrained.getDesiredSize().getWidth());
+		assertEquals(30.0, constrained.getDesiredSize().getHeight());
+		assertBounds(constrained, new Rect(10.0, 20.0, 12.0, 8.0));
+	}
+
+	@Test
 	void nonStretchChildKeepsDesiredSizeWhenItOverflowsAvailableArea() {
 		Grid grid = new Grid();
 		FixedElement child = new FixedElement(120.0, 100.0)
