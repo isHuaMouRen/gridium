@@ -3,7 +3,7 @@
 	"id": "gridium",
 	"version": "${version}",
 	"name": "Gridium",
-	"description": "A lightweight UI layout framework for Fabric mods that arranges and renders Minecraft UI elements without manual screen-coordinate calculations.",
+	"description": "A lightweight UI layout framework for Fabric mods.",
 	"authors": [
 		"HuaMouRen"
 	],
