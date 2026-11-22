@@ -24,6 +24,7 @@ import me.hua.gridium.controls.VerticalLine;
 import me.hua.gridium.core.Rect;
 import me.hua.gridium.core.RenderTransform;
 import me.hua.gridium.integration.minecraft.MinecraftWidget;
+import me.hua.gridium.core.HorizontalAlignment;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.network.chat.Component;
@@ -152,7 +153,7 @@ public class MinecraftGridRenderer implements GridRenderer {
 		Rect bounds = text.getBounds();
 		int x = PixelBounds.roundCoordinate(bounds.getX());
 		int y = PixelBounds.roundCoordinate(bounds.getY());
-		if (text.isCentered() && string != null) {
+		if (text.getHorizontalAlignment() == HorizontalAlignment.CENTER && string != null) {
 			int centerX = PixelBounds.roundCoordinate(bounds.getX() + bounds.getWidth() / 2.0);
 			if (text.drawsShadow()) {
 				x = centerX - text.getFont().width(string) / 2;
@@ -170,7 +171,7 @@ public class MinecraftGridRenderer implements GridRenderer {
 		Rect bounds = text.getBounds();
 		int x = PixelBounds.roundCoordinate(bounds.getX());
 		int y = PixelBounds.roundCoordinate(bounds.getY());
-		if (text.isCentered()) {
+		if (text.getHorizontalAlignment() == HorizontalAlignment.CENTER) {
 			int centerX = PixelBounds.roundCoordinate(bounds.getX() + bounds.getWidth() / 2.0);
 			if (text.drawsShadow()) {
 				x = centerX - text.getFont().width(formattedCharSequence) / 2;
@@ -188,7 +189,7 @@ public class MinecraftGridRenderer implements GridRenderer {
 		Rect bounds = text.getBounds();
 		int x = PixelBounds.roundCoordinate(bounds.getX());
 		int y = PixelBounds.roundCoordinate(bounds.getY());
-		if (text.isCentered()) {
+		if (text.getHorizontalAlignment() == HorizontalAlignment.CENTER) {
 			int centerX = PixelBounds.roundCoordinate(bounds.getX() + bounds.getWidth() / 2.0);
 			if (text.drawsShadow()) {
 				x = centerX - text.getFont().width(component) / 2;

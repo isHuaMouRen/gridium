@@ -22,7 +22,6 @@ public class Text extends FrameworkElement<Text> {
 	private final int backdropWidth;
 	private final int color;
 	private final boolean drawShadow;
-	private boolean centered;
 
 	public Text(Font font, @Nullable String string, int color) {
 		this(font, ContentType.STRING, string, null, null, null, 0, 0, color, true);
@@ -142,25 +141,6 @@ public class Text extends FrameworkElement<Text> {
 
 	public boolean drawsShadow() {
 		return drawShadow;
-	}
-
-	/**
-	 * @deprecated Use {@link #setHorizontalAlignment(me.hua.gridium.core.HorizontalAlignment)
-	 * setHorizontalAlignment(HorizontalAlignment.CENTER)} instead.
-	 */
-	@Deprecated
-	public boolean isCentered() {
-		return centered;
-	}
-
-	/**
-	 * @deprecated Use {@link #setHorizontalAlignment(me.hua.gridium.core.HorizontalAlignment)
-	 * setHorizontalAlignment(HorizontalAlignment.CENTER)} instead.
-	 */
-	@Deprecated
-	public Text setCentered(boolean centered) {
-		this.centered = centered;
-		return this;
 	}
 
 	@Override
