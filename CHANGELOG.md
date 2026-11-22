@@ -1,5 +1,13 @@
 # Change Logs
 
+## 1.0.0+26.3
+
+* Release the first stable version!
+
+### Change
+
+* `UIElement.setParent()` is no longer public
+
 ## 0.1.3+26.3
 
 ### Updates
@@ -8,7 +16,7 @@
 * Added `Panel.clear()`; elements can now be detached from a panel using `remove()`.
 * Implemented a restriction: an element cannot be added to multiple containers.
 * Expanded public API Javadoc to clarify layout semantics and native widget limitations.
-* Added minimum and maximum size properties to `FrameworkElement`: `minWidth`,     `maxWidth`,     `minHeight`, and `maxHeight`.
+* Added minimum and maximum size properties to `FrameworkElement`: `minWidth` `maxWidth` `minHeight` `maxHeight`.
 
 ### Changes
 
