@@ -1,5 +1,20 @@
 # Change Logs
 
+## 0.1.3+26.3
+
+### Updates
+
+* `Panel.add()` now supports method chaining.
+* Added `Panel.clear()`; elements can now be detached from a panel using `remove()`.
+* Implemented a restriction: an element cannot be added to multiple containers.
+* Expanded public API Javadoc to clarify layout semantics and native widget limitations.
+* Added minimum and maximum size properties to `FrameworkElement`: `minWidth`,     `maxWidth`,     `minHeight`, and `maxHeight`.
+
+### Changes
+
+* **Namespace moved: `me.hua.gridium.layout.StackOrientation` -> `me.hua.gridium.core.StackOrientation`**
+* Removed the `centered` property from `Text`, along with its associated methods.
+
 ## 0.1.2+26.3
 
 ### Updates
