@@ -3,15 +3,16 @@
 	"id": "gridium",
 	"version": "${version}",
 	"name": "Gridium",
-	"description": "A UI layout framework",
+	"description": "A lightweight UI layout framework for Fabric mods that arranges and renders Minecraft UI elements without manual screen-coordinate calculations.",
 	"authors": [
 		"HuaMouRen"
 	],
 	"contact": {
-		"homepage": "https://modrinth.com/project/gridium",
-		"sources": "https://github.com/isHuaMouRen/gridium"
+		"homepage": "https://modrinth.com/mod/gridium",
+		"sources": "https://github.com/isHuaMouRen/gridium",
+		"issues": "https://github.com/isHuaMouRen/gridium/issues"
 	},
-	"license": "GPL-v3",
+	"license": "GPL-3.0-only",
 	"icon": "assets/gridium/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -19,11 +20,10 @@
 			"me.hua.gridium.Gridium"
 		],
 		"modmenu": [
-          "me.hua.gridium.integration.modmenu.ModMenuIntegration"
+			"me.hua.gridium.integration.modmenu.ModMenuIntegration"
 		]
 	},
 	"mixins": [
-		"gridium.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.20.1",
@@ -31,7 +31,7 @@
 		"java": ">=25",
 		"fabric-api": "*"
 	},
-	"recommends": {
+	"suggests": {
 		"modmenu": ">=21.0.0"
 	}
 }
