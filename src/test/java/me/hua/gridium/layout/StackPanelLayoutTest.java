@@ -180,6 +180,14 @@ class StackPanelLayoutTest {
 	}
 
 	@Test
+	void parentMutationIsNotExposedAsPublicApi() {
+		assertThrows(
+				NoSuchMethodException.class,
+				() -> UIElement.class.getMethod("setParent", UIElement.class)
+		);
+	}
+
+	@Test
 	void nestedGridAndStackPanelArrangeChildren() {
 		Grid root = new Grid();
 		StackPanel stack = new StackPanel(StackOrientation.VERTICAL).setSpacing(2.0);

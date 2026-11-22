@@ -48,15 +48,9 @@ public class UIElement {
 		return parent;
 	}
 
-	/**
-	 * Updates the owning panel.
-	 *
-	 * <p>This method is intended for panel attachment and detachment. Callers should normally use
-	 * {@link me.hua.gridium.layout.Panel#add(UIElement)} and
-	 * {@link me.hua.gridium.layout.Panel#remove(UIElement)} instead.</p>
-	 */
-	public final void setParent(@Nullable UIElement parent) {
-		this.parent = parent;
+	/** Updates parent ownership for panel implementations. */
+	protected static final void setParentInternal(UIElement element, @Nullable UIElement parent) {
+		element.parent = parent;
 	}
 
 	/** Measures this element against a finite, non-negative available size. */

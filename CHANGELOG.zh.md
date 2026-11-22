@@ -1,5 +1,11 @@
 # Change Logs
 
+## 0.1.4+26.3
+
+### 更改
+
+* `UIElement.setParent()` 不再公开
+
 ## 0.1.3+26.3
 
 ### 更新

@@ -48,7 +48,7 @@ public abstract class Panel<T extends Panel<T>> extends FrameworkElement<T> {
 		}
 
 		children.add(element);
-		element.setParent(this);
+		setParentInternal(element, this);
 		return self();
 	}
 
@@ -61,14 +61,14 @@ public abstract class Panel<T extends Panel<T>> extends FrameworkElement<T> {
 		if (!children.remove(element)) {
 			return false;
 		}
-		element.setParent(null);
+		setParentInternal(element, null);
 		return true;
 	}
 
 	/** Removes every child and returns this panel for fluent composition. */
 	public final T clear() {
 		for (UIElement child : children) {
-			child.setParent(null);
+			setParentInternal(child, null);
 		}
 		children.clear();
 		return self();
