@@ -48,6 +48,9 @@ public class DemoWidgetsScreen extends Screen {
 		grid.add(new Text(font, Component.literal("§lLayout & Widget"), 0xFFFFFFFF, true)
 				.setLayoutScale(2, 2)
 				.setMargin(new Thickness(44, 10, 10, 0))
+		).add(new Rectangle(width - (24 + 10 + 10) - 10, 2, 0xFFFFFFFF)
+				.setHorizontalAlignment(HorizontalAlignment.RIGHT)
+				.setMargin(new Thickness(0, 10 + 24 - 2, 10, 0))
 		);
 
 		var leftColumn = new StackPanel().setSpacing(8);
