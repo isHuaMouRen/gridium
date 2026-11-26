@@ -1,6 +1,6 @@
 # Gridium 编写指南
 
-本文以 Minecraft 26.3 和 Gridium 0.1.x 为例，提供一个完整的 `Screen` 编写示例，并说明布局、生命周期和原生 Widget 桥接。Gridium 不取代 Minecraft 绘制 API：元素构造器描述内容，布局属性描述元素如何排列。
+本文以 Minecraft 26.3 和 Gridium 1.0.0 为例，提供一个完整的 `Screen` 编写示例，并说明布局、生命周期和原生 Widget 桥接。Gridium 不取代 Minecraft 绘制 API：元素构造器描述内容，布局属性描述元素如何排列。
 
 ## 添加依赖
 

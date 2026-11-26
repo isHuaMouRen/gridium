@@ -1,6 +1,6 @@
 # Gridium Writing Guide
 
-Using Minecraft 26.3 and Gridium 0.1.x as examples, this article provides a complete demonstration of how to implement a `Screen` , covering layout, lifecycle, and the bridging of native widgets. Gridium does not replace Minecraft’s native rendering API; instead, element constructors define the content, while layout properties dictate how those elements are arranged.
+Using Minecraft 26.3 and Gridium 1.0.0 as examples, this article provides a complete demonstration of how to implement a `Screen` , covering layout, lifecycle, and the bridging of native widgets. Gridium does not replace Minecraft’s native rendering API; instead, element constructors define the content, while layout properties dictate how those elements are arranged.
 
 ## Add dependencies
 
