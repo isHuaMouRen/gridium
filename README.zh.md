@@ -52,6 +52,12 @@ grid.draw(graphics, mouseX, mouseY, partialTick);
 
 一个最小的实现示例； `font` 、 `graphics` 、 `mouseX/Y` 和 `partialTick` 来自 Screen 生命周期。完整可复制的 Screen、布局行为、动态增删和原生 Widget 桥接示例见[详细编写指南](./GUIDE.zh.md)。仓库还提供了[演示屏幕](./src/main/java/me/hua/gridium/screen/DemoScreen.java) 以供参考。
 
+## 屏幕截图
+
+![Basic Controls](/images/screenshot_basic_controls.png)
+
+![Widgets](/images/screenshot_widgets.png)
+
 ## 许可证
 
 本项目使用 GPL-3.0 许可证，详见 [LICENSE.md](LICENSE.md)。

@@ -36,7 +36,7 @@ Replace `<version>` with the version of Gridium published on Modrinth.
 
 ## Quick Start
 
-In a `Screen`, create a `Grid`, add an element with layout intent, then draw it during render-state extraction:
+In a `Screen` , create a `Grid` , add an element with layout intent, then draw it during render-state extraction:
 
 ```java
 Grid grid = new Grid();
@@ -50,7 +50,13 @@ grid.add(new Text(font, Component.literal("Gridium"), 0xFFFFFFFF)
 grid.draw(graphics, mouseX, mouseY, partialTick);
 ```
 
-A minimal implementation example; `font`, `graphics`, `mouseX/Y`, and `partialTick` are derived from the `Screen` lifecycle. For a complete, reproducible example—covering `Screen` implementation, layout behavior, dynamic addition/removal of elements, and bridging to native widgets—please refer to the [detailed guide](./GUIDE.md). The repository also includes a [demo screen](./src/main/java/me/hua/gridium/screen/DemoScreen.java) for reference.
+A minimal implementation example; `font` , `graphics` , `mouseX/Y` , and `partialTick` are derived from the `Screen` lifecycle. For a complete, reproducible example—covering `Screen` implementation, layout behavior, dynamic addition/removal of elements, and bridging to native widgets—please refer to the [detailed guide](./GUIDE.md). The repository also includes a [demo screen](./src/main/java/me/hua/gridium/screen/DemoScreen.java) for reference.
+
+## Screenshots
+
+![Basic Controls](/images/screenshot_basic_controls.png)
+
+![Widgets](/images/screenshot_widgets.png)
 
 ## License
 
